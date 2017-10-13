@@ -1,3 +1,5 @@
+<a href="https://library.brown.edu/bul_cbp/demo_info/"><img src="https://library.brown.edu/bul_cbp/demo_image/" alt="BUL Best Practices" data-canonical-src="https://library.brown.edu/bul_cbp/demo_image/" style="max-width:100%;"></a>
+
 ##### overview
 
 Template [runserver](https://docs.djangoproject.com/en/1.11/ref/django-admin/#runserver) and [passenger](https://www.phusionpassenger.com)-compatible [django](https://www.djangoproject.com) project.
