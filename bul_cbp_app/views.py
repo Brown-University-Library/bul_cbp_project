@@ -6,6 +6,7 @@ from django.contrib.auth import logout
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
+from django.utils.cache import patch_response_headers
 
 log = logging.getLogger(__name__)
 
@@ -36,7 +37,9 @@ def demo_image( request ):
 <text x="127.5" y="14">failing</text>
 </g>
 </svg>'''
-    return HttpResponse( svg, content_type="image/svg+xml" )
+    resp = HttpResponse( svg, content_type="image/svg+xml" )
+    patch_response_headers( resp, cache_timeout=5 )
+    return resp
 
 def demo_info( request ):
     html = '<p>forced https: true or false or not-applicable</p> <p>logs auto-rotated: true or false or not-applicable</p>'
