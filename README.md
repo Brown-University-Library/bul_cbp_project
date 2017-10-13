@@ -1,4 +1,4 @@
-<a href="https://library.brown.edu/bul_cbp/demo_info/"><img src="https://library.brown.edu/bul_cbp/demo_image/" alt="BUL Best Practices" data-canonical-src="https://library.brown.edu/bul_cbp/demo_image/" style="max-width:100%;"></a>
+[![BUL Best Practices](https://library.brown.edu/bul_cbp/demo_image/)](https://library.brown.edu/bul_cbp/demo_info/)
 
 ##### overview
 
