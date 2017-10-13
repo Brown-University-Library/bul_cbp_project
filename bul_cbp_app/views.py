@@ -16,8 +16,7 @@ def info( request ):
     return HttpResponse( '<p>hi</p> <p>( %s )</p>' % now )
 
 def demo_image( request ):
-    return HttpResponse( '''
-<svg xmlns="http://www.w3.org/2000/svg" width="154" height="20">
+    return HttpResponse( '''<svg xmlns="http://www.w3.org/2000/svg" width="154" height="20">
   <linearGradient id="b" x2="0" y2="100%">
     <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
     <stop offset="1" stop-opacity=".1"/>
