@@ -12,9 +12,9 @@ log = logging.getLogger(__name__)
 class Tracker(models.Model):
 
     STANDARD_CHOICES = (
-        (YES, 'yes'),
-        (NO, 'no'),
-        (NA, 'not-applicable'),
+        ('yes', 'yes'),  # ( db-value, appearance-value )
+        ('no', 'no'),
+        ('n/a', 'not-applicable'),
     )
 
     created = models.DateTimeField( auto_now_add=True )
@@ -25,25 +25,25 @@ class Tracker(models.Model):
     ##################################################
 
     project_name = models.CharField( max_length=50 )
-    project_contact_email = EmailField()
+    project_contact_email = models.EmailField()
 
-    has public_code_url = models.CharField(
+    has_public_code_url = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
-        default=NA,
+        default='n/a',
     )
     public_code_url = models.URLField( max_length=200 )
 
     contains_lightweight_data_reporting = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
-        default=NA,
+        default='n/a',
     )
 
     accessability_check_run = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
-        default=NA,
+        default='n/a',
     )
 
     ##################################################
@@ -51,11 +51,11 @@ class Tracker(models.Model):
     ##################################################
 
     ## dates for publicly viewable options
-    project_contact_email__checked = models.DateField()
-    has public_code_url__checked = models.DateField()
-    public_code_url__checked = models.DateField()
-    contains_lightweight_data_reporting__checked = models.DateField()
-    accessability_check_run__checked = models.DateField()
+    project_contact_email_CHECKED = models.DateField()
+    has_public_code_url_CHECKED = models.DateField()
+    public_code_url_CHECKED = models.DateField()
+    contains_lightweight_data_reporting_CHECKED = models.DateField()
+    accessability_check_run_CHECKED = models.DateField()
 
     ##################################################
     ## security
@@ -64,24 +64,24 @@ class Tracker(models.Model):
     code_is_supported = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
-        default=NA,
+        default='n/a',
         help_text="eg: uses long-term-release version or later"
     )
-    code_is_supported__checked = models.DateField()
+    code_is_supported_CHECKED = models.DateField()
 
     https_enforced = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
-        default=NA,
+        default='n/a',
     )
-    https_enforced__checked = models.DateField()
+    https_enforced_CHECKED = models.DateField()
 
     admin_links_shib_protected = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
-        default=NA,
+        default='n/a',
     )
-    admin_links_shib_protected__checked = models.DateField()
+    admin_links_shib_protected_CHECKED = models.DateField()
 
     notes = models.TextField( null=True, blank=True )
 
