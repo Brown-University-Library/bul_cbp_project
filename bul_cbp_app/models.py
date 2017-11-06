@@ -25,6 +25,7 @@ class Tracker(models.Model):
     ##################################################
 
     project_name = models.CharField( max_length=50 )
+    slug = models.SlugField( help_text='for identifying segment in url' )
     project_contact_email = models.EmailField()
 
     has_public_code_url = models.CharField(
@@ -61,13 +62,13 @@ class Tracker(models.Model):
     ## security
     ##################################################
 
-    code_is_supported = models.CharField(
+    framework_supported = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
         default='n/a',
-        help_text="eg: uses long-term-release version or later"
+        help_text='eg: uses long-term-release version or later'
     )
-    code_is_supported_CHECKED = models.DateField()
+    framework_supported_CHECKED = models.DateField()
 
     https_enforced = models.CharField(
         max_length=20,
