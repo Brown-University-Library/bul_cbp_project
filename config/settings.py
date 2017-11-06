@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'config.passenger_wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-# DATABASES = json.loads( os.environ['BUL_CBP__DATABASES_JSON'] )
+DATABASES = json.loads( os.environ['BUL_CBP__DATABASES_JSON'] )
 
 
 # Password validation
