@@ -9,8 +9,6 @@ log = logging.getLogger(__name__)
 def calc_score( tracker ):
     """ Calculates int score.
         Called by views.project_image() """
-    score = 60
-    log.debug( 'score, `%s`' % score )
 
     possible = 0
     score = 0

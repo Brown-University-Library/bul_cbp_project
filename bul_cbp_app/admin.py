@@ -33,7 +33,8 @@ class TrackerAdmin(admin.ModelAdmin):
                 'public_code_url',
                 'contains_lightweight_data_reporting',
                 'accessability_check_run',
-                'modified'
+                'project_contact_email',
+                'modified',
             )
         }),
         ('Non-Public Dates for above', {

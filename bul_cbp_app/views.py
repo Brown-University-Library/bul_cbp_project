@@ -2,7 +2,7 @@
 
 import datetime, json, logging, os, pprint
 from .models import Tracker
-from .lib import image_helper
+from .lib import image_helper, info_helper
 from django.conf import settings as project_settings
 from django.contrib.auth import logout
 from django.core.urlresolvers import reverse
@@ -23,7 +23,6 @@ def info( request ):
 def project_image( request, slug ):
     """ Loads data, calculates score, displays image. """
     tracker = get_object_or_404( Tracker, slug=slug )
-    log.debug( 'tracker, ```%s```' % tracker )
     score = image_helper.calc_score( tracker )
     svg = image_helper.prep_svg( score )
     resp = HttpResponse( svg, content_type="image/svg+xml" )
@@ -33,7 +32,9 @@ def project_image( request, slug ):
 
 def project_info( request, slug ):
     """ Shows public info. """
-    return HttpResponse( 'coming' )
+    tracker = get_object_or_404( Tracker, slug=slug )
+    html = info_helper.prep_info( tracker )
+    return HttpResponse( html )
 
 
 def demo_image( request ):
