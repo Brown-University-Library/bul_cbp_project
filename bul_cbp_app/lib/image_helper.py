@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import logging
+import datetime, decimal, logging
 
 
 log = logging.getLogger(__name__)
@@ -41,7 +41,7 @@ def calc_score( tracker ):
             score += 1
 
     ## public dates
-    for datetime_value in [
+    for date_value in [
         tracker.project_contact_email_CHECKED,
         tracker.has_public_code_url_CHECKED,
         tracker.public_code_url_CHECKED,
@@ -49,8 +49,7 @@ def calc_score( tracker ):
         tracker.accessability_check_run_CHECKED,
         ]:
         possible += 1
-        now = datetime.datetime.now()
-        if ( datetime_value + datetime.timedelta(6*365/12) ) > now:  # means entry has been updated in last six months
+        if ( date_value + datetime.timedelta(6*365/12) ) > datetime.date.today():  # means entry has been updated in last six months
             score += 1
 
     ## non-public info ##
@@ -71,20 +70,20 @@ def calc_score( tracker ):
             score += 1
 
     ## non-public dates
-    for datetime_value in [
+    for date_value in [
         tracker.framework_supported_CHECKED,
         tracker.https_enforced_CHECKED,
         tracker.admin_links_shib_protected_CHECKED,
         ]:
         possible += 1
         now = datetime.datetime.now()
-        if ( datetime_value + datetime.timedelta(6*365/12) ) > now:  # means entry has been updated in last six months
+        if ( date_value + datetime.timedelta(6*365/12) ) > datetime.date.today():  # means entry has been updated in last six months
             score += 1
 
     log.debug( 'possible score, %s' % possible )
     log.debug( 'actual score, %s' % score )
 
-    initial_percentage_score = (possible / score) * 100
+    initial_percentage_score = (score / possible) * 100
     log.debug( 'initial_percentage_score, `%s`' % initial_percentage_score )
 
     decimal_percentage_score = decimal.Decimal(initial_percentage_score).quantize( decimal.Decimal('1'), rounding=decimal.ROUND_HALF_UP )
