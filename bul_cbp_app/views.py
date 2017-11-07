@@ -22,7 +22,7 @@ def info( request ):
 
 def project_image( request, slug ):
     """ Loads data, calculates score, displays image. """
-    tracker = get_object_or_404( StaticPage, slug=info_id )
+    tracker = get_object_or_404( Tracker, slug=slug )
     log.debug( 'tracker, ```%s```' % tracker )
     score = image_helper.calc_score( tracker )
     svg = image_helper.prep_svg( score )
@@ -58,7 +58,7 @@ def demo_image( request ):
 </g>
 </svg>'''
     resp = HttpResponse( svg, content_type="image/svg+xml" )
-    patch_response_headers( resp, cache_timeout=5 )
+    patch_response_headers( resp, cache_timeout=2 )
     return resp
 
 
