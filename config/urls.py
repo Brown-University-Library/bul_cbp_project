@@ -15,6 +15,10 @@ urlpatterns = [
 
     url( r'^info/$', views.info, name='info_url' ),
 
+    url( r'^project_image/(?P<slug>.*)/$', views.project_image, name='project_image_url' ),
+
+    url( r'^project_info/(?P<slug>.*)/$', views.project_info, name='project_info_url' ),
+
     url( r'^demo_image/$', views.demo_image, name='demo_image_url' ),
 
     url( r'^demo_info/$', views.demo_info, name='demo_info_url' ),
