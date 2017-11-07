@@ -175,3 +175,5 @@ LOGGING = {
         },
     }
 }
+
+CSRF_TRUSTED_ORIGINS = json.loads( os.environ['BUL_CBP__CSRF_TRUSTED_ORIGINS_JSON'] )

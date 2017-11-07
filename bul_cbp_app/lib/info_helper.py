@@ -20,7 +20,7 @@ def prep_info( tracker ):
 <p>accessability_check_run: {accessability}</p>
 <p>contact: {contact}</p>
 <hr/>
-<p>admins, <a href="{admn}">update project</a></p>
+<p>admins, <a href="{admn}">see additional info and update project</a></p>
 
 '''.format(
         name=tracker.project_name,
