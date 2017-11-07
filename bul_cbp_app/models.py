@@ -25,7 +25,7 @@ class Tracker(models.Model):
     ##################################################
 
     project_name = models.CharField( max_length=50 )
-    slug = models.SlugField( help_text='for identifying segment in url' )
+    slug = models.SlugField( help_text='for identifying segment in url; auto-entered, but feel free to edit' )
     project_contact_email = models.EmailField()
 
     has_public_code_url = models.CharField(

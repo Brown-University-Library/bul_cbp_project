@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import datetime, json, logging, os, pprint
+from .models import Tracker
+from .lib import image_helper
 from django.conf import settings as project_settings
 from django.contrib.auth import logout
 from django.core.urlresolvers import reverse
@@ -14,7 +16,25 @@ log = logging.getLogger(__name__)
 def info( request ):
     """ Returns simplest response. """
     now = datetime.datetime.now()
+    log.debug( 'now, ```%s```' % str(now) )
     return HttpResponse( '<p>hi</p> <p>( %s )</p>' % now )
+
+
+def project_image( request, slug ):
+    """ Loads data, calculates score, displays image. """
+    tracker = get_object_or_404( StaticPage, slug=info_id )
+    log.debug( 'tracker, ```%s```' % tracker )
+    score = image_helper.calc_score( tracker )
+    svg = image_helper.prep_svg( score )
+    resp = HttpResponse( svg, content_type="image/svg+xml" )
+    patch_response_headers( resp, cache_timeout=5 )
+    return resp
+
+
+def project_info( request, slug ):
+    """ Shows public info. """
+    return HttpResponse( 'coming' )
+
 
 def demo_image( request ):
     svg = '''<svg xmlns="http://www.w3.org/2000/svg" width="154" height="20">
@@ -40,6 +60,7 @@ def demo_image( request ):
     resp = HttpResponse( svg, content_type="image/svg+xml" )
     patch_response_headers( resp, cache_timeout=5 )
     return resp
+
 
 def demo_info( request ):
     html = '<p>forced https: true or false or not-applicable</p> <p>logs auto-rotated: true or false or not-applicable</p>'
