@@ -1,17 +1,21 @@
 # -*- coding: utf-8 -*-
 
 import datetime, json, logging, os, pprint
-from .models import Tracker
 from .lib import image_helper, info_helper
+from .lib.shibboleth.backends import ShibbolethBackend
+from .models import Tracker
 from django.conf import settings as project_settings
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from django.core.urlresolvers import reverse
 from django.utils.cache import patch_response_headers
 
 log = logging.getLogger(__name__)
+
+shibber = ShibbolethBackend()
 
 
 def info( request ):
@@ -40,13 +44,16 @@ def project_info( request, slug ):
 
 def login( request ):
     """ Handles authNZ, & redirects. """
+    shibber.authenticate( remote_user=None, shib_meta={}, host=request.get_host() )
     return HttpResponse( 'login handling coming')
 
 
+@login_required
 def login_test( request ):
     """ Checks login() handling. """
     if not request.user.is_authenticated:
         redirect_url = '%s?next=%s' % ( reverse('login_url'), request.path )
+        # redirect_url = reverse('login_url')
         log.debug( 'redirect_url, ```%s```' % redirect_url )
         return HttpResponseRedirect( redirect_url )
     return HttpResponse( 'login_test handling coming')
