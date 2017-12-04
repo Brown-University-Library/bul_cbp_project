@@ -15,6 +15,9 @@ urlpatterns = [
 
     url( r'^info/$', views.info, name='info_url' ),
 
+    url( r'^login/$', views.login, name='login_url' ),
+    url( r'^login_test/$', views.login_test, name='login_test_url' ),
+
     url( r'^project_image/(?P<slug>.*)/$', views.project_image, name='project_image_url' ),
 
     url( r'^project_info/(?P<slug>.*)/$', views.project_info, name='project_info_url' ),

@@ -8,6 +8,7 @@ from django.contrib.auth import logout
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
+from django.core.urlresolvers import reverse
 from django.utils.cache import patch_response_headers
 
 log = logging.getLogger(__name__)
@@ -35,6 +36,20 @@ def project_info( request, slug ):
     tracker = get_object_or_404( Tracker, slug=slug )
     html = info_helper.prep_info( tracker )
     return HttpResponse( html )
+
+
+def login( request ):
+    """ Handles authNZ, & redirects. """
+    return HttpResponse( 'login handling coming')
+
+
+def login_test( request ):
+    """ Checks login() handling. """
+    if not request.user.is_authenticated:
+        redirect_url = '%s?next=%s' % ( reverse('login_url'), request.path )
+        log.debug( 'redirect_url, ```%s```' % redirect_url )
+        return HttpResponseRedirect( redirect_url )
+    return HttpResponse( 'login_test handling coming')
 
 
 def demo_image( request ):
