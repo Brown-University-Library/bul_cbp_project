@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import logging
-from django.contrib.auth import get_user_model
-from django.contrib.auth.backends import RemoteUserBackend
+from bul_cbp_app import settings_app
 from django.conf import settings
+from django.contrib.auth import get_user_model
 
 log = logging.getLogger(__name__)
 log.debug( 'in backends module' )
@@ -27,7 +27,7 @@ class ShibbolethBackend():
     if hasattr(settings, 'CREATE_UNKNOWN_USER'):
         create_unknown_user = settings.CREATE_UNKNOWN_USER
 
-    def authenticate(self, remote_user, shib_meta):
+    def authenticate( self, remote_user, shib_meta, host ):
         """
         The username passed as ``remote_user`` is considered trusted.  This
         method simply returns the ``User`` object with the given username,
@@ -37,6 +37,10 @@ class ShibbolethBackend():
         object with the given username is not found in the database.
         """
         log.debug( 'here' )
+        if not remote_user:
+            if host == '127.0.0.1' and settings.DEBUG is True:
+                remote_user = settings_app.DEV_SHIB_INFO['remote_user']
+                shib_meta = {}
         if not remote_user:
             return
         User = get_user_model()
