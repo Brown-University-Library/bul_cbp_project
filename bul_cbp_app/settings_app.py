@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import os
+import json, os
 
 
 FOO = 'BAR'
 
-FOO2 = os.environ['FOO2']
+DEV_SHIB_INFO = json.loads( os.environ['DEV_SHIB_INFO_JSON']
