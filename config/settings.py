@@ -64,6 +64,9 @@ AUTHENTICATION_BACKENDS = [
     # 'django.contrib.auth.backends.ModelBackend'
 ]
 
+LOGIN_URL = '/login/'  # https://docs.djangoproject.com/en/1.11/ref/settings/#login-url
+LOGIN_REDIRECT_URL = '/info/' # https://docs.djangoproject.com/en/1.11/ref/settings/#login-redirect-url
+
 ROOT_URLCONF = 'config.urls'
 
 template_dirs = json.loads( os.environ['BUL_CBP__TEMPLATES_JSON'] )
