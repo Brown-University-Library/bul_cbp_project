@@ -57,12 +57,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-AUTHENTICATION_BACKENDS = [
-    # 'django.contrib.auth.backends.RemoteUserBackend',
-    # 'shibboleth.backends.ShibbolethRemoteUserBackend',
-    'bul_cbp_app.lib.shibboleth.backends.ShibbolethBackend',
-    # 'django.contrib.auth.backends.ModelBackend'
-]
+# AUTHENTICATION_BACKENDS = [
+#     # 'django.contrib.auth.backends.RemoteUserBackend',
+#     # 'shibboleth.backends.ShibbolethRemoteUserBackend',
+#     'bul_cbp_app.lib.shibboleth.backends.ShibbolethBackend',
+#     # 'django.contrib.auth.backends.ModelBackend'
+# ]
 
 LOGIN_URL = '/login/'  # https://docs.djangoproject.com/en/1.11/ref/settings/#login-url
 LOGIN_REDIRECT_URL = '/info/' # https://docs.djangoproject.com/en/1.11/ref/settings/#login-redirect-url

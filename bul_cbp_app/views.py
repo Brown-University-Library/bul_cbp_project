@@ -2,20 +2,18 @@
 
 import datetime, json, logging, os, pprint
 from .lib import image_helper, info_helper
-from .lib.shibboleth.backends import ShibbolethBackend
+from .lib.shib_auth import shib_login  # decorator
 from .models import Tracker
 from django.conf import settings as project_settings
 from django.contrib.auth import logout
-from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.utils.cache import patch_response_headers
 
-log = logging.getLogger(__name__)
 
-shibber = ShibbolethBackend()
+log = logging.getLogger(__name__)
 
 
 def info( request ):
@@ -48,7 +46,7 @@ def login( request ):
     return HttpResponse( 'login handling coming')
 
 
-@login_required
+@shib_login
 def login_test( request ):
     """ Checks login() handling. """
     if not request.user.is_authenticated:
