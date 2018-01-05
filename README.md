@@ -85,5 +85,13 @@ This is new, under-development outside of regular sprint-work, but implemented..
     - right now it's simple: the score is simply the ratio of the sum of each completed entry, over the sum of each relevant (non "not-applicable") entry. But weighting could be applied to different checklist elements.
 
 
+#### todos
+
+- the public display, though dynamic, is currently barren html. make it nice.
+
+- make the shib login get right into the admin.
+
+- add checks -- currently there are only a few public and private ones.
+
 ---
 
