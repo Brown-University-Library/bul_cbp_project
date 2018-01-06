@@ -41,8 +41,11 @@ def info( request ):
             'message': 'ok'
         }
     }
-    jsn = json.dumps( rtrn_dct, sort_keys=True, indent=2 )
-    return HttpResponse( jsn, content_type='application/javascript; charset=utf-8' )
+    context = {
+        }
+    return render( request, 'bul_cbp_app_templates/info.html', context )
+    # jsn = json.dumps( rtrn_dct, sort_keys=True, indent=2 )
+    # return HttpResponse( jsn, content_type='application/javascript; charset=utf-8' )
 
 
 def project_image( request, slug ):
