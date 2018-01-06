@@ -48,6 +48,40 @@ table {
 
 
 
+    #header-navbar {
+        margin-top: 1.9em;
+        border-top: #c81700 .33em solid;
+        border-bottom: 0em solid #eed4aa;
+        background-color: #2b0b07;
+        height: 4.6em;
+    }
+
+    #header-navbar {
+      border-top: #7f2320 thick solid;
+
+      .navbar-brand {
+        width: 230px;
+        height: 65px;
+        background-image: url('bul/shield_307_87.png');
+        background-color: transparent;
+        background-size: 100%;
+        text-indent: 20%;
+        white-space: nowrap;
+        overflow: visible;
+        padding-right:0;
+        margin-top: -5px;
+        margin-right:0px;
+        margin-left: .5em;
+        padding-left: 2%;
+      }
+    }
+
+
+
+
+
+
+
 
 
 /* homepage layout (main properties & div styles) */
@@ -57,7 +91,7 @@ img, embed, object, video {
 }
 
 body {
-    background: url(../img_2011/BULheader_bodybkgnd2.png) repeat-x;
+    /*background: url(../img_2011/BULheader_bodybkgnd2.png) repeat-x;*/
     font-size: 62.5%; /* sets browsers' 16px default em value to = 10px (16*.625=10) */
     font-family: "Lucida Sans Unicode", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
 }
@@ -74,7 +108,7 @@ strong, em, b, i {
 }
 
 
-#header {
+/*#header {
     clear: both;
     position: relative;
     float: left;
@@ -84,23 +118,23 @@ strong, em, b, i {
     overflow: hidden;
     z-index: 10;
     background: url(../img_2011/BULheader_940x87.png) no-repeat;
-}
+}*/
 
-#header .BUhomelink {
+/*#header .BUhomelink {
     position: relative;
     float: left;
     width: 50px;
     height: 87px;
-}
+}*/
 
-#header .BULhomelink {
+/*#header .BULhomelink {
     position: relative;
     float: left;
     margin-left: 10px;
     margin-top: 31px;
     width: 440px;
     height: 30px;
-}
+}*/
 
 #search_area {
     clear: both;
@@ -955,7 +989,7 @@ body {
 }
 */
 
-#header {
+/*#header {
     clear: both;
     width: 100%;
     height: 103px;
@@ -964,23 +998,23 @@ body {
     overflow: visible;
     z-index: 10;
     background: url(../img_2011/BULheader_940x87_narrow.png) no-repeat;
-}
+}*/
 
-#header .BUhomelink {
+/*#header .BUhomelink {
     position: relative;
     float: left;
     width: 50px;
     height: 87px;
-}
+}*/
 
-#header .BULhomelink {
+/*#header .BULhomelink {
     position: relative;
     float: left;
     margin-left: 10px;
     margin-top: 31px;
     width: 230px;
     height: 30px;
-}
+}*/
 
 p.top_header_links {
     margin-top: 41px;
@@ -1205,16 +1239,16 @@ img {
 }
 */
 
-body {
+/*body {
     background: url(../img_2011/BULheader_bodybkgnd2.png) repeat-x
-}
+}*/
 
 #wrapper {
     margin: auto;
     min-width: 97%;
 }
 
-#header {
+/*#header {
     clear: both;
     width: 100%;
     height: 127px;
@@ -1222,25 +1256,25 @@ body {
     overflow: hidden;
     z-index: 10;
     background: #2b0b07 url(../img_2011/BULheader_940x87_narrow2.png) no-repeat;
-}
+}*/
 
-#header .BUhomelink {
+/*#header .BUhomelink {
     position: relative;
     float: left;
     margin-top: 19px;
     margin-left: -71%;
     width: 50px;
     height: 87px;
-}
+}*/
 
-#header .BULhomelink {
+/*#header .BULhomelink {
     position: relative;
     float: left;
     margin-left: -55%;
     margin-top: 45px;
     width: 230px;
     height: 30px;
-}
+}*/
 
 p.top_header_links {
     margin-top: 89px;
