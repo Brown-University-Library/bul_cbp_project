@@ -48,33 +48,34 @@ table {
 
 
 
-    #header-navbar {
-        margin-top: 1.9em;
-        border-top: #c81700 .33em solid;
-        border-bottom: 0em solid #eed4aa;
-        background-color: #2b0b07;
-        height: 4.6em;
-    }
+#header-navbar {
+    margin-top: 1.9em;
+    border-top: #c81700 .33em solid;
+    border-bottom: 0em solid #eed4aa;
+    background-color: #2b0b07;
+    height: 4.6em;
+}
 
-    #header-navbar {
-      border-top: #7f2320 thick solid;
+#header-navbar {
+  border-top: #7f2320 thick solid;
 
-      .navbar-brand {
-        width: 230px;
-        height: 65px;
-        background-image: url('bul/shield_307_87.png');
-        background-color: transparent;
-        background-size: 100%;
-        text-indent: 20%;
-        white-space: nowrap;
-        overflow: visible;
-        padding-right:0;
-        margin-top: -5px;
-        margin-right:0px;
-        margin-left: .5em;
-        padding-left: 2%;
-      }
-    }
+  .navbar-brand {
+    width: 230px;
+    height: 65px;
+    background-image: url('../img/shield_307_87.png');
+    background-color: transparent;
+    background-size: 100%;
+    text-indent: 20%;
+    white-space: nowrap;
+    overflow: visible;
+    padding-right:0;
+    margin-top: -5px;
+    margin-right:0px;
+    margin-left: .5em;
+    padding-left: 2%;
+  }
+
+}
 
 
 
@@ -148,7 +149,7 @@ strong, em, b, i {
     width: 96%;
     min-height: 98px;
     height: auto;
-    background: url(../img_2011/search_gradientbkgnd.png) repeat-x;
+    /*background: url(../img_2011/search_gradientbkgnd.png) repeat-x;*/
     background-color: #2b0b07;
     margin-bottom: 2.127659574468085%; /* 20px/940px */
     -moz-box-shadow: 4px 4px 4px #dbd6d5; /* FF3.5+ */
@@ -223,7 +224,7 @@ p.josiah_link_line {
     padding-right: 2%;
     width: 27.914893617021277%; /* (300px/940px) - padding */
     height: 251.5px;
-    background: white url(../img_2011/ASKaL_bkgnd.png) repeat-x;
+    /*background: white url(../img_2011/ASKaL_bkgnd.png) repeat-x;*/
     -moz-box-shadow: 4px 4px 4px #dbd6d5; /* FF3.5+ */
     -webkit-box-shadow: 4px 4px 4px #dbd6d5; /* Saf3.0+, Chrome */
     box-shadow: 4px 4px 4px #dbd6d5; /* Opera 10.5, IE9, Chrome 10+ */
