@@ -1,22 +1,59 @@
 {% extends "bul_cbp_app_templates/base.html" %}
 
+
 {% block page_title %}
-bul code-quality
+bul-cbp info
 {% endblock page_title %}
+
+
+{% block extra_css %}
+<style type="text/css">
+    div#info_text {
+        margin-top: 2em;
+    }
+    pre#info {
+        margin:0 auto;
+        width: 80%;
+    }
+</style>
+{% endblock extra_css %}
 
 
 {% block content %}
 
-<style>
-    h1#page_title {
-        font-size: 2.5em;
-        margin-top: 1.5em;
-        text-transform: none
-        }
-</style>
+<h1>brown library -- code-best-practices</h1>
 
-<h1 id="page_title">BUL Code Best-Practices Manager</h1>
+<div id="info_text">
 
-<hr/>
+    <p><strong>under-construction</strong></p>
+
+    <p>
+        This is a django webapp that manages localized code-best-practices checks. Its three primary functions:
+    </p>
+    <ul>
+        <li>
+        <p>
+            Serves out a dynamically-updated badge on a load of a github readme page.
+        </p>
+        </li>
+        <li>
+        <p>
+            Provides a public-display of some of the underlying data that produces the badge score.
+        </p>
+        </li>
+        <li>
+        <p>
+            Provides a link for authorized users to use a lightweight admin to edit an existing project&rsquo;s best-practices checklist or create a new-project checklist.
+        </p>
+        </li>
+    </ul>
+    <p>For more information, please see the project's <a href="https://github.com/birkin/bul_cbp_project/blob/master/README.md">README</a> file.</p>
+</div>  <!-- end <div id="info_text"> -->
+
+{% comment %}
+<pre id="info">
+{{ context_handle }}
+</pre>
+{% endcomment %}
 
 {% endblock content %}
