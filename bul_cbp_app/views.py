@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime, json, logging, os, pprint
-from .lib import image_helper
+from .lib import image_helper, info_view_helper
 from .lib.shib_auth import shib_login  # decorator
 from .models import Tracker
 from bul_cbp_app import settings_app
@@ -32,25 +32,28 @@ def project_info( request, slug ):
     return render( request, 'bul_cbp_app_templates/project_info.html', context )
 
 
+# def info( request ):
+#     """ Returns simple response.
+#         Called by site-checker, or by loading root url. """
+#     start = datetime.datetime.now()
+#     log.debug( 'now-time, ```%s```' % start )
+#     context = {}
+#     return render( request, 'bul_cbp_app_templates/info.html', context )
+
+
 def info( request ):
     """ Returns simple response.
         Called by site-checker, or by loading root url. """
+    log.debug( 'starting info()' )
     start = datetime.datetime.now()
-    log.debug( 'now-time, ```%s```' % start )
-    rtrn_dct = {
-        'query': {
-            'date_time': str( start ),
-            'url': '{schm}://{hst}{uri}'.format( schm=request.scheme, hst=request.META['HTTP_HOST'], uri=request.META.get('REQUEST_URI', request.META['PATH_INFO']) )  # REQUEST_URI not available via run-server
-        },
-        'response': {
-            'documentation': settings_app.README_URL,
-            'elapsed_time': str( datetime.datetime.now() - start ),
-            'message': 'ok'
-        }
-    }
-    context = {
-        }
-    return render( request, 'bul_cbp_app_templates/info.html', context )
+    if request.GET.get('format', '') == 'json':
+        context = info_view_helper.build_json_context( start, request.scheme, request.META['HTTP_HOST'], request.META.get('REQUEST_URI', request.META['PATH_INFO'])  )
+        context_json = json.dumps(context, sort_keys=True, indent=2)
+        resp = HttpResponse( context_json, content_type='application/javascript; charset=utf-8' )
+    else:
+        context = {}
+        resp = render( request, 'bul_cbp_app_templates/info.html', context )
+    return resp
 
 
 def project_image( request, slug ):
