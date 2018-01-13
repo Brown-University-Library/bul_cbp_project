@@ -8,7 +8,6 @@ from bul_cbp_app import settings_app
 from django.conf import settings as project_settings
 from django.contrib.auth import logout
 from django.core.urlresolvers import reverse
-from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.utils.cache import patch_response_headers
@@ -17,12 +16,27 @@ from django.utils.cache import patch_response_headers
 log = logging.getLogger(__name__)
 
 
+# def project_info( request, slug ):
+#     """ Shows public info.
+#         Called by click on `BUL code-check` badge of github readme page. """
+#     tracker = get_object_or_404( Tracker, slug=slug )
+#     html = info_helper.prep_info( tracker )
+#     return HttpResponse( html )
+
+
 def project_info( request, slug ):
     """ Shows public info.
         Called by click on `BUL code-check` badge of github readme page. """
     tracker = get_object_or_404( Tracker, slug=slug )
-    html = info_helper.prep_info( tracker )
-    return HttpResponse( html )
+    context = {
+        'project_name': tracker.project_name,
+        'has_url': tracker.has_public_code_url,
+        'reports': tracker.contains_lightweight_data_reporting,
+        'accessability': tracker.accessability_check_run,
+        'contact': tracker.project_contact_email,
+        'admn': reverse('admin:bul_cbp_app_tracker_changelist' )
+    }
+    return render( request, 'bul_cbp_app_templates/project_info.html', context )
 
 
 def info( request ):

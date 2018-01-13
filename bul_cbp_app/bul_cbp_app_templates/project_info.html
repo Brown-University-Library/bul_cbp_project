@@ -1,0 +1,45 @@
+{% extends "bul_cbp_app_templates/base.html" %}
+
+
+{% block page_title %}
+project-info
+{% endblock page_title %}
+
+
+{% block extra_css %}
+<style type="text/css">
+    div#info_text {
+        margin-top: 2em;
+    }
+    pre#info {
+        margin:0 auto;
+        width: 80%;
+    }
+</style>
+{% endblock extra_css %}
+
+
+{% block content %}
+
+<h1>best-practices project info</h1>
+
+<div id="info_text">
+
+    <p><strong>under-construction</strong></p>
+
+    <h2><strong>project: {{ project_name }} </strong></h2>
+
+    <ul>
+        <li><p>has_public_code_url: {{ has_url }}</p></li>
+        <li><p>contains_lightweight_data_reporting: {{ reports }}</p></li>
+        <li><p>accessability_check_run: {{ accessability }}</p></li>
+        <li><p>contact: {{ contact }}</p></li>
+    </ul>
+
+    <hr/>
+    <p>admins, <a href="{{ admn }}">see additional info and update project</a></p>
+
+
+</div>  <!-- end <div id="info_text"> -->
+
+{% endblock content %}

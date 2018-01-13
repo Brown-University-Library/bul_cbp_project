@@ -28,6 +28,6 @@ def prep_info( tracker ):
         reports=tracker.contains_lightweight_data_reporting,
         accessability=tracker.accessability_check_run,
         contact=tracker.project_contact_email,
-        admn=admin_url
+        admn=reverse('admin:bul_cbp_app_tracker_changelist' )
     )
     return html
