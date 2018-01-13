@@ -20,7 +20,6 @@ def project_info( request, slug ):
     """ Shows public info.
         Called by click on `BUL code-check` badge of github readme page. """
     tracker = get_object_or_404( Tracker, slug=slug )
-    # admin_url = reverse('admin:bul_cbp_app_tracker_changelist' )
     admin_url = '{schm}://{hst}{path}'.format( schm=request.scheme, hst=request.META['HTTP_HOST'], path=reverse('admin:bul_cbp_app_tracker_changelist') )
     login_url = '%s?next=%s' % ( reverse('login_url'), admin_url )
     context = {
@@ -29,8 +28,7 @@ def project_info( request, slug ):
         'reports': tracker.contains_lightweight_data_reporting,
         'accessability': tracker.accessability_check_run,
         'contact': tracker.project_contact_email,
-        'admn': login_url
-    }
+        'admn': login_url }
     return render( request, 'bul_cbp_app_templates/project_info.html', context )
 
 
@@ -53,8 +51,6 @@ def info( request ):
     context = {
         }
     return render( request, 'bul_cbp_app_templates/info.html', context )
-    # jsn = json.dumps( rtrn_dct, sort_keys=True, indent=2 )
-    # return HttpResponse( jsn, content_type='application/javascript; charset=utf-8' )
 
 
 def project_image( request, slug ):
@@ -83,6 +79,14 @@ def login_test( request ):
         log.debug( 'redirect_url, ```%s```' % redirect_url )
         return HttpResponseRedirect( redirect_url )
     return HttpResponse( 'login_test handling coming')
+
+
+def bul_search( request ):
+    """ Triggered by user entering search term into banner-search-field.
+        Redirects query to search.library.brown.edu """
+    log.debug( 'request.__dict__, ```%s```' % pprint.pformat(request.__dict__) )
+    redirect_url = 'https://search.library.brown.edu?%s' % request.META['QUERY_STRING']
+    return HttpResponseRedirect( redirect_url )
 
 
 # def demo_image( request ):
@@ -116,9 +120,3 @@ def login_test( request ):
 #     return HttpResponse( html )
 
 
-def bul_search( request ):
-    """ Triggered by user entering search term into banner-search-field.
-        Redirects query to search.library.brown.edu """
-    log.debug( 'request.__dict__, ```%s```' % pprint.pformat(request.__dict__) )
-    redirect_url = 'https://search.library.brown.edu?%s' % request.META['QUERY_STRING']
-    return HttpResponseRedirect( redirect_url )
