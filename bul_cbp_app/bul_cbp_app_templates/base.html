@@ -1,64 +1,99 @@
 {% load staticfiles %}
 
-<!DOCTYPE HTML>
-
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
         {% block page_title %}
-        bul_cbp_app - Brown University Library
+        easyrequest_hay_webapp - Brown University Library
         {% endblock page_title %}
     </title>
-    <link href="//library.brown.edu/css_2011/BUL2011.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="//library.brown.edu/scripts_2011/css3-mediaqueries.js"></script>
+    <link href="{% static 'css/all_search_css_pretty-print.css' %}" rel="stylesheet" type="text/css"/>
+    <script src="{% static 'js/bul_style.js' %}"></script>
+    {% block extra_css %}
+    {% endblock extra_css %}
+
     <style type="text/css">
-        /* load 'Source Sans Pro' type family via Google Fonts */
-        @import url(//fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,700,700italic);
-        body {
-            background: none;
-            font-family: 'Source Sans Pro', sans-serif;
+        div#content_wrapper {
+            margin:0 auto;
+            width: 80%;
         }
-
-        @import url("https://library.brown.edu/info/modules/system/system.base.css?okanas");
-
+        div#footer {
+            padding-top: 1em;
+        }
     </style>
-</head>
 
+</head>
 
 <body>
 
-    <div id="wrapper">
+    <!-- BANNER start... -->
 
-        <div id="header">
+    <div id="topmost-nav-links">
+        <ul>
+            <li><a href="https://library.brown.edu/borrowing/">Find &amp; Borrow</a></li>
+            <li><a href="https://library.brown.edu/info/ajdb">Articles, Journals, &amp; Databases</a></li>
+            <li><a href="https://library.brown.edu/about/specialists.php">Research Help</a></li>
+            <li><a href="https://library.brown.edu/libweb/hours.php">Hours, Locations, &amp; Events</a></li>
+            <li><a href="https://library.brown.edu/libweb/askalib.php">Ask a Question Now</a></li>
+            <li><a href="https://library.brown.edu/libweb/proxy.php">Off-Campus Access</a></li>
+            <li><a href="https://josiah.brown.edu/patroninfo">My Library Account</a>
+        </ul>
+    </div>
 
+    <div id="header-navbar" class="navbar navbar-inverse navbar-static-top" role="navigation">
 
-            <div id="fooz" class="BUhomelink">
-                <a href="http://www.brown.edu"><img src="//library.brown.edu/images/spacer.gif" width="50" alt="Brown University Homepage" title="Brown University Homepage" /></a>
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#user-util-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button> <a class="navbar-brand" href="//library.brown.edu"><span>Brown University Library</span></a>
             </div>
+        </div>
 
-            <div class="BULhomelink">
-                <a href="http://library.brown.edu/"><img src="//library.brown.edu/images/spacer.gif" width="440" height="30" alt="Brown University Library Homepage" title="Brown University Library Homepage" /></a>
+        <div id="search-navbar" class="navbar navbar-default navbar-static-top" role="navigation">
+            <div class="container">
+                <!-- <form accept-charset="UTF-8" action="/bul_search" class="search-query-form form-inline clearfix navbar-form" method="get"> -->
+                <form accept-charset="UTF-8" action="{% url 'bul_search_url' %}" class="search-query-form form-inline clearfix navbar-form" method="get">
+                    <div style="display:none">
+                        <input name="utf8" type="hidden" value="&#x2713;" />
+                    </div>
+                    <div class="input-group col-md-9 col-md-offset-1">
+                        <label for="q" class="sr-only">Enter keywords to search library resources</label>
+                        <input class="search_q q form-control" id="q" name="q" placeholder="Enter keywords to search library resources" type="text" value="" />
+                        <span class="input-group-btn"> <button type="submit" class="btn btn-primary search-btn" id="search"> <span class="submit-search-text">Search</span> <span class="glyphicon glyphicon-search"></span> </button> </span>
+                    </div>
+                    <span class="start-over"><a href="/">Start over</a></span>
+                </form>
             </div>
+        </div>
 
-        </div> <!-- end div#header -->
+        <div class="collapse navbar-collapse" id="user-util-collapse">
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+                    <li> <a href="{% url 'info_url' %}" rel="tooltip" title="about this webapp">Info</a> </li>
+                    <li> <a href="https://library.brown.edu/hay/specol.php" rel="tooltip" title="Special Collections">Special Collections</a> </li>
+                    <li> <a href="https://library.brown.edu/hay/" rel="tooltip" title="John Hay Library">John Hay Library</a> </li>
+                    <!-- <li> <a href="https://docs.google.com/forms/d/e/1FAIpQLSfJzCWiV06MFF8mkJ7uhhnv_FeWAoKdlxIXMHAAwn7LIv4_UA/viewform?usp=pp_url&amp;entry.707592340&amp;entry.1473753199&amp;entry.1930188522&amp;entry.1267373353&amp;entry.1478665067=https%3A%2F%2Fsearch.library.brown.edu%2F%3Futf8%3D%25E2%259C%2593%26q%3Dcoffee" rel="tooltip" target="_blank" title="Report an error, make suggestions, or let us know what you think ">Feedback</a> </li> -->
+                    <li> <a href="https://docs.google.com/forms/d/e/1FAIpQLSfQMOBVHPA3uGiylbZzN-RPCx9gj0rPI8SfoNAEC2Nfl0M5CQ/viewform" rel="tooltip" target="_blank" title="Report an error, make suggestions, or let us know what you think ">Feedback</a> </li>
+                    <li> <a href="https://library.brown.edu/libweb/askalib.php">Help</a> </li>
+                </ul>
+            </div>
+        </div>
 
-        <div class="content-wrapper findit-core">
+    </div>  <!-- end <div id="header-navbar"...  -->
 
-            <div class="large-content findit-core">
-                <h3>&nbsp;</h3>
-                <div style="margin:2em;">
-                    {% block content %}
-                    {% endblock content %}
-                </div>
+    <!-- ...BANNER end -->
 
-            </div> <!-- end div.large-content findit-core -->
+    <div id="content_wrapper">
+        {% block content %}
+        {% endblock content %}
+    </div>
 
-        </div> <!-- end div.content-wrapper findit-core -->
-
-    </div> <!-- end div#wrapper -->
+    <div id="footer">
+        <hr/>
+    </div>
 
 </body>
 
