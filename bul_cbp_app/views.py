@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime, json, logging, os, pprint
-from .lib import image_helper, info_helper
+from .lib import image_helper
 from .lib.shib_auth import shib_login  # decorator
 from .models import Tracker
 from bul_cbp_app import settings_app
@@ -16,25 +16,20 @@ from django.utils.cache import patch_response_headers
 log = logging.getLogger(__name__)
 
 
-# def project_info( request, slug ):
-#     """ Shows public info.
-#         Called by click on `BUL code-check` badge of github readme page. """
-#     tracker = get_object_or_404( Tracker, slug=slug )
-#     html = info_helper.prep_info( tracker )
-#     return HttpResponse( html )
-
-
 def project_info( request, slug ):
     """ Shows public info.
         Called by click on `BUL code-check` badge of github readme page. """
     tracker = get_object_or_404( Tracker, slug=slug )
+    # admin_url = reverse('admin:bul_cbp_app_tracker_changelist' )
+    admin_url = '{schm}://{hst}{path}'.format( schm=request.scheme, hst=request.META['HTTP_HOST'], path=reverse('admin:bul_cbp_app_tracker_changelist') )
+    login_url = '%s?next=%s' % ( reverse('login_url'), admin_url )
     context = {
         'project_name': tracker.project_name,
         'has_url': tracker.has_public_code_url,
         'reports': tracker.contains_lightweight_data_reporting,
         'accessability': tracker.accessability_check_run,
         'contact': tracker.project_contact_email,
-        'admn': reverse('admin:bul_cbp_app_tracker_changelist' )
+        'admn': login_url
     }
     return render( request, 'bul_cbp_app_templates/project_info.html', context )
 
