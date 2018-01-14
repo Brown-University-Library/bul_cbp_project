@@ -75,14 +75,24 @@ class LoginDecoratorHelper(object):
         log.debug( 'meta_dct, ```%s```' % pprint.pformat(meta_dct) )
         usrnm = meta_dct['Shibboleth-eppn']
         log.debug( 'usrnm, `%s`' % usrnm )
-        usr, created = User.objects.get_or_create( username=usrnm )
+        try:
+            usr, created = User.objects.get_or_create( username=usrnm )
+        except Exception as e:
+            msg = 'exception, ```%s```' % e
+            log.debug( msg )
+            # raise Exception( msg )
         netid = meta_dct['Shibboleth-brownNetId']
         if netid in settings_app.SUPER_USERS:
             usr.is_superuser = True
         if netid in settings_app.STAFF_USERS:
             usr.is_staff = True
         usr = self.update_user( usr, meta_dct )
-        usr.save()
+        try:
+            usr.save()
+        except Exception as e:
+            msg = 'exception, ```%s```' % e
+            log.debug( msg )
+            # raise Exception( msg )
         log.debug( 'user updated and saved' )
         log.debug( 'user-obj, ```%s```' % pprint.pformat(usr.__dict__) )
         return usr
