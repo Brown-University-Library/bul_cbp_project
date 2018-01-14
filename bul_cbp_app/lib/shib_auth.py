@@ -110,7 +110,7 @@ class LoginDecoratorHelper(object):
         usr.email = meta_dct['Shibboleth-mail']
         usr.set_unusable_password()
         usr.save()
-        grp = Group.objects.get( name=settings_app.STAFF_GROUP )
+        grp = Group.objects.get( name=settings_app.STAFF_GROUP )  # group must exist; TODO: autocreate if it doesn't
         grp.user_set.add( usr )
         log.debug( 'user updated' )
         return usr
