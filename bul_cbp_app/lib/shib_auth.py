@@ -74,7 +74,7 @@ class LoginDecoratorHelper(object):
             Called by manage_usr_obj() """
         log.debug( 'meta_dct, ```%s```' % pprint.pformat(meta_dct) )
         usrnm = meta_dct['Shibboleth-eppn']
-        log.debug( 'usrnm, `%s`' % usrnm )
+        log.debug( 'usrnm-b, `%s`' % usrnm )
         try:
             usr, created = User.objects.get_or_create( username=usrnm )
         except Exception as e:
