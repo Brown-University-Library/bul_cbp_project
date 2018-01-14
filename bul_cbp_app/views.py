@@ -32,15 +32,6 @@ def project_info( request, slug ):
     return render( request, 'bul_cbp_app_templates/project_info.html', context )
 
 
-# def info( request ):
-#     """ Returns simple response.
-#         Called by site-checker, or by loading root url. """
-#     start = datetime.datetime.now()
-#     log.debug( 'now-time, ```%s```' % start )
-#     context = {}
-#     return render( request, 'bul_cbp_app_templates/info.html', context )
-
-
 def info( request ):
     """ Returns simple response.
         Called by site-checker, or by loading root url. """
@@ -67,21 +58,24 @@ def project_image( request, slug ):
     return resp
 
 
-def login( request ):
-    """ Handles authNZ, & redirects. """
-    shibber.authenticate( remote_user=None, shib_meta={}, host=request.get_host() )
-    return HttpResponse( 'login handling coming')
-
-
 @shib_login
-def login_test( request ):
-    """ Checks login() handling. """
-    if not request.user.is_authenticated:
-        redirect_url = '%s?next=%s' % ( reverse('login_url'), request.path )
-        # redirect_url = reverse('login_url')
-        log.debug( 'redirect_url, ```%s```' % redirect_url )
-        return HttpResponseRedirect( redirect_url )
-    return HttpResponse( 'login_test handling coming')
+def login( request ):
+    """ Handles authNZ, & redirects to admin. """
+    admin_url = request.GET.get( 'next', None )
+    if not admin_url:
+        redirect_url = '%s?problem_message=%s' % ( reverse('problem_url'), 'could not redirect to the admin' )
+    else:
+        redirect_url = request.GET['next']
+    return HttpResponseRedirect( redirect_url )
+
+
+def problem( request ):
+    """ Returns template with problem-message.
+        Called on failed login attempt for now. """
+    log.debug( 'starting problem()' )
+    context = { 'problem_message': request.GET.get( 'problem_message', 'A problem occurred.' ) }
+    resp = render( request, 'bul_cbp_app_templates/problem.html', context )
+    return resp
 
 
 def bul_search( request ):
@@ -90,6 +84,9 @@ def bul_search( request ):
     log.debug( 'request.__dict__, ```%s```' % pprint.pformat(request.__dict__) )
     redirect_url = 'https://search.library.brown.edu?%s' % request.META['QUERY_STRING']
     return HttpResponseRedirect( redirect_url )
+
+
+## end of views ##
 
 
 # def demo_image( request ):
@@ -123,3 +120,11 @@ def bul_search( request ):
 #     return HttpResponse( html )
 
 
+# @shib_login
+# def login_test( request ):
+#     """ Checks login() handling. """
+#     if not request.user.is_authenticated:
+#         redirect_url = '%s?next=%s' % ( reverse('login_url'), request.path )
+#         log.debug( 'redirect_url, ```%s```' % redirect_url )
+#         return HttpResponseRedirect( redirect_url )
+#     return HttpResponse( 'login_test handling coming')

@@ -1,0 +1,34 @@
+{% extends "bul_cbp_app_templates/base.html" %}
+
+
+{% block page_title %}
+cbp problem
+{% endblock page_title %}
+
+
+{% block extra_css %}
+<style type="text/css">
+    div#info_text {
+        margin-top: 2em;
+    }
+    pre#info {
+        margin:0 auto;
+        width: 80%;
+    }
+</style>
+{% endblock extra_css %}
+
+
+{% block content %}
+
+<h1>code-best-practices &mdash; problem</h1>
+
+<div id="info_text">
+
+    <p>
+        {{ problem_message }}
+    </p>
+
+</div>  <!-- end <div id="info_text"> -->
+
+{% endblock content %}
