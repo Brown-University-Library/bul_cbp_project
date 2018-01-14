@@ -29,10 +29,14 @@ class TrackerAdmin(admin.ModelAdmin):
             'fields': (
                 'project_name',
                 'slug',
+                'code_versioned',
                 'has_public_code_url',
                 'public_code_url',
+                'responsive',
                 'contains_lightweight_data_reporting',
                 'accessability_check_run',
+                'data_discoverable',
+                'has_sitechecker_entry',
                 'project_contact_email',
                 'modified',
             )
@@ -40,11 +44,15 @@ class TrackerAdmin(admin.ModelAdmin):
         ('Non-Public Dates for above', {
             'classes': ('wide',),
             'fields': (
-                'project_contact_email_CHECKED',
+                'code_versioned_CHECKED',
                 'has_public_code_url_CHECKED',
                 'public_code_url_CHECKED',
+                'responsiveness_CHECKED',
                 'contains_lightweight_data_reporting_CHECKED',
-                'accessability_check_run_CHECKED'
+                'accessability_check_run_CHECKED',
+                'data_discoverable_CHECKED',
+                'has_sitechecker_entry_CHECKED',
+                'project_contact_email_CHECKED',
             ),
         }),
         ('Non-Public Security', {
@@ -56,6 +64,13 @@ class TrackerAdmin(admin.ModelAdmin):
                 'https_enforced_CHECKED',
                 'admin_links_shib_protected',
                 'admin_links_shib_protected_CHECKED',
+                'logs_rotated',
+                'logs_rotated_CHECKED',
+                'patron_data_expiration_process',
+                'patron_data_expiration_process_CHECKED',
+                'django_session_data_expired',
+                'django_session_data_expired_CHECKED',
+
             ),
         }),
         ('Non-Public Other', {
