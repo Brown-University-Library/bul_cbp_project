@@ -48,7 +48,7 @@ class LoginDecoratorHelper(object):
 
     def manage_usr_obj( self, request, meta_dct ):
         """ Pull information for the Shib request and get/create and login Django User object.
-            Called by bul_login() """
+            Called by shib_login() """
         ( username, netid, email ) = self.ensure_basics( meta_dct )
         if not username or not netid or not email:
             return
@@ -86,7 +86,12 @@ class LoginDecoratorHelper(object):
             usr.is_superuser = True
         if netid in settings_app.STAFF_USERS:
             usr.is_staff = True
-        usr = self.update_user( usr, meta_dct )
+        try:
+            usr = self.update_user( usr, meta_dct )
+        except Exception as e:
+            msg = 'exception, ```%s```' % e
+            log.debug( msg )
+            # raise Exception( msg )
         try:
             usr.save()
         except Exception as e:
