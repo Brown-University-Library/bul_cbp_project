@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime, json, logging, os, pprint
+from django.utils import timezone
 from django.conf import settings as project_settings
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -78,19 +79,22 @@ class Tracker(models.Model):
     ##################################################
 
     ## dates for publicly viewable options
-    project_contact_email_CHECKED = models.DateField()
-    code_versioned_CHECKED = models.DateField()
+
+    # project_contact_email_CHECKED = models.DateField( default=timezone.now )
+    project_contact_email_CHECKED = models.DateField( default=timezone.now )
+
+    code_versioned_CHECKED = models.DateField( default=timezone.now )
     has_public_code_url_CHECKED = models.DateField(
         help_text="check-date for whether there is a public url to code"
         )
     public_code_url_CHECKED = models.DateField(
         help_text="check-date for the url entered in this code-check app"
         )
-    responsiveness_CHECKED = models.DateField()
-    contains_lightweight_data_reporting_CHECKED = models.DateField()
-    accessability_check_run_CHECKED = models.DateField()
-    data_discoverable_CHECKED = models.DateField()
-    has_sitechecker_entry_CHECKED = models.DateField()
+    responsiveness_CHECKED = models.DateField( default=timezone.now )
+    contains_lightweight_data_reporting_CHECKED = models.DateField( default=timezone.now )
+    accessability_check_run_CHECKED = models.DateField( default=timezone.now )
+    data_discoverable_CHECKED = models.DateField( default=timezone.now )
+    has_sitechecker_entry_CHECKED = models.DateField( default=timezone.now )
 
     ##################################################
     ## security
@@ -102,28 +106,28 @@ class Tracker(models.Model):
         default='no',
         help_text='eg: uses long-term-release version or later'
     )
-    framework_supported_CHECKED = models.DateField()
+    framework_supported_CHECKED = models.DateField( default=timezone.now )
 
     https_enforced = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
         default='no',
     )
-    https_enforced_CHECKED = models.DateField()
+    https_enforced_CHECKED = models.DateField( default=timezone.now )
 
     admin_links_shib_protected = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
         default='no',
     )
-    admin_links_shib_protected_CHECKED = models.DateField()
+    admin_links_shib_protected_CHECKED = models.DateField( default=timezone.now )
 
     logs_rotated = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
         default='no',
     )
-    logs_rotated_CHECKED = models.DateField()
+    logs_rotated_CHECKED = models.DateField( default=timezone.now )
 
     patron_data_expiration_process = models.CharField(
         max_length=20,
@@ -131,7 +135,7 @@ class Tracker(models.Model):
         default='no',
         help_text='if patron data is captured, there is an implemented process for identifying info to be deleted'
     )
-    patron_data_expiration_process_CHECKED = models.DateField()
+    patron_data_expiration_process_CHECKED = models.DateField( default=timezone.now )
 
     django_session_data_expired = models.CharField(
         max_length=20,
@@ -139,7 +143,7 @@ class Tracker(models.Model):
         default='no',
         help_text="if django session-data is stored in db, it's auto-deleted via cron"
     )
-    django_session_data_expired_CHECKED = models.DateField()
+    django_session_data_expired_CHECKED = models.DateField( default=timezone.now )
 
     ### other ###
 
