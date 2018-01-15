@@ -80,9 +80,13 @@ class Tracker(models.Model):
     ## dates for publicly viewable options
     project_contact_email_CHECKED = models.DateField()
     code_versioned_CHECKED = models.DateField()
-    has_public_code_url_CHECKED = models.DateField()
+    has_public_code_url_CHECKED = models.DateField(
+        help_text="check-date for whether there is a public url to code"
+        )
+    public_code_url_CHECKED = models.DateField(
+        help_text="check-date for the url entered in this code-check app"
+        )
     responsiveness_CHECKED = models.DateField()
-    public_code_url_CHECKED = models.DateField()
     contains_lightweight_data_reporting_CHECKED = models.DateField()
     accessability_check_run_CHECKED = models.DateField()
     data_discoverable_CHECKED = models.DateField()

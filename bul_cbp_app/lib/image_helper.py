@@ -13,11 +13,14 @@ def calc_score( tracker ):
     possible = 0
     score = 0
 
-    ## public info ##
+    ##################################################
+    ## public info
+    ##################################################
 
-    possible += 1
-    if tracker.project_contact_email:
-        score +=1
+    if tracker.code_versioned is not 'n/a':
+        possible += 1
+        if tracker.code_versioned == 'yes':
+            score += 1
 
     if tracker.has_public_code_url is not 'n/a':
         possible += 1
@@ -27,6 +30,11 @@ def calc_score( tracker ):
     possible += 1
     if tracker.public_code_url:
         score += 1
+
+    if tracker.responsive is not 'n/a':
+        possible += 1
+        if tracker.responsive == 'yes':
+            score += 1
 
     if tracker.contains_lightweight_data_reporting is not 'n/a':
         possible += 1
@@ -38,19 +46,39 @@ def calc_score( tracker ):
         if tracker.accessability_check_run == 'yes':
             score += 1
 
+    if tracker.data_discoverable is not 'n/a':
+        possible += 1
+        if tracker.data_discoverable == 'yes':
+            score += 1
+
+    if tracker.has_sitechecker_entry is not 'n/a':
+        possible += 1
+        if tracker.has_sitechecker_entry == 'yes':
+            score += 1
+
+    possible += 1
+    if tracker.project_contact_email:
+        score +=1
+
     ## public dates
     for date_value in [
         tracker.project_contact_email_CHECKED,
+        tracker.code_versioned_CHECKED,
         tracker.has_public_code_url_CHECKED,
         tracker.public_code_url_CHECKED,
+        tracker.responsiveness_CHECKED,
         tracker.contains_lightweight_data_reporting_CHECKED,
         tracker.accessability_check_run_CHECKED,
+        tracker.data_discoverable_CHECKED,
+        tracker.has_sitechecker_entry_CHECKED,
         ]:
         possible += 1
         if ( date_value + datetime.timedelta(6*365/12) ) > datetime.date.today():  # means entry has been updated in last six months
             score += 1
 
-    ## non-public info ##
+    ##################################################
+    ## non-public info
+    ##################################################
 
     if tracker.framework_supported is not 'n/a':
         possible += 1
@@ -67,11 +95,29 @@ def calc_score( tracker ):
         if tracker.admin_links_shib_protected == 'yes':
             score += 1
 
+    if tracker.logs_rotated is not 'n/a':
+        possible += 1
+        if tracker.logs_rotated == 'yes':
+            score += 1
+
+    if tracker.patron_data_expiration_process is not 'n/a':
+        possible += 1
+        if tracker.patron_data_expiration_process == 'yes':
+            score += 1
+
+    if tracker.django_session_data_expired is not 'n/a':
+        possible += 1
+        if tracker.django_session_data_expired == 'yes':
+            score += 1
+
     ## non-public dates
     for date_value in [
         tracker.framework_supported_CHECKED,
         tracker.https_enforced_CHECKED,
         tracker.admin_links_shib_protected_CHECKED,
+        tracker.logs_rotated_CHECKED,
+        tracker.patron_data_expiration_process_CHECKED,
+        tracker.django_session_data_expired_CHECKED,
         ]:
         possible += 1
         now = datetime.datetime.now()
