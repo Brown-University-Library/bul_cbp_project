@@ -31,46 +31,46 @@ class Tracker(models.Model):
     code_versioned = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
-        default='n/a',
+        default='no',
     )
 
     has_public_code_url = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
-        default='n/a',
+        default='no',
     )
     public_code_url = models.URLField( max_length=200 )
 
     responsive = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
-        default='n/a',
+        default='no',
         help_text='looks/works right on desktop & mobile-devices'
     )
 
     contains_lightweight_data_reporting = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
-        default='n/a',
+        default='no',
     )
 
     accessability_check_run = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
-        default='n/a',
+        default='no',
     )
 
     data_discoverable = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
-        default='n/a',
+        default='no',
         help_text='information accessible by discovery-application'
     )
 
     has_sitechecker_entry = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
-        default='n/a',
+        default='no',
     )
 
     ##################################################
@@ -95,7 +95,7 @@ class Tracker(models.Model):
     framework_supported = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
-        default='n/a',
+        default='no',
         help_text='eg: uses long-term-release version or later'
     )
     framework_supported_CHECKED = models.DateField()
@@ -103,28 +103,28 @@ class Tracker(models.Model):
     https_enforced = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
-        default='n/a',
+        default='no',
     )
     https_enforced_CHECKED = models.DateField()
 
     admin_links_shib_protected = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
-        default='n/a',
+        default='no',
     )
     admin_links_shib_protected_CHECKED = models.DateField()
 
     logs_rotated = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
-        default='n/a',
+        default='no',
     )
     logs_rotated_CHECKED = models.DateField()
 
     patron_data_expiration_process = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
-        default='n/a',
+        default='no',
         help_text='if patron data is captured, there is an implemented process for identifying info to be deleted'
     )
     patron_data_expiration_process_CHECKED = models.DateField()
@@ -132,7 +132,7 @@ class Tracker(models.Model):
     django_session_data_expired = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
-        default='n/a',
+        default='no',
         help_text="if django session-data is stored in db, it's auto-deleted via cron"
     )
     django_session_data_expired_CHECKED = models.DateField()
