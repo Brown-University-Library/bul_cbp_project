@@ -21,6 +21,10 @@ cbp project-info
     ul {
         margin-top: 1em;
     }
+    span.no {
+        font-weight: bold;
+        color: red;
+    }
 </style>
 {% endblock extra_css %}
 
@@ -39,13 +43,13 @@ cbp project-info
      <p><img id="score" src="{{ score_image_url }}" alt="score-image"></img></p>
 
     <ul>
-        <li><p>code is versioned: {{ code_versioned }}</p></li>
-        <li><p>has public code-url: {{ has_url }}</p></li>
-        <li><p>is responsive: {{ responsive }}</p></li>
-        <li><p>contains lightweight data-reporting: {{ reports }}</p></li>
-        <li><p>accessability checked: {{ accessability }}</p></li>
-        <li><p>data is discoverable: {{ discoverable }}</p></li>
-        <li><p>has site-checker entry: {{ has_sitechecker_entry }}</p></li>
+        <li><p>code is versioned: <span {% if code_versioned == "no" %}class="no"{% endif %}">{{ code_versioned }}</span></p></li>
+        <li><p>has public code-url: <span {% if has_url == "no" %}class="no"{% endif %}>{{ has_url }}</span></p></li>
+        <li><p>is responsive: <span {% if responsive == "no" %}class="no"{% endif %}>{{ responsive }}</span></p></li>
+        <li><p>contains lightweight data-reporting: <span {% if reports == "no" %}class="no"{% endif %}>{{ reports }}</span></p></li>
+        <li><p>accessability checked: <span {% if accessability == "no" %}class="no"{% endif %}">{{ accessability }}</span></p></li>
+        <li><p>data is discoverable: <span {% if discoverable == "no" %}class="no"{% endif %}>{{ discoverable }}</span></p></li>
+        <li><p>has site-checker entry: <span {% if has_sitechecker_entry == "no" %}class="no"{% endif %}>{{ has_sitechecker_entry }}</span></p></li>
         <li><p>contact: {{ contact }}</p></li>
     </ul>
 
