@@ -15,6 +15,12 @@ cbp project-info
         margin:0 auto;
         width: 80%;
     }
+    img#score {
+        margin-top: .5em;
+    }
+    ul {
+        margin-top: 1em;
+    }
 </style>
 {% endblock extra_css %}
 
@@ -27,7 +33,10 @@ cbp project-info
 
     <h2><strong>project: {{ project_name }} </strong></h2>
 
-    <p><img src="https://library.brown.edu/bul_cbp/project_image/best-practices/" alt="score-image"></img></p>
+<!--     <p><img id="score" src="https://library.brown.edu/bul_cbp/project_image/best-practices/" alt="score-image"></img></p>
+ -->
+
+     <p><img id="score" src="{{ score_image_url }}" alt="score-image"></img></p>
 
     <ul>
         <li><p>code is versioned: {{ code_versioned }}</p></li>

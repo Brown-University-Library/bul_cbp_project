@@ -21,10 +21,12 @@ def project_info( request, slug ):
         Called by click on `BUL code-check` badge of github readme page. """
     tracker = get_object_or_404( Tracker, slug=slug )
     admin_url = '{schm}://{hst}{path}'.format( schm=request.scheme, hst=request.META['HTTP_HOST'], path=reverse('admin:bul_cbp_app_tracker_changelist') )
-    # login_url = '%s?next=%s' % ( reverse('login_url'), admin_url )
     login_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(admin_url) )
+    score_image_url = reverse( 'project_image_url', kwargs={'slug': 'best-practices'} )  # https://library.brown.edu/bul_cbp/project_image/best-practices/
+    log.debug( 'score_image_url, ```%s```' % score_image_url )
     context = {
         'project_name': tracker.project_name,
+        'score_image_url': score_image_url,
         'code_versioned': tracker.code_versioned,
         'has_url': tracker.has_public_code_url,
         'responsive': tracker.responsive,
