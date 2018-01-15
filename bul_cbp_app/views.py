@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import datetime, json, logging, os, pprint
+import datetime, json, logging, os, pprint, urllib
 from .lib import image_helper, info_view_helper
 from .lib.shib_auth import shib_login  # decorator
 from .models import Tracker
@@ -21,12 +21,17 @@ def project_info( request, slug ):
         Called by click on `BUL code-check` badge of github readme page. """
     tracker = get_object_or_404( Tracker, slug=slug )
     admin_url = '{schm}://{hst}{path}'.format( schm=request.scheme, hst=request.META['HTTP_HOST'], path=reverse('admin:bul_cbp_app_tracker_changelist') )
-    login_url = '%s?next=%s' % ( reverse('login_url'), admin_url )
+    # login_url = '%s?next=%s' % ( reverse('login_url'), admin_url )
+    login_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(admin_url) )
     context = {
         'project_name': tracker.project_name,
+        'code_versioned': tracker.code_versioned,
         'has_url': tracker.has_public_code_url,
+        'responsive': tracker.responsive,
         'reports': tracker.contains_lightweight_data_reporting,
         'accessability': tracker.accessability_check_run,
+        'discoverable': tracker.data_discoverable,
+        'has_sitechecker_entry': tracker.has_sitechecker_entry,
         'contact': tracker.project_contact_email,
         'admn': login_url }
     return render( request, 'bul_cbp_app_templates/project_info.html', context )
@@ -42,7 +47,9 @@ def info( request ):
         context_json = json.dumps(context, sort_keys=True, indent=2)
         resp = HttpResponse( context_json, content_type='application/javascript; charset=utf-8' )
     else:
-        context = {}
+        admin_url = '{schm}://{hst}{path}'.format( schm=request.scheme, hst=request.META['HTTP_HOST'], path=reverse('admin:bul_cbp_app_tracker_changelist') )
+        login_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(admin_url) )
+        context = { 'login_url': login_url }
         resp = render( request, 'bul_cbp_app_templates/info.html', context )
     return resp
 

@@ -30,28 +30,18 @@ cbp info
     </p>
     <ul>
         <li>
-        <p>
-            Serves out a dynamically-updated badge on a load of a github readme page.
-        </p>
+            <p>Serves out a dynamically-updated badge on a load of a github readme page.</p>
         </li>
         <li>
-        <p>
-            Provides a public-display of some of the underlying data that produces the badge score.
-        </p>
+            <p>Provides a public-display of some of the underlying data that produces the badge score.</p>
         </li>
         <li>
-        <p>
-            Provides a link for authorized users to use a lightweight admin to edit an existing project&rsquo;s best-practices checklist or create a new-project checklist.
-        </p>
+            <p>Provides a link for authorized users to use a lightweight admin to edit an existing project&rsquo;s best-practices checklist or create a new-project checklist.</p>
         </li>
     </ul>
     <p>For more information, please see the project's <a href="https://github.com/birkin/bul_cbp_project/blob/master/README.md">README</a> file.</p>
+    <hr/>
+    <p>admins, <a href="{{ login_url }}">log-in</a> to create and edit project-info</p>
 </div>  <!-- end <div id="info_text"> -->
-
-{% comment %}
-<pre id="info">
-{{ context_handle }}
-</pre>
-{% endcomment %}
 
 {% endblock content %}

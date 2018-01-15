@@ -27,10 +27,16 @@ cbp project-info
 
     <h2><strong>project: {{ project_name }} </strong></h2>
 
+    <p><img src="https://library.brown.edu/bul_cbp/project_image/best-practices/" alt="score-image"></img></p>
+
     <ul>
-        <li><p>has_public_code_url: {{ has_url }}</p></li>
-        <li><p>contains_lightweight_data_reporting: {{ reports }}</p></li>
-        <li><p>accessability_check_run: {{ accessability }}</p></li>
+        <li><p>code is versioned: {{ code_versioned }}</p></li>
+        <li><p>has public code-url: {{ has_url }}</p></li>
+        <li><p>is responsive: {{ responsive }}</p></li>
+        <li><p>contains lightweight data-reporting: {{ reports }}</p></li>
+        <li><p>accessability checked: {{ accessability }}</p></li>
+        <li><p>data is discoverable: {{ discoverable }}</p></li>
+        <li><p>has site-checker entry: {{ has_sitechecker_entry }}</p></li>
         <li><p>contact: {{ contact }}</p></li>
     </ul>
 
