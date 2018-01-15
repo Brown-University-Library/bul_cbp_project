@@ -62,7 +62,7 @@ def calc_score( tracker ):
     #     score +=1
 
     ## public dates
-    for date_value in [
+    pub_dates_to_check = [
         tracker.project_contact_email_CHECKED,
         tracker.code_versioned_CHECKED,
         tracker.has_public_code_url_CHECKED,
@@ -72,10 +72,14 @@ def calc_score( tracker ):
         tracker.accessability_check_run_CHECKED,
         tracker.data_discoverable_CHECKED,
         tracker.has_sitechecker_entry_CHECKED,
-        ]:
+        ]
+    log.debug( 'pub_dates_to_check, ```%s```' % pub_dates_to_check )
+    for pub_date_value in pub_dates_to_check:
+        log.debug( 'pub_date_value, ```%s```' % pub_date_value )
         possible += 1
-        if ( date_value + datetime.timedelta(6*365/12) ) > datetime.date.today():  # means entry has been updated in last six months
-            score += 1
+        if pub_date_value:
+            if ( pub_date_value + datetime.timedelta(6*365/12) ) > datetime.date.today():  # means entry has been updated in last six months
+                score += 1
 
     ##################################################
     ## non-public info
@@ -112,18 +116,19 @@ def calc_score( tracker ):
             score += 1
 
     ## non-public dates
-    for date_value in [
+    non_pub_dates_to_check = [
         tracker.framework_supported_CHECKED,
         tracker.https_enforced_CHECKED,
         tracker.admin_links_shib_protected_CHECKED,
         tracker.logs_rotated_CHECKED,
         tracker.patron_data_expiration_process_CHECKED,
         tracker.django_session_data_expired_CHECKED,
-        ]:
+        ]
+    for non_pub_date_value in non_pub_dates_to_check:
         possible += 1
-        now = datetime.datetime.now()
-        if ( date_value + datetime.timedelta(6*365/12) ) > datetime.date.today():  # means entry has been updated in last six months
-            score += 1
+        if non_pub_date_value:
+            if ( non_pub_date_value + datetime.timedelta(6*365/12) ) > datetime.date.today():  # means entry has been updated in last six months
+                score += 1
 
     log.debug( 'possible score, %s' % possible )
     log.debug( 'actual score, %s' % score )
