@@ -29,6 +29,7 @@ class TrackerAdmin(admin.ModelAdmin):
             'fields': (
                 'project_name',
                 'slug',
+                'project_contact_email',
                 'code_versioned',
                 'has_public_code_url',
                 'public_code_url',
@@ -37,7 +38,6 @@ class TrackerAdmin(admin.ModelAdmin):
                 'accessability_check_run',
                 'data_discoverable',
                 'has_sitechecker_entry',
-                'project_contact_email',
                 'modified',
             )
         }),

@@ -83,22 +83,22 @@ class Tracker(models.Model):
 
     ## dates for publicly viewable options
 
-    project_contact_email_CHECKED = models.DateField( blank=True )
+    project_contact_email_CHECKED = models.DateField( blank=True, null=True )
 
-    code_versioned_CHECKED = models.DateField( blank=True )
+    code_versioned_CHECKED = models.DateField( null=True )
     has_public_code_url_CHECKED = models.DateField(
         help_text="check-date for whether there is a public url to code",
-        blank=True
+        null=True
     )
     public_code_url_CHECKED = models.DateField(
         help_text="check-date for the url entered in this web-app",
-        blank=True
+        null=True
     )
-    responsiveness_CHECKED = models.DateField( blank=True )
-    contains_lightweight_data_reporting_CHECKED = models.DateField( blank=True )
-    accessability_check_run_CHECKED = models.DateField( blank=True )
-    data_discoverable_CHECKED = models.DateField( blank=True )
-    has_sitechecker_entry_CHECKED = models.DateField( blank=True )
+    responsiveness_CHECKED = models.DateField( null=True )
+    contains_lightweight_data_reporting_CHECKED = models.DateField( null=True )
+    accessability_check_run_CHECKED = models.DateField( null=True )
+    data_discoverable_CHECKED = models.DateField( null=True )
+    has_sitechecker_entry_CHECKED = models.DateField( null=True )
 
     ##################################################
     ## security
@@ -110,28 +110,28 @@ class Tracker(models.Model):
         default='no',
         help_text='eg: uses long-term-release version or later'
     )
-    framework_supported_CHECKED = models.DateField( blank=True )
+    framework_supported_CHECKED = models.DateField( null=True )
 
     https_enforced = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
         default='no',
     )
-    https_enforced_CHECKED = models.DateField( blank=True )
+    https_enforced_CHECKED = models.DateField( null=True )
 
     admin_links_shib_protected = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
         default='no',
     )
-    admin_links_shib_protected_CHECKED = models.DateField( blank=True )
+    admin_links_shib_protected_CHECKED = models.DateField( null=True )
 
     logs_rotated = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
         default='no',
     )
-    logs_rotated_CHECKED = models.DateField( blank=True )
+    logs_rotated_CHECKED = models.DateField( null=True )
 
     patron_data_expiration_process = models.CharField(
         max_length=20,
@@ -139,7 +139,7 @@ class Tracker(models.Model):
         default='no',
         help_text='if patron data is captured, there is an implemented process for identifying info to be deleted'
     )
-    patron_data_expiration_process_CHECKED = models.DateField( blank=True )
+    patron_data_expiration_process_CHECKED = models.DateField( null=True )
 
     django_session_data_expired = models.CharField(
         max_length=20,
@@ -147,7 +147,7 @@ class Tracker(models.Model):
         default='no',
         help_text="if django session-data is stored in db, it's auto-deleted via cron"
     )
-    django_session_data_expired_CHECKED = models.DateField( blank=True )
+    django_session_data_expired_CHECKED = models.DateField( null=True )
 
     ### other ###
 
