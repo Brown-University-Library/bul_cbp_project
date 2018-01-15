@@ -56,9 +56,10 @@ def calc_score( tracker ):
         if tracker.has_sitechecker_entry == 'yes':
             score += 1
 
-    possible += 1
-    if tracker.project_contact_email:
-        score +=1
+    ## removing this from scoring since it's required
+    # possible += 1
+    # if tracker.project_contact_email:
+    #     score +=1
 
     ## public dates
     for date_value in [
