@@ -84,8 +84,9 @@ class LoginDecoratorHelper(object):
         netid = meta_dct['Shibboleth-brownNetId']
         if netid in settings_app.SUPER_USERS:
             usr.is_superuser = True
-        if netid in settings_app.STAFF_USERS:
-            usr.is_staff = True
+        # if netid in settings_app.STAFF_USERS:  # <-- left in for J.R.  :)
+        #     usr.is_staff = True
+        usr.is_staff = True
         try:
             usr = self.update_user( usr, meta_dct )
         except Exception as e:
