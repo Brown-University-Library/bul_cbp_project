@@ -17,44 +17,52 @@ def calc_score( tracker ):
     ## public info
     ##################################################
 
-    if tracker.code_versioned is not 'n/a':
+    if tracker.code_versioned != 'n/a':
         possible += 1
         if tracker.code_versioned == 'yes':
             score += 1
+    log.debug( 'possible so far, `%s`; score so far, `%s`' % (possible, score) )
 
-    if tracker.has_public_code_url is not 'n/a':
+    if tracker.has_public_code_url != 'n/a':
         possible += 1
         if tracker.has_public_code_url == 'yes':
             score += 1
+    log.debug( 'possible so far, `%s`; score so far, `%s`' % (possible, score) )
 
     possible += 1
     if tracker.public_code_url:
         score += 1
+    log.debug( 'possible so far, `%s`; score so far, `%s`' % (possible, score) )
 
-    if tracker.responsive is not 'n/a':
+    if tracker.responsive != 'n/a':
         possible += 1
         if tracker.responsive == 'yes':
             score += 1
+    log.debug( 'possible so far, `%s`; score so far, `%s`' % (possible, score) )
 
-    if tracker.contains_lightweight_data_reporting is not 'n/a':
+    if tracker.contains_lightweight_data_reporting != 'n/a':
         possible += 1
         if tracker.contains_lightweight_data_reporting == 'yes':
             score += 1
+    log.debug( 'possible so far, `%s`; score so far, `%s`' % (possible, score) )
 
-    if tracker.accessability_check_run is not 'n/a':
+    if tracker.accessability_check_run != 'n/a':
         possible += 1
         if tracker.accessability_check_run == 'yes':
             score += 1
+    log.debug( 'possible so far, `%s`; score so far, `%s`' % (possible, score) )
 
-    if tracker.data_discoverable is not 'n/a':
+    if tracker.data_discoverable != 'n/a':
         possible += 1
         if tracker.data_discoverable == 'yes':
             score += 1
+    log.debug( 'possible so far, `%s`; score so far, `%s`' % (possible, score) )
 
-    if tracker.has_sitechecker_entry is not 'n/a':
+    if tracker.has_sitechecker_entry != 'n/a':
         possible += 1
         if tracker.has_sitechecker_entry == 'yes':
             score += 1
+    log.debug( 'possible so far, `%s`; score so far, `%s`' % (possible, score) )
 
     ## removing this from scoring since it's required
     # possible += 1
@@ -73,47 +81,60 @@ def calc_score( tracker ):
         tracker.data_discoverable_CHECKED,
         tracker.has_sitechecker_entry_CHECKED,
         ]
-    log.debug( 'pub_dates_to_check, ```%s```' % pub_dates_to_check )
     for pub_date_value in pub_dates_to_check:
         log.debug( 'pub_date_value, ```%s```' % pub_date_value )
         possible += 1
         if pub_date_value:
             if ( pub_date_value + datetime.timedelta(6*365/12) ) > datetime.date.today():  # means entry has been updated in last six months
                 score += 1
+        log.debug( 'possible so far, `%s`; score so far, `%s`' % (possible, score) )
+
 
     ##################################################
     ## non-public info
     ##################################################
 
-    if tracker.framework_supported is not 'n/a':
+    if tracker.framework_supported != 'n/a':
         possible += 1
         if tracker.framework_supported == 'yes':
             score += 1
+    log.debug( 'possible so far, `%s`; score so far, `%s`' % (possible, score) )
 
-    if tracker.https_enforced is not 'n/a':
+    if tracker.https_enforced != 'n/a':
         possible += 1
         if tracker.https_enforced == 'yes':
             score += 1
+    log.debug( 'possible so far, `%s`; score so far, `%s`' % (possible, score) )
 
-    if tracker.admin_links_shib_protected is not 'n/a':
+    if tracker.admin_links_shib_protected != 'n/a':
         possible += 1
         if tracker.admin_links_shib_protected == 'yes':
             score += 1
+    log.debug( 'possible so far, `%s`; score so far, `%s`' % (possible, score) )
 
-    if tracker.logs_rotated is not 'n/a':
+    if tracker.logs_rotated != 'n/a':
         possible += 1
         if tracker.logs_rotated == 'yes':
             score += 1
+    log.debug( 'possible so far, `%s`; score so far, `%s`' % (possible, score) )
 
-    if tracker.patron_data_expiration_process is not 'n/a':
+    log.debug( 'tracker.patron_data_expiration_process, `%s`' % tracker.patron_data_expiration_process )
+    assert tracker.patron_data_expiration_process is not 'n/a', 'error, tracker.patron_data_expiration_process is `%s`' % tracker.patron_data_expiration_process
+    # if tracker.patron_data_expiration_process is not 'n/a':
+    if tracker.patron_data_expiration_process != 'n/a':
+        log.debug( 'hereA' )
+        log.debug( 'tracker.patron_data_expiration_process, `%s`' % tracker.patron_data_expiration_process )
         possible += 1
         if tracker.patron_data_expiration_process == 'yes':
+            log.debug( 'hereB' )
             score += 1
+    log.debug( 'possible so far, `%s`; score so far, `%s`' % (possible, score) )
 
-    if tracker.django_session_data_expired is not 'n/a':
+    if tracker.django_session_data_expired != 'n/a':
         possible += 1
         if tracker.django_session_data_expired == 'yes':
             score += 1
+    log.debug( 'possible so far, `%s`; score so far, `%s`' % (possible, score) )
 
     ## non-public dates
     non_pub_dates_to_check = [
@@ -125,13 +146,12 @@ def calc_score( tracker ):
         tracker.django_session_data_expired_CHECKED,
         ]
     for non_pub_date_value in non_pub_dates_to_check:
+        log.debug( 'non_pub_date_value, ```%s```' % pub_date_value )
         possible += 1
         if non_pub_date_value:
             if ( non_pub_date_value + datetime.timedelta(6*365/12) ) > datetime.date.today():  # means entry has been updated in last six months
                 score += 1
-
-    log.debug( 'possible score, %s' % possible )
-    log.debug( 'actual score, %s' % score )
+        log.debug( 'possible so far, `%s`; score so far, `%s`' % (possible, score) )
 
     initial_percentage_score = (score / possible) * 100
     log.debug( 'initial_percentage_score, `%s`' % initial_percentage_score )
