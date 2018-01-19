@@ -10,12 +10,19 @@ class TrackerAdmin(admin.ModelAdmin):
     list_display = [ 'project_name', 'slug', 'project_contact_email', 'modified' ]
     list_filter = [
         'project_contact_email',
+        'code_versioned',
         'has_public_code_url',
+        'responsive',
         'contains_lightweight_data_reporting',
         'accessability_check_run',
+        'data_discoverable',
+        'has_sitechecker_entry',
         'framework_supported',
         'https_enforced',
         'admin_links_shib_protected',
+        'logs_rotated',
+        'patron_data_expiration_process',
+        'django_session_data_expired'
     ]
     ordering = [ 'project_name' ]
 
