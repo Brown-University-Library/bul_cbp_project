@@ -1,4 +1,4 @@
-[![BUL Code Best-Practices](https://library.brown.edu/bul_cbp/project_image/best-practices/)](https://library.brown.edu/bul_cbp/project_info/best-practices/)
+[![BUL Code Best-Practices](https://library.brown.edu/good_code/project_image/best-practices/)](https://library.brown.edu/good_code/project_info/best-practices/)
 
 
 #### on this page...
