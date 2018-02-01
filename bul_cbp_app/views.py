@@ -70,17 +70,17 @@ def project_image( request, slug ):
 @shib_login
 def login( request ):
     """ Handles authNZ, & redirects to admin. """
-    admin_url = request.GET.get( 'next', None )
-    if not admin_url:
-        redirect_url = '%s?problem_message=%s' % ( reverse('problem_url'), 'could not redirect to the admin' )
+    next_url = request.GET.get( 'next', None )
+    if not next_url:
+        redirect_url = reverse( 'admin:bul_cbp_app_tracker_changelist' )
     else:
-        redirect_url = request.GET['next']
+        redirect_url = request.GET['next']  # will often be same page
     return HttpResponseRedirect( redirect_url )
 
 
 def problem( request ):
     """ Returns template with problem-message.
-        Called on failed login attempt for now. """
+        Not currently called. """
     log.debug( 'starting problem()' )
     context = { 'problem_message': request.GET.get( 'problem_message', 'A problem occurred.' ) }
     resp = render( request, 'bul_cbp_app_templates/problem.html', context )
@@ -93,47 +93,3 @@ def bul_search( request ):
     log.debug( 'request.__dict__, ```%s```' % pprint.pformat(request.__dict__) )
     redirect_url = 'https://search.library.brown.edu?%s' % request.META['QUERY_STRING']
     return HttpResponseRedirect( redirect_url )
-
-
-## end of views ##
-
-
-# def demo_image( request ):
-#     svg = '''<svg xmlns="http://www.w3.org/2000/svg" width="154" height="20">
-# <linearGradient id="b" x2="0" y2="100%">
-# <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
-# <stop offset="1" stop-opacity=".1"/>
-# </linearGradient>
-# <mask id="a">
-# <rect width="154" height="20" rx="3" fill="#fff"/>
-# </mask>
-# <g mask="url(#a)">
-# <path fill="#551919" d="M0 0h103v20H0z"/>
-# <path fill="#A01A00" d="M103 0h51v20H103z"/>
-# <path fill="url(#b)" d="M0 0h154v20H0z"/>
-# </g>
-# <g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11">
-# <text x="51.5" y="15" fill="#010101" fill-opacity=".3">cii best practices</text>
-# <text x="51.5" y="14">BUL best practices</text>
-# <text x="127.5" y="15" fill="#010101" fill-opacity=".3">failing</text>
-# <text x="127.5" y="14">failing</text>
-# </g>
-# </svg>'''
-#     resp = HttpResponse( svg, content_type="image/svg+xml" )
-#     patch_response_headers( resp, cache_timeout=2 )
-#     return resp
-
-
-# def demo_info( request ):
-#     html = '<p>forced https: true or false or not-applicable</p> <p>logs auto-rotated: true or false or not-applicable</p>'
-#     return HttpResponse( html )
-
-
-# @shib_login
-# def login_test( request ):
-#     """ Checks login() handling. """
-#     if not request.user.is_authenticated:
-#         redirect_url = '%s?next=%s' % ( reverse('login_url'), request.path )
-#         log.debug( 'redirect_url, ```%s```' % redirect_url )
-#         return HttpResponseRedirect( redirect_url )
-#     return HttpResponse( 'login_test handling coming')
