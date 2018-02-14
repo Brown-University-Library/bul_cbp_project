@@ -155,5 +155,7 @@ class Tracker(models.Model):
 
     notes = models.TextField( null=True, blank=True )
 
+    score = models.IntegerField( null=True, blank=True, help_text="auto-calculated, not editable" )
+
     def __unicode__(self):
         return self.project_name

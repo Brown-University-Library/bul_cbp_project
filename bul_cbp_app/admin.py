@@ -26,7 +26,7 @@ class TrackerAdmin(admin.ModelAdmin):
     ]
     ordering = [ 'project_name' ]
 
-    readonly_fields = ( 'created', 'modified' )
+    readonly_fields = ( 'created', 'modified', 'score' )
 
     prepopulated_fields = { "slug": ("project_name",) }
 
@@ -84,6 +84,7 @@ class TrackerAdmin(admin.ModelAdmin):
             'fields': (
                 'notes',
                 'created',
+                'score'
             ),
         }),
     )
