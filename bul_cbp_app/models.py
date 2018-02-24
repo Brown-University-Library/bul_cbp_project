@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime, json, logging, os, pprint
+from .lib.scorer import Scorer
 from django.utils import timezone
 from django.conf import settings as project_settings
 from django.core.urlresolvers import reverse
@@ -8,6 +9,7 @@ from django.db import models
 from django.http import HttpResponseRedirect
 
 log = logging.getLogger(__name__)
+scrr = Scorer()
 
 
 class Tracker(models.Model):
@@ -157,5 +159,12 @@ class Tracker(models.Model):
 
     score = models.IntegerField( null=True, blank=True, help_text="auto-calculated, not editable" )
 
+    def save(self, *args, **kwargs):
+        # self.score = 42
+        self.score = scrr.calc_score( self )
+        super(Tracker, self).save()
+
     def __unicode__(self):
         return self.project_name
+
+    ## end class Tracker()
