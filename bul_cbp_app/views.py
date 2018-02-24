@@ -60,8 +60,9 @@ def project_image( request, slug ):
     """ Loads data, calculates score, displays image.
         Called by load of github readme page. """
     tracker = get_object_or_404( Tracker, slug=slug )
-    score = image_helper.calc_score( tracker )
-    svg = image_helper.prep_svg( score )
+    # score = image_helper.calc_score( tracker )
+    # svg = image_helper.prep_svg( score )
+    svg = image_helper.prep_svg( tracker.score )
     resp = HttpResponse( svg, content_type="image/svg+xml" )
     patch_response_headers( resp, cache_timeout=5 )
     return resp
