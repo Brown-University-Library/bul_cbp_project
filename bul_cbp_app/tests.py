@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import logging
+import logging, pprint
+from .lib.scorer import Scorer
 from .models import Tracker
-from bul_cbp_app.lib import image_helper
 from django.test import TestCase
 
 
@@ -10,13 +10,18 @@ log = logging.getLogger(__name__)
 TestCase.maxDiff = None
 
 
-class Scorer( TestCase ):
+class ScorerTest( TestCase ):
     """ Checks score calculation. """
 
     def test_mostly_empty(self):
         """ Checks single `yes`. """
+        scrr = Scorer()
+        log.debug( 'dir(scrr), ```%s```' % pprint.pformat(dir(scrr)) )
         trckr = Tracker( code_versioned='yes' )
-        self.assertEqual( 3, image_helper.calc_score(trckr) )
+        # trckr.save()
+        scr = scrr.calc_score(trckr)
+        log.debug( 'scr, `%s`' % scr )
+        self.assertEqual( 3, scrr.calc_score(trckr) )
 
 
 class RootUrlTest( TestCase ):
