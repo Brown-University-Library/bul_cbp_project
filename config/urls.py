@@ -19,7 +19,7 @@ urlpatterns = [
     ## support urls...
     url( r'^bul_search/$', views.bul_search, name='bul_search_url' ),
     url( r'^info/$', views.info, name='info_url' ),
-    url( r'^login/$', views.login, name='login_url' ),
+    url( r'^admin_login/$', views.admin_login, name='login_url' ),
     url( r'^problem/$', views.problem, name='problem_url' ),
 
     url( r'^$', RedirectView.as_view(pattern_name='info_url') ),
