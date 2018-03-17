@@ -14,7 +14,7 @@ log = logging.getLogger(__name__)
 def shib_login(func):
     """ Decorator to create a user object for the Shib user, if necessary, and log the user into Django.
         Called by views.py decorators. """
-    log.debug( 'starting bul_login() decorator' )
+    log.debug( 'starting shib_login() decorator' )
     def decorator(request, *args, **kwargs):
         hlpr = LoginDecoratorHelper()
         cleaned_meta_dct = hlpr.prep_shib_dct( request.META, request.get_host() )
@@ -33,7 +33,7 @@ class LoginDecoratorHelper(object):
 
     def prep_shib_dct( self, request_meta_dct, host ):
         """ Returns dct from shib-info.
-            Called by bul_login() """
+            Called by shib_login() """
         log.debug( 'starting prep_shib_dct()' )
         new_dct = copy.copy( request_meta_dct )
         for (key, val) in request_meta_dct.items():  # get rid of some dictionary items not serializable
