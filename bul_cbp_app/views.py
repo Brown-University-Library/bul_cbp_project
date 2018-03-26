@@ -69,7 +69,7 @@ def project_image( request, slug ):
 
 
 @shib_login
-def admin_login( request ):
+def login( request ):
     """ Handles authNZ, & redirects to admin. """
     next_url = request.GET.get( 'next', None )
     if not next_url:
