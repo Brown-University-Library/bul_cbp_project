@@ -27,10 +27,6 @@ function easyScanFullLink(t, e, n) {
     return t + "&title=" + n + "&bibnum=" + e
 }
 
-function itemRequestFullLink(t, e) {
-    return "https://library.brown.edu/easyrequest/login/?bibnum=" + e + "&barcode=" + t
-}
-
 function jcbRequestFullLink(t, e, n, i, r) {
     var o = t,
         a = extractTitle(e),
@@ -2084,10 +2080,6 @@ var Handlebars = function() {
         function p() {
             var t = "";
             return t += "\n        \n      "
-        }
-
-        function f() {
-            return '\n        <h4>\n          Availability\n        </h4>\n        <div>\n          We don\'t currently have availability information for this item.\n          <a href="http://library.brown.edu/libweb/askalib.php" target="_blank">\n            Contact the library staff<a/>\n          for assistance with this item.\n        </div>\n      '
         }
 
         function m(t, e) {
