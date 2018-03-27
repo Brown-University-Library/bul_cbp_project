@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import datetime, json, logging, os, pprint, urllib
-from .lib import image_helper, info_view_helper
+# from .lib import image_helper, info_view_helper
+from .lib import image_helper, view_helper
 from .lib.shib_auth import shib_login  # decorator
 from .models import Tracker
 from bul_cbp_app import settings_app
@@ -16,29 +17,6 @@ from django.utils.cache import patch_response_headers
 log = logging.getLogger(__name__)
 
 
-# def project_info( request, slug ):
-#     """ Shows public info.
-#         Called by click on `BUL code-check` badge of github readme page. """
-#     tracker = get_object_or_404( Tracker, slug=slug )
-#     admin_url = '{schm}://{hst}{path}'.format( schm=request.scheme, hst=request.META['HTTP_HOST'], path=reverse('admin:bul_cbp_app_tracker_changelist') )
-#     login_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(admin_url) )
-#     score_image_url = reverse( 'project_image_url', kwargs={'slug': tracker.slug} )  # https://library.brown.edu/bul_cbp/project_image/best-practices/
-#     log.debug( 'score_image_url, ```%s```' % score_image_url )
-#     context = {
-#         'project_name': tracker.project_name,
-#         'score_image_url': score_image_url,
-#         'code_versioned': tracker.code_versioned,
-#         'has_url': tracker.has_public_code_url,
-#         'responsive': tracker.responsive,
-#         'reports': tracker.contains_lightweight_data_reporting,
-#         'accessability': tracker.accessability_check_run,
-#         'discoverable': tracker.data_discoverable,
-#         'has_sitechecker_entry': tracker.has_sitechecker_entry,
-#         'contact': tracker.project_contact_email,
-#         'admn': login_url }
-#     return render( request, 'bul_cbp_app_templates/project_info.html', context )
-
-
 def project_info( request, slug ):
     """ Shows public info.
         Called by click on `BUL code-check` badge of github readme page. """
@@ -47,21 +25,12 @@ def project_info( request, slug ):
     display_admin_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(admin_url) )
     score_image_url = reverse( 'project_image_url', kwargs={'slug': tracker.slug} )  # https://library.brown.edu/bul_cbp/project_image/best-practices/
     log.debug( 'score_image_url, ```%s```' % score_image_url )
-    context = {
-        'project_name': tracker.project_name,
-        'score_image_url': score_image_url,
-        'code_versioned': tracker.code_versioned,
-        'has_url': tracker.has_public_code_url,
-        'responsive': tracker.responsive,
-        'reports': tracker.contains_lightweight_data_reporting,
-        'accessability': tracker.accessability_check_run,
-        'discoverable': tracker.data_discoverable,
-        'has_sitechecker_entry': tracker.has_sitechecker_entry,
-        'contact': tracker.project_contact_email,
-        'admin_url': display_admin_url,
-        'login_url': '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(reverse('project_info_url', kwargs={'slug': slug})) )
-        }
-    return render( request, 'bul_cbp_app_templates/project_info.html', context )
+    context = view_helper.build_project_context( tracker, score_image_url, display_admin_url, slug )
+    if request.GET.get('format', '') == 'json':
+        resp = HttpResponse( json.dumps(context, sort_keys=True, indent=2), content_type='application/javascript; charset=utf-8' )
+    else:
+        resp = render( request, 'bul_cbp_app_templates/project_info.html', context )
+    return resp
 
 
 def info( request ):
@@ -70,7 +39,8 @@ def info( request ):
     log.debug( 'starting info()' )
     start = datetime.datetime.now()
     if request.GET.get('format', '') == 'json':
-        context = info_view_helper.build_json_context( start, request.scheme, request.META['HTTP_HOST'], request.META.get('REQUEST_URI', request.META['PATH_INFO'])  )
+        # context = info_view_helper.build_json_context( start, request.scheme, request.META['HTTP_HOST'], request.META.get('REQUEST_URI', request.META['PATH_INFO'])  )
+        context = view_helper.build_info_json_context( start, request.scheme, request.META['HTTP_HOST'], request.META.get('REQUEST_URI', request.META['PATH_INFO'])  )
         context_json = json.dumps(context, sort_keys=True, indent=2)
         resp = HttpResponse( context_json, content_type='application/javascript; charset=utf-8' )
     else:
