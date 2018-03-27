@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import datetime, json, logging, os, pprint, urllib
-# from .lib import image_helper, info_view_helper
 from .lib import image_helper, view_helper
 from .lib.shib_auth import shib_login  # decorator
 from .models import Tracker
 from bul_cbp_app import settings_app
 from django.conf import settings as project_settings
-from django.contrib.auth import logout
+from django.contrib.auth import logout as django_logout
+# from django.contrib.auth.views import logout
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
@@ -20,12 +20,13 @@ log = logging.getLogger(__name__)
 def project_info( request, slug ):
     """ Shows public info.
         Called by click on `BUL code-check` badge of github readme page. """
+    # log.debug( 'request.user, ```%s```' % request.user )
     tracker = get_object_or_404( Tracker, slug=slug )
     admin_url = reverse( 'admin:bul_cbp_app_tracker_changelist' )
     display_admin_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(admin_url) )
-    score_image_url = reverse( 'project_image_url', kwargs={'slug': tracker.slug} )  # https://library.brown.edu/bul_cbp/project_image/best-practices/
-    log.debug( 'score_image_url, ```%s```' % score_image_url )
-    context = view_helper.build_project_context( tracker, score_image_url, display_admin_url, slug )
+    # score_image_url = '%s?cache_timeout=0' % reverse( 'project_image_url', kwargs={'slug': tracker.slug} )  # https://library.brown.edu/bul_cbp/project_image/best-practices/
+    score_image_url = view_helper.build_project_score_image_url( request.GET, tracker )
+    context = view_helper.build_project_context( request.user, tracker, score_image_url, display_admin_url, slug )
     if request.GET.get('format', '') == 'json':
         resp = HttpResponse( json.dumps(context, sort_keys=True, indent=2), content_type='application/javascript; charset=utf-8' )
     else:
@@ -54,7 +55,9 @@ def info( request ):
 
 def project_image( request, slug ):
     """ Loads data, calculates score, displays image.
-        Called by load of github readme page. """
+        views.project_info() will pass in a cache_timeout=0 when logout is clicked.
+        Called by load of github readme page, and views.project_info(). """
+    cache_timeout = int( request.GET.get('cache_timeout', '5') )
     tracker = get_object_or_404( Tracker, slug=slug )
     log.debug( 'real tracker.score, `%s`' % tracker.score )
     log.debug( 'request.user.is_authenticated, `%s`' % request.user.is_authenticated )
@@ -64,8 +67,24 @@ def project_image( request, slug ):
             score_display = '&lt; 75'
     svg = image_helper.prep_svg( tracker.score, score_display )
     resp = HttpResponse( svg, content_type="image/svg+xml" )
-    patch_response_headers( resp, cache_timeout=5 )
+    patch_response_headers( resp, cache_timeout=cache_timeout )
     return resp
+
+
+# def project_image( request, slug ):
+#     """ Loads data, calculates score, displays image.
+#         Called by load of github readme page. """
+#     tracker = get_object_or_404( Tracker, slug=slug )
+#     log.debug( 'real tracker.score, `%s`' % tracker.score )
+#     log.debug( 'request.user.is_authenticated, `%s`' % request.user.is_authenticated )
+#     score_display = str( tracker.score )
+#     if tracker.score < 75:
+#         if not request.user.is_authenticated:
+#             score_display = '&lt; 75'
+#     svg = image_helper.prep_svg( tracker.score, score_display )
+#     resp = HttpResponse( svg, content_type="image/svg+xml" )
+#     patch_response_headers( resp, cache_timeout=5 )
+#     return resp
 
 
 @shib_login
@@ -76,6 +95,15 @@ def login( request ):
         redirect_url = reverse( 'admin:bul_cbp_app_tracker_changelist' )
     else:
         redirect_url = request.GET['next']  # will often be same page
+    return HttpResponseRedirect( redirect_url )
+
+
+def logout( request ):
+    redirect_url = request.GET.get( 'next', None )
+    if not redirect_url:
+        redirect_url = reverse( 'info_url' )
+    django_logout( request )
+    log.debug( 'redirect_url, ```%s```' % redirect_url )
     return HttpResponseRedirect( redirect_url )
 
 
