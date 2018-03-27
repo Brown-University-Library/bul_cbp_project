@@ -20,11 +20,10 @@ log = logging.getLogger(__name__)
 def project_info( request, slug ):
     """ Shows public info.
         Called by click on `BUL code-check` badge of github readme page. """
-    # log.debug( 'request.user, ```%s```' % request.user )
+    log.debug( 'starting project_info()' )
     tracker = get_object_or_404( Tracker, slug=slug )
     admin_url = reverse( 'admin:bul_cbp_app_tracker_changelist' )
     display_admin_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(admin_url) )
-    # score_image_url = '%s?cache_timeout=0' % reverse( 'project_image_url', kwargs={'slug': tracker.slug} )  # https://library.brown.edu/bul_cbp/project_image/best-practices/
     score_image_url = view_helper.build_project_score_image_url( request.GET, tracker )
     context = view_helper.build_project_context( request.user, tracker, score_image_url, display_admin_url, slug )
     if request.GET.get('format', '') == 'json':
@@ -38,19 +37,33 @@ def info( request ):
     """ Returns simple response.
         Called by site-checker, or by loading root url. """
     log.debug( 'starting info()' )
-    start = datetime.datetime.now()
+    admin_url = '{schm}://{hst}{path}'.format( schm=request.scheme, hst=request.META['HTTP_HOST'], path=reverse('admin:bul_cbp_app_tracker_changelist') )
+    display_admin_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(admin_url) )
+    context = view_helper.build_info_context( request.user, display_admin_url )
     if request.GET.get('format', '') == 'json':
-        # context = info_view_helper.build_json_context( start, request.scheme, request.META['HTTP_HOST'], request.META.get('REQUEST_URI', request.META['PATH_INFO'])  )
-        context = view_helper.build_info_json_context( start, request.scheme, request.META['HTTP_HOST'], request.META.get('REQUEST_URI', request.META['PATH_INFO'])  )
-        context_json = json.dumps(context, sort_keys=True, indent=2)
-        resp = HttpResponse( context_json, content_type='application/javascript; charset=utf-8' )
+        resp = HttpResponse( json.dumps(context, sort_keys=True, indent=2), content_type='application/javascript; charset=utf-8' )
     else:
-        admin_url = '{schm}://{hst}{path}'.format( schm=request.scheme, hst=request.META['HTTP_HOST'], path=reverse('admin:bul_cbp_app_tracker_changelist') )
-        display_login_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(reverse('info_url')) )
-        display_admin_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(admin_url) )
-        context = { 'login_url': display_login_url, 'admin_url': display_admin_url   }
         resp = render( request, 'bul_cbp_app_templates/info.html', context )
     return resp
+
+
+# def info( request ):
+#     """ Returns simple response.
+#         Called by site-checker, or by loading root url. """
+#     log.debug( 'starting info()' )
+#     start = datetime.datetime.now()
+#     if request.GET.get('format', '') == 'json':
+#         # context = info_view_helper.build_json_context( start, request.scheme, request.META['HTTP_HOST'], request.META.get('REQUEST_URI', request.META['PATH_INFO'])  )
+#         context = view_helper.build_info_json_context( start, request.scheme, request.META['HTTP_HOST'], request.META.get('REQUEST_URI', request.META['PATH_INFO'])  )
+#         context_json = json.dumps(context, sort_keys=True, indent=2)
+#         resp = HttpResponse( context_json, content_type='application/javascript; charset=utf-8' )
+#     else:
+#         admin_url = '{schm}://{hst}{path}'.format( schm=request.scheme, hst=request.META['HTTP_HOST'], path=reverse('admin:bul_cbp_app_tracker_changelist') )
+#         display_login_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(reverse('info_url')) )
+#         display_admin_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(admin_url) )
+#         context = { 'login_url': display_login_url, 'admin_url': display_admin_url   }
+#         resp = render( request, 'bul_cbp_app_templates/info.html', context )
+#     return resp
 
 
 def project_image( request, slug ):
