@@ -50,21 +50,27 @@ def info( request ):
         resp = HttpResponse( context_json, content_type='application/javascript; charset=utf-8' )
     else:
         admin_url = '{schm}://{hst}{path}'.format( schm=request.scheme, hst=request.META['HTTP_HOST'], path=reverse('admin:bul_cbp_app_tracker_changelist') )
-        login_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(admin_url) )
-        context = { 'login_url': login_url }
+        display_login_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(reverse('info_url')) )
+        display_admin_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(admin_url) )
+        context = { 'login_url': display_login_url, 'admin_url': display_admin_url   }
         resp = render( request, 'bul_cbp_app_templates/info.html', context )
     return resp
 
 
-# def project_image( request, slug ):
-#     """ Loads data, calculates score, displays image.
-#         Called by load of github readme page. """
-#     tracker = get_object_or_404( Tracker, slug=slug )
-#     # score = image_helper.calc_score( tracker )
-#     # svg = image_helper.prep_svg( score )
-#     svg = image_helper.prep_svg( tracker.score )
-#     resp = HttpResponse( svg, content_type="image/svg+xml" )
-#     patch_response_headers( resp, cache_timeout=5 )
+# def info( request ):
+#     """ Returns simple response.
+#         Called by site-checker, or by loading root url. """
+#     log.debug( 'starting info()' )
+#     start = datetime.datetime.now()
+#     if request.GET.get('format', '') == 'json':
+#         context = info_view_helper.build_json_context( start, request.scheme, request.META['HTTP_HOST'], request.META.get('REQUEST_URI', request.META['PATH_INFO'])  )
+#         context_json = json.dumps(context, sort_keys=True, indent=2)
+#         resp = HttpResponse( context_json, content_type='application/javascript; charset=utf-8' )
+#     else:
+#         admin_url = '{schm}://{hst}{path}'.format( schm=request.scheme, hst=request.META['HTTP_HOST'], path=reverse('admin:bul_cbp_app_tracker_changelist') )
+#         login_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(admin_url) )
+#         context = { 'login_url': login_url }
+#         resp = render( request, 'bul_cbp_app_templates/info.html', context )
 #     return resp
 
 
