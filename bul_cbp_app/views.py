@@ -16,12 +16,35 @@ from django.utils.cache import patch_response_headers
 log = logging.getLogger(__name__)
 
 
+# def project_info( request, slug ):
+#     """ Shows public info.
+#         Called by click on `BUL code-check` badge of github readme page. """
+#     tracker = get_object_or_404( Tracker, slug=slug )
+#     admin_url = '{schm}://{hst}{path}'.format( schm=request.scheme, hst=request.META['HTTP_HOST'], path=reverse('admin:bul_cbp_app_tracker_changelist') )
+#     login_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(admin_url) )
+#     score_image_url = reverse( 'project_image_url', kwargs={'slug': tracker.slug} )  # https://library.brown.edu/bul_cbp/project_image/best-practices/
+#     log.debug( 'score_image_url, ```%s```' % score_image_url )
+#     context = {
+#         'project_name': tracker.project_name,
+#         'score_image_url': score_image_url,
+#         'code_versioned': tracker.code_versioned,
+#         'has_url': tracker.has_public_code_url,
+#         'responsive': tracker.responsive,
+#         'reports': tracker.contains_lightweight_data_reporting,
+#         'accessability': tracker.accessability_check_run,
+#         'discoverable': tracker.data_discoverable,
+#         'has_sitechecker_entry': tracker.has_sitechecker_entry,
+#         'contact': tracker.project_contact_email,
+#         'admn': login_url }
+#     return render( request, 'bul_cbp_app_templates/project_info.html', context )
+
+
 def project_info( request, slug ):
     """ Shows public info.
         Called by click on `BUL code-check` badge of github readme page. """
     tracker = get_object_or_404( Tracker, slug=slug )
-    admin_url = '{schm}://{hst}{path}'.format( schm=request.scheme, hst=request.META['HTTP_HOST'], path=reverse('admin:bul_cbp_app_tracker_changelist') )
-    login_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(admin_url) )
+    admin_url = reverse( 'admin:bul_cbp_app_tracker_changelist' )
+    display_admin_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(admin_url) )
     score_image_url = reverse( 'project_image_url', kwargs={'slug': tracker.slug} )  # https://library.brown.edu/bul_cbp/project_image/best-practices/
     log.debug( 'score_image_url, ```%s```' % score_image_url )
     context = {
@@ -35,7 +58,9 @@ def project_info( request, slug ):
         'discoverable': tracker.data_discoverable,
         'has_sitechecker_entry': tracker.has_sitechecker_entry,
         'contact': tracker.project_contact_email,
-        'admn': login_url }
+        'admin_url': display_admin_url,
+        'login_url': '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(reverse('project_info_url', kwargs={'slug': slug})) )
+        }
     return render( request, 'bul_cbp_app_templates/project_info.html', context )
 
 
@@ -55,23 +80,6 @@ def info( request ):
         context = { 'login_url': display_login_url, 'admin_url': display_admin_url   }
         resp = render( request, 'bul_cbp_app_templates/info.html', context )
     return resp
-
-
-# def info( request ):
-#     """ Returns simple response.
-#         Called by site-checker, or by loading root url. """
-#     log.debug( 'starting info()' )
-#     start = datetime.datetime.now()
-#     if request.GET.get('format', '') == 'json':
-#         context = info_view_helper.build_json_context( start, request.scheme, request.META['HTTP_HOST'], request.META.get('REQUEST_URI', request.META['PATH_INFO'])  )
-#         context_json = json.dumps(context, sort_keys=True, indent=2)
-#         resp = HttpResponse( context_json, content_type='application/javascript; charset=utf-8' )
-#     else:
-#         admin_url = '{schm}://{hst}{path}'.format( schm=request.scheme, hst=request.META['HTTP_HOST'], path=reverse('admin:bul_cbp_app_tracker_changelist') )
-#         login_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(admin_url) )
-#         context = { 'login_url': login_url }
-#         resp = render( request, 'bul_cbp_app_templates/info.html', context )
-#     return resp
 
 
 def project_image( request, slug ):
