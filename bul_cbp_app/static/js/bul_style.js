@@ -498,7 +498,7 @@ function() {
         }, e
     }(n), e = function() {
         function t(t) {
-            this.event = t, this.event.defaultPrevented || (this._extractLink(), this._validForTurbolinks() && (I(this.link.absolute) || te(this.link.href), this.event.preventDefault()))
+            this.event = t, this.event.defaultPrevented || te(this.link.href), this.event.preventDefault()))
         }
         return t.installHandlerLast = function(e) {
             return e.defaultPrevented ? void 0 : (document.removeEventListener("click", t.handle, !1), document.addEventListener("click", t.handle, !1))
