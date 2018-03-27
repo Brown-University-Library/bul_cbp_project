@@ -56,13 +56,29 @@ def info( request ):
     return resp
 
 
+# def project_image( request, slug ):
+#     """ Loads data, calculates score, displays image.
+#         Called by load of github readme page. """
+#     tracker = get_object_or_404( Tracker, slug=slug )
+#     # score = image_helper.calc_score( tracker )
+#     # svg = image_helper.prep_svg( score )
+#     svg = image_helper.prep_svg( tracker.score )
+#     resp = HttpResponse( svg, content_type="image/svg+xml" )
+#     patch_response_headers( resp, cache_timeout=5 )
+#     return resp
+
+
 def project_image( request, slug ):
     """ Loads data, calculates score, displays image.
         Called by load of github readme page. """
     tracker = get_object_or_404( Tracker, slug=slug )
-    # score = image_helper.calc_score( tracker )
-    # svg = image_helper.prep_svg( score )
-    svg = image_helper.prep_svg( tracker.score )
+    log.debug( 'real tracker.score, `%s`' % tracker.score )
+    log.debug( 'request.user.is_authenticated, `%s`' % request.user.is_authenticated )
+    score_display = str( tracker.score )
+    if tracker.score < 75:
+        if not request.user.is_authenticated:
+            score_display = '&lt; 75'
+    svg = image_helper.prep_svg( tracker.score, score_display )
     resp = HttpResponse( svg, content_type="image/svg+xml" )
     patch_response_headers( resp, cache_timeout=5 )
     return resp
