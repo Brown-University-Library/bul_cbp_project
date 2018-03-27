@@ -40,7 +40,6 @@ def build_info_context( user, display_admin_url ):
     return context
 
 
-
 def build_project_context( user, tracker, score_image_url, display_admin_url, slug ):
     """ Builds project-info context.
         Called by views.project_info() """
