@@ -23,8 +23,7 @@ def build_info_context( user, display_admin_url, get_dct ):
         'login_url': '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(reverse('info_url')) ),
         'admin_url': display_admin_url,
         'logout_url': '%s?next=%s?cache_timeout=0' % ( reverse('logout_url'), urllib.parse.quote(reverse('info_url')) ),
-        'projects': make_info_projects_lst( get_dct )
-        }
+        'projects': make_info_projects_lst( get_dct ) }
     log.debug( 'context, ```%s```' % context )
     return context
 
@@ -39,9 +38,7 @@ def make_info_projects_lst( get_dct ):
             'name': project.project_name,
             'contact': project.project_contact_email,
             'project_info_link': reverse( 'project_info_url', kwargs={'slug': project.slug} ),
-            # 'project_image_link': reverse( 'project_image_url', kwargs={'slug': project.slug} )
-            'project_image_link': build_image_link( get_dct, project.slug )
-        }
+            'project_image_link': build_image_link( get_dct, project.slug ) }
         projects_lst.append( dct )
     log.debug( 'projects_lst, ```%s```' % pprint.pformat(projects_lst) )
     return projects_lst
@@ -53,26 +50,6 @@ def build_image_link( get_dct, project_slug ):
     if cache_timeout:
         image_link = image_link + '?cache_timeout=%s' % cache_timeout
     return image_link
-
-
-# def make_info_projects_lst():
-#     """ Grabs projects.
-#         Called by build_info_context() """
-#     rec1 = {
-#         'name': 'aa',
-#         'contact': 'aa_contact',
-#         'project_info_link': 'https://library.brown.edu/good_code/project_info/best-practices/',
-#         'project_image_link': 'https://library.brown.edu/good_code/project_image/best-practices/'
-#         }
-#     rec2 = {
-#         'name': 'bb',
-#         'contact': 'bb_contact',
-#         'project_info_link': 'https://library.brown.edu/good_code/project_info/easyaccess/',
-#         'project_image_link': 'https://library.brown.edu/good_code/project_image/easyaccess/'
-#         }
-#     projects_lst = [rec1, rec2]
-#     log.debug( 'projects_lst, ```%s```' % pprint.pformat(projects_lst) )
-#     return projects_lst
 
 
 ## views.project_info() ##
@@ -117,9 +94,9 @@ def build_project_score_image_url( get_dct, tracker ):
     return score_image_url
 
 
-# def build_info_json_context( start, scheme, host, uri_path ):
+# def build_generic_context( start, scheme, host, uri_path ):
 #     """ Builds context that'll be converted into json by the view.
-#         Called by views.info() """
+#         Called by views.x() """
 #     context = {
 #         'query': {
 #             'date_time': str( start ),

@@ -28,11 +28,17 @@ cbp info
         font-weight: bold;
         cursor: default;
     }
+    table#projects th#project {
+        padding-left: .25em;
+    }
     table#projects th#contact {
         padding-left: 2em;
     }
     table#projects {
         line-height: 2em;
+    }
+    table#projects td.project {
+        padding-left: .25em;
     }
     table#projects td.contact {
         padding-left: 2em;
@@ -76,11 +82,11 @@ cbp info
     <h2>projects...</h2>
     <table id="projects" class="sortable">
         <tr>
-            <th>project</th><th id="contact">contact</th>
+            <th id="project">project</th><th id="contact">contact</th>
         </tr>
         {% for project in projects %}
         <tr>
-            <td>{{ project.name }}</td><td class="contact">{{ project.contact }}</td>
+            <td class="project">{{ project.name }}</td><td class="contact">{{ project.contact }}</td>
             <td class="badge_cell"><a href="{{ project.project_info_link }}"><img alt="badge-image-link" src="{{ project.project_image_link }}" /></a></td>
         </tr>
         {% endfor %}
