@@ -2,6 +2,7 @@
 
 import datetime, logging, pprint, urllib
 from bul_cbp_app import settings_app
+from bul_cbp_app.models import Tracker
 from django.core.urlresolvers import reverse
 
 
@@ -29,37 +30,40 @@ def build_info_context( user, display_admin_url ):
 
 
 def make_info_projects_lst():
-    rec1 = {
-        'name': 'aa',
-        'contact': 'aa_contact',
-        'project_info_link': 'https://library.brown.edu/good_code/project_info/best-practices/',
-        'project_image_link': 'https://library.brown.edu/good_code/project_image/best-practices/'
+    """ Grabs projects.
+        Called by build_info_context() """
+    projects = Tracker.objects.all().order_by( 'project_name' )
+    projects_lst = []
+    for project in projects:
+        dct = {
+            'name': project.project_name,
+            'contact': project.project_contact_email,
+            'project_info_link': reverse( 'project_info_url', kwargs={'slug': project.slug} ),
+            'project_image_link': reverse( 'project_image_url', kwargs={'slug': project.slug} )
         }
-    rec2 = {
-        'name': 'bb',
-        'contact': 'bb_contact',
-        'project_info_link': 'https://library.brown.edu/good_code/project_info/easyaccess/',
-        'project_image_link': 'https://library.brown.edu/good_code/project_image/easyaccess/'
-        }
-    projects_lst = [rec1, rec2]
+        projects_lst.append( dct )
     log.debug( 'projects_lst, ```%s```' % pprint.pformat(projects_lst) )
     return projects_lst
 
 
-# def build_info_context( user, display_admin_url ):
-#     """ Builds info context.
-#         Called by views.info() """
-#     username = None
-#     if user.is_authenticated:
-#         username = user.first_name
-#     context = {
-#         'username': username,
-#         'login_url': '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(reverse('info_url')) ),
-#         'admin_url': display_admin_url,
-#         'logout_url': '%s?next=%s?cache_timeout=0' % ( reverse('logout_url'), urllib.parse.quote(reverse('info_url')) ),
+# def make_info_projects_lst():
+#     """ Grabs projects.
+#         Called by build_info_context() """
+#     rec1 = {
+#         'name': 'aa',
+#         'contact': 'aa_contact',
+#         'project_info_link': 'https://library.brown.edu/good_code/project_info/best-practices/',
+#         'project_image_link': 'https://library.brown.edu/good_code/project_image/best-practices/'
 #         }
-#     log.debug( 'context, ```%s```' % context )
-#     return context
+#     rec2 = {
+#         'name': 'bb',
+#         'contact': 'bb_contact',
+#         'project_info_link': 'https://library.brown.edu/good_code/project_info/easyaccess/',
+#         'project_image_link': 'https://library.brown.edu/good_code/project_image/easyaccess/'
+#         }
+#     projects_lst = [rec1, rec2]
+#     log.debug( 'projects_lst, ```%s```' % pprint.pformat(projects_lst) )
+#     return projects_lst
 
 
 ## views.project_info() ##
