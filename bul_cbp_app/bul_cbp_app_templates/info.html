@@ -78,15 +78,14 @@ cbp info
         <tr>
             <th>project</th><th id="contact">contact</th>
         </tr>
+        {% for project in projects %}
         <tr>
-            <td>aa</td><td class="contact">birkin_diana@brown.edu</td>
-            <td class="badge_cell"><a href="https://library.brown.edu/good_code/project_info/best-practices/"><img alt="BUL Code Best-Practices" src="https://library.brown.edu/good_code/project_image/best-practices/" /></a></td>
+            <td>{{ project.name }}</td><td class="contact">{{ project.contact }}</td>
+            <td class="badge_cell"><a href="{{ project.project_info_link }}"><img alt="badge-image-link" src="{{ project.project_image_link }}" /></a></td>
         </tr>
-        <tr>
-            <td>bb</td><td class="contact">zbirkin_diana@brown.edu</td>
-            <td class="badge_cell"><a href="https://library.brown.edu/good_code/project_info/easyaccess/"><img alt="BUL Code Best-Practices" src="https://library.brown.edu/good_code/project_image/easyaccess/" /></a></td>
-        </tr>
+        {% endfor %}
     </table>
 </div>  <!-- end <div id="projects_div"> -->
+
 
 {% endblock content %}
