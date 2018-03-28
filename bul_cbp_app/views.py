@@ -47,25 +47,6 @@ def info( request ):
     return resp
 
 
-# def info( request ):
-#     """ Returns simple response.
-#         Called by site-checker, or by loading root url. """
-#     log.debug( 'starting info()' )
-#     start = datetime.datetime.now()
-#     if request.GET.get('format', '') == 'json':
-#         # context = info_view_helper.build_json_context( start, request.scheme, request.META['HTTP_HOST'], request.META.get('REQUEST_URI', request.META['PATH_INFO'])  )
-#         context = view_helper.build_info_json_context( start, request.scheme, request.META['HTTP_HOST'], request.META.get('REQUEST_URI', request.META['PATH_INFO'])  )
-#         context_json = json.dumps(context, sort_keys=True, indent=2)
-#         resp = HttpResponse( context_json, content_type='application/javascript; charset=utf-8' )
-#     else:
-#         admin_url = '{schm}://{hst}{path}'.format( schm=request.scheme, hst=request.META['HTTP_HOST'], path=reverse('admin:bul_cbp_app_tracker_changelist') )
-#         display_login_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(reverse('info_url')) )
-#         display_admin_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(admin_url) )
-#         context = { 'login_url': display_login_url, 'admin_url': display_admin_url   }
-#         resp = render( request, 'bul_cbp_app_templates/info.html', context )
-#     return resp
-
-
 def project_image( request, slug ):
     """ Loads data, calculates score, displays image.
         views.project_info() will pass in a cache_timeout=0 when logout is clicked.

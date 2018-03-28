@@ -1,5 +1,5 @@
 {% extends "bul_cbp_app_templates/base.html" %}
-
+{% load staticfiles %}
 
 {% block page_title %}
 cbp info
@@ -7,6 +7,7 @@ cbp info
 
 
 {% block extra_css %}
+<script src="{% static 'js/sorttable.js' %}"></script>
 <style type="text/css">
     div#info_text {
         margin-top: 2em;
@@ -14,6 +15,31 @@ cbp info
     pre#info {
         margin:0 auto;
         width: 80%;
+    }
+
+    /* table css */
+    div#projects_div h2 {
+        margin-top: .75em;
+        margin-bottom: .75em;
+    }
+
+    table.sortable thead {
+        background-color:#eee;
+        color:#666666;
+        font-weight: bold;
+        cursor: default;
+    }
+    table#projects th#contact {
+        padding-left: 2em;
+    }
+    table#projects {
+        line-height: 2em;
+    }
+    table#projects td.contact {
+        padding-left: 2em;
+    }
+    table#projects td.badge_cell {
+        padding-left: 2em;
     }
 </style>
 {% endblock extra_css %}
@@ -42,7 +68,25 @@ cbp info
     <p>For more information, please see the project's <a href="https://github.com/birkin/bul_cbp_project/blob/master/README.md">README</a> file.</p>
     <hr/>
     <p>BUL developers, <a href="{{ login_url }}">log-in</a> to see additional info, and use the <a href="{{ admin_url }}">admin</a> to create or update project-entries.</p>
+    <hr/>
 
 </div>  <!-- end <div id="info_text"> -->
+
+<div id="projects_div">
+    <h2>projects...</h2>
+    <table id="projects" class="sortable">
+        <tr>
+            <th>project</th><th id="contact">contact</th>
+        </tr>
+        <tr>
+            <td>aa</td><td class="contact">birkin_diana@brown.edu</td>
+            <td class="badge_cell"><a href="https://library.brown.edu/good_code/project_info/best-practices/"><img alt="BUL Code Best-Practices" src="https://library.brown.edu/good_code/project_image/best-practices/" /></a></td>
+        </tr>
+        <tr>
+            <td>bb</td><td class="contact">zbirkin_diana@brown.edu</td>
+            <td class="badge_cell"><a href="https://library.brown.edu/good_code/project_info/easyaccess/"><img alt="BUL Code Best-Practices" src="https://library.brown.edu/good_code/project_image/easyaccess/" /></a></td>
+        </tr>
+    </table>
+</div>  <!-- end <div id="projects_div"> -->
 
 {% endblock content %}
