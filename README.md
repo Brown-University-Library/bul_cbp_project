@@ -57,7 +57,7 @@ That's the nice thing about this approach -- the tracker is directly connected t
 
 #### usage
 
-- From the project's [info page](https://library.brown.edu/bul_cbp/info/), log in and you'll be at the tracker admin page.
+- From the project's root info page, click 'Admin' and you'll be at the tracker admin page.
 - Create a new entry, and fill it out. Note the `stub`, near the top.
 - Save the entry via the `Save` button near the bottom-right.
 - Go to the project's info-url, which will be in the form of `https://library.brown.edu/bul_cbp/project_info/the-stub/`
