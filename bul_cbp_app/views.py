@@ -39,7 +39,7 @@ def info( request ):
     log.debug( 'starting info()' )
     admin_url = '{schm}://{hst}{path}'.format( schm=request.scheme, hst=request.META['HTTP_HOST'], path=reverse('admin:bul_cbp_app_tracker_changelist') )
     display_admin_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(admin_url) )
-    context = view_helper.build_info_context( request.user, display_admin_url )
+    context = view_helper.build_info_context( request.user, display_admin_url, request.GET )
     if request.GET.get('format', '') == 'json':
         resp = HttpResponse( json.dumps(context, sort_keys=True, indent=2), content_type='application/javascript; charset=utf-8' )
     else:

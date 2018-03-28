@@ -12,7 +12,7 @@ log = logging.getLogger(__name__)
 ## views.info() ##
 
 
-def build_info_context( user, display_admin_url ):
+def build_info_context( user, display_admin_url, get_dct ):
     """ Builds info context.
         Called by views.info() """
     username = None
@@ -23,13 +23,13 @@ def build_info_context( user, display_admin_url ):
         'login_url': '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(reverse('info_url')) ),
         'admin_url': display_admin_url,
         'logout_url': '%s?next=%s?cache_timeout=0' % ( reverse('logout_url'), urllib.parse.quote(reverse('info_url')) ),
-        'projects': make_info_projects_lst()
+        'projects': make_info_projects_lst( get_dct )
         }
     log.debug( 'context, ```%s```' % context )
     return context
 
 
-def make_info_projects_lst():
+def make_info_projects_lst( get_dct ):
     """ Grabs projects.
         Called by build_info_context() """
     projects = Tracker.objects.all().order_by( 'project_name' )
@@ -39,11 +39,20 @@ def make_info_projects_lst():
             'name': project.project_name,
             'contact': project.project_contact_email,
             'project_info_link': reverse( 'project_info_url', kwargs={'slug': project.slug} ),
-            'project_image_link': reverse( 'project_image_url', kwargs={'slug': project.slug} )
+            # 'project_image_link': reverse( 'project_image_url', kwargs={'slug': project.slug} )
+            'project_image_link': build_image_link( get_dct, project.slug )
         }
         projects_lst.append( dct )
     log.debug( 'projects_lst, ```%s```' % pprint.pformat(projects_lst) )
     return projects_lst
+
+
+def build_image_link( get_dct, project_slug ):
+    cache_timeout = get_dct.get( 'cache_timeout', None )
+    image_link = reverse( 'project_image_url', kwargs={'slug': project_slug} )
+    if cache_timeout:
+        image_link = image_link + '?cache_timeout=%s' % cache_timeout
+    return image_link
 
 
 # def make_info_projects_lst():
