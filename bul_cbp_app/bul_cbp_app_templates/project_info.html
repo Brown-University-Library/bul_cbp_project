@@ -40,7 +40,12 @@ cbp project-info
      <p><img id="score" src="{{ score_image_url }}" alt="image showing score"></img></p>
 
     <ul>
-        <li><p>code is versioned: <span {% if code_versioned == "no" %}class="no"{% endif %}">{{ code_versioned }}</span></p></li>
+        <li>
+            <p>code is versioned:
+                <span {% if code_versioned == "no" %}class="no"{% endif %}">{{ code_versioned }}</span>
+                {% if authenticated %} &mdash; <span {% if not code_versioned_CHECKED.fresh %}class="no"{% endif %}">({{ code_versioned_CHECKED.date }})</span>{% endif %}
+            </p>
+        </li>
         <li><p>has public code-url: <span {% if has_url == "no" %}class="no"{% endif %}>{{ has_url }}</span></p></li>
         <li><p>is responsive: <span {% if responsive == "no" %}class="no"{% endif %}>{{ responsive }}</span></p></li>
         <li><p>contains lightweight data-reporting: <span {% if reports == "no" %}class="no"{% endif %}>{{ reports }}</span></p></li>
@@ -48,6 +53,8 @@ cbp project-info
         <li><p>data is discoverable: <span {% if discoverable == "no" %}class="no"{% endif %}>{{ discoverable }}</span></p></li>
         <li><p>has site-checker entry: <span {% if has_sitechecker_entry == "no" %}class="no"{% endif %}>{{ has_sitechecker_entry }}</span></p></li>
         <li><p>contact: {{ contact }}</p></li>
+        {% if authenticated %}
+        {% endif %}
     </ul>
 
     <hr/>
