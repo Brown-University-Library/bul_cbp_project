@@ -87,15 +87,53 @@ def build_project_info_unauthenticated_context( user, tracker, score_image_url, 
     log.debug( 'unauthenticated context, ```%s```' % pprint.pformat(context) )
     return context
 
+
 def build_project_info_authenticated_context( context, user, tracker ):
     """ Updates and adds values to project-info basic context if user is authenticated.
         Called by build_project_context() """
     context['username'] = user.first_name
-    context['code_versioned_CHECKED'] = { 'date': str(tracker.code_versioned_CHECKED) if tracker.code_versioned_CHECKED else 'no date', 'fresh': False }
-        if tracker.code_versioned_CHECKED and ( tracker.code_versioned_CHECKED + datetime.timedelta(6*365/12) ) > datetime.date.today():
-        context['code_versioned_CHECKED']['fresh'] = True
+    for ( field_name, field_value ) in tracker.__dict__.items():
+        log.debug( 'field_name, `%s`' % field_name )
+        log.debug( 'field_value, `%s`' % field_value )
+        log.debug( 'ending, `%s`' % field_name[-7:] )
+        if field_name[-7:] == 'CHECKED':
+            entrydct = { 'date': 'init', 'fresh': 'init' }
+            entrydct['date'] = str(field_value) if field_value else 'no_date'
+            entrydct['fresh'] = True if ( field_value is None or field_value + datetime.timedelta(6*365/12) < datetime.date.today() ) else False
+            context[field_name] = entrydct
     log.debug( 'authenticated context, ```%s```' % pprint.pformat(context) )
     return context
+
+
+# def build_project_info_authenticated_context( context, user, tracker ):
+#     """ Updates and adds values to project-info basic context if user is authenticated.
+#         Called by build_project_context() """
+#     context['username'] = user.first_name
+#     ## initialize dates
+#     log.debug( 'type(tracker.__dict__), ```%s```' % type(tracker.__dict__) )
+#     log.debug( 'tracker.__dict__, ```%s```' % pprint.pformat(tracker.__dict__) )
+#     for entry in tracker.__dict__:
+#         log.debug( 'type(entry), `%s`' % type(entry) )
+#         log.debug( 'entry, `%s`' % entry )
+#         # log.debug( 'ending, `%s`' % field_name[-7,] )
+#         # if field_name[-7,] == 'CHECKED':
+#         #     entrydct = { 'date': 'init', 'fresh': 'init' }
+#         #     entrydct['date'] = str(date_value) if date_value else 'no_date'
+#         #     entrydct['fresh'] = True if ( date_value is None or date_value + datetime.timedelta(6*365/12) < datetime.date.today() ) else False
+#         #     context[field_name] = entrydct
+#     log.debug( 'authenticated context, ```%s```' % pprint.pformat(context) )
+#     return context
+
+
+# def build_project_info_authenticated_context( context, user, tracker ):
+#     """ Updates and adds values to project-info basic context if user is authenticated.
+#         Called by build_project_context() """
+#     context['username'] = user.first_name
+#     context['code_versioned_CHECKED'] = { 'date': str(tracker.code_versioned_CHECKED) if tracker.code_versioned_CHECKED else 'no date', 'fresh': False }
+#         if tracker.code_versioned_CHECKED and ( tracker.code_versioned_CHECKED + datetime.timedelta(6*365/12) ) > datetime.date.today():
+#         context['code_versioned_CHECKED']['fresh'] = True
+#     log.debug( 'authenticated context, ```%s```' % pprint.pformat(context) )
+#     return context
 
 def build_project_score_image_url( get_dct, tracker ):
     """ Sets the cache_timeout.
