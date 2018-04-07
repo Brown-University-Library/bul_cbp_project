@@ -91,43 +91,11 @@ def build_project_info_authenticated_context( context, user, tracker ):
     """ Updates and adds values to project-info basic context if user is authenticated.
         Called by build_project_context() """
     context['username'] = user.first_name
-    context['code_versioned_CHECKED'] = { 'date': str(tracker.code_versioned_CHECKED), 'fresh': False }
-    if ( tracker.code_versioned_CHECKED + datetime.timedelta(6*365/12) ) > datetime.date.today():
+    context['code_versioned_CHECKED'] = { 'date': str(tracker.code_versioned_CHECKED) if tracker.code_versioned_CHECKED else 'no date', 'fresh': False }
+        if tracker.code_versioned_CHECKED and ( tracker.code_versioned_CHECKED + datetime.timedelta(6*365/12) ) > datetime.date.today():
         context['code_versioned_CHECKED']['fresh'] = True
-        log.debug( 'authenticated context, ```%s```' % pprint.pformat(context) )
+    log.debug( 'authenticated context, ```%s```' % pprint.pformat(context) )
     return context
-
-
-# def build_project_context( user, tracker, score_image_url, display_admin_url, slug ):
-#     """ Builds project-info context.
-#         Called by views.project_info() """
-#     username = None
-#     if user.is_authenticated:
-#         username = user.first_name
-#     context = {
-#         'authenticated': user.is_authenticated(),
-#         'username': username,
-#         'project_name': tracker.project_name,
-#         'score_image_url': score_image_url,
-#         'code_versioned': tracker.code_versioned,
-#         'has_url': tracker.has_public_code_url,
-#         'responsive': tracker.responsive,
-#         'reports': tracker.contains_lightweight_data_reporting,
-#         'accessability': tracker.accessability_check_run,
-#         'discoverable': tracker.data_discoverable,
-#         'has_sitechecker_entry': tracker.has_sitechecker_entry,
-#         'contact': tracker.project_contact_email,
-#         'admin_url': display_admin_url,
-#         'login_url': '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(reverse('project_info_url', kwargs={'slug': slug})) ),
-#         'logout_url': '%s?next=%s?cache_timeout=0' % ( reverse('logout_url'), urllib.parse.quote(reverse('project_info_url', kwargs={'slug': slug})) ),
-#         }
-#     if user.is_authenticated:
-#         context['code_versioned_CHECKED'] = { 'date': str(tracker.code_versioned_CHECKED), 'fresh': False }
-#         if ( tracker.code_versioned_CHECKED + datetime.timedelta(6*365/12) ) > datetime.date.today():
-#             context['code_versioned_CHECKED']['fresh'] = True
-#     log.debug( 'context, ```%s```' % context )
-#     return context
-
 
 def build_project_score_image_url( get_dct, tracker ):
     """ Sets the cache_timeout.
