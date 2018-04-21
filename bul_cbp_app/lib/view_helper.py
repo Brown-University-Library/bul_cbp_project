@@ -87,6 +87,7 @@ def build_project_info_unauthenticated_context( user, tracker, score_image_url, 
     log.debug( 'unauthenticated context, ```%s```' % pprint.pformat(context) )
     return context
 
+
 def build_project_info_authenticated_context( context, user, tracker ):
     """ Updates and adds values to project-info basic context if user is authenticated.
         Called by build_project_context() """
@@ -95,7 +96,7 @@ def build_project_info_authenticated_context( context, user, tracker ):
         log.debug( 'field_name, `%s`' % field_name )
         log.debug( 'field_value, `%s`' % field_value )
         log.debug( 'ending, `%s`' % field_name[-7:] )
-        if field_name[-7:] == 'CHECKED':
+        if field_name[-7:] == 'CHECKED':  # these are dates (can't use isinstance() on the field_value because it can be None )
             entrydct = { 'date': 'init', 'fresh': 'init' }
             entrydct['date'] = str(field_value) if field_value else 'no_date'
             entrydct['fresh'] = False if ( field_value is None or field_value + datetime.timedelta(6*365/12) < datetime.date.today() ) else True
