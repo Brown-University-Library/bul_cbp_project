@@ -100,6 +100,11 @@ def build_project_info_authenticated_context( context, user, tracker ):
             entrydct['date'] = 'checked ' + str(field_value) if field_value else 'no_date'
             entrydct['fresh'] = False if ( field_value is None or field_value + datetime.timedelta(6*365/12) < datetime.date.today() ) else True
             context[field_name] = entrydct
+    context['framework_supported'] = tracker.framework_supported
+    context['https_enforced'] = tracker.https_enforced
+    context['admin_links_shib_protected'] = tracker.admin_links_shib_protected
+    context['logs_rotated'] = tracker.logs_rotated
+    context['patron_data_expiration_process'] = tracker.patron_data_expiration_process
     log.debug( 'authenticated context, ```%s```' % pprint.pformat(context) )
     return context
 

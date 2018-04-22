@@ -23,9 +23,9 @@ class Tracker(models.Model):
     created = models.DateTimeField( auto_now_add=True )
     modified = models.DateTimeField( auto_now=True )
 
-    ##################################################
-    ## will be publicly viewable
-    ##################################################
+    # ================================================
+    # will be publicly viewable
+    # ================================================
 
     project_name = models.CharField( max_length=50 )
     slug = models.SlugField( help_text='for identifying segment in url; auto-entered, but feel free to edit' )
@@ -79,9 +79,9 @@ class Tracker(models.Model):
         default='no',
     )
 
-    ##################################################
-    ## everything below (to bottom of file) _not_ publicly viewable
-    ##################################################
+    # ================================================
+    # everything below (to bottom of file) _not_ publicly viewable
+    # ================================================
 
     ## dates for publicly viewable options
 

@@ -40,6 +40,7 @@ cbp project-info
      <p><img id="score" src="{{ score_image_url }}" alt="image showing score"></img></p>
 
     <ul>
+        {% comment %} publicly-viewable elements {% endcomment %}
         <li>
             <p>code is versioned:
                 <span {% if code_versioned == "no" %}class="no"{% endif %}">{{ code_versioned }}</span>
@@ -64,14 +65,71 @@ cbp project-info
                 {% if authenticated %} &mdash; <span {% if not contains_lightweight_data_reporting_CHECKED.fresh %}class="no"{% endif %}">({{ contains_lightweight_data_reporting_CHECKED.date }})</span>{% endif %}
             </p>
         </li>
-        <li><p>accessability checked: <span {% if accessability == "no" %}class="no"{% endif %}">{{ accessability }}</span></p></li>
-        <li><p>data is discoverable: <span {% if discoverable == "no" %}class="no"{% endif %}>{{ discoverable }}</span></p></li>
-        <li><p>has site-checker entry: <span {% if has_sitechecker_entry == "no" %}class="no"{% endif %}>{{ has_sitechecker_entry }}</span></p></li>
-        <li><p>contact: {{ contact }}</p></li>
-        {% if authenticated %}
-        {% endif %}
+        <li>
+            <p>accessability checked:
+                <span {% if accessability == "no" %}class="no"{% endif %}">{{ accessability }}</span>
+                {% if authenticated %} &mdash; <span {% if not accessability_check_run_CHECKED.fresh %}class="no"{% endif %}">({{ accessability_check_run_CHECKED.date }})</span>{% endif %}
+            </p>
+        </li>
+        <li>
+            <p>data is discoverable:
+                <span {% if discoverable == "no" %}class="no"{% endif %}>{{ discoverable }}</span>
+                {% if authenticated %} &mdash; <span {% if not data_discoverable_CHECKED.fresh %}class="no"{% endif %}">({{ data_discoverable_CHECKED.date }})</span>{% endif %}
+            </p>
+        </li>
+        <li>
+            <p>has site-checker entry:
+                <span {% if has_sitechecker_entry == "no" %}class="no"{% endif %}>{{ has_sitechecker_entry }}</span>
+                {% if authenticated %} &mdash; <span {% if not has_sitechecker_entry_CHECKED.fresh %}class="no"{% endif %}">({{ has_sitechecker_entry_CHECKED.date }})</span>{% endif %}
+            </p>
+        </li>
+        <li>
+            <p>contact: {{ contact }}</p>
+        </li>
     </ul>
+    {% comment %} authenticated-only elements {% endcomment %}
+    {% if authenticated %}
+    <h3>non-public elements</h3>
+    <ul>
+        <li>
+            <p>framework supported:
+                <span {% if framework_supported == "no" %}class="no"{% endif %}">{{ framework_supported }}</span>
+                 &mdash; <span {% if not framework_supported_CHECKED.fresh %}class="no"{% endif %}">({{ framework_supported_CHECKED.date }})</span>
+            </p>
+        </li>
+        <li>
+            <p>https enforced:
+                <span {% if https_enforced == "no" %}class="no"{% endif %}">{{ https_enforced }}</span>
+                 &mdash; <span {% if not https_enforced_CHECKED.fresh %}class="no"{% endif %}">({{ https_enforced_CHECKED.date }})</span>
+            </p>
+        </li>
+        <li>
+            <p>admin-links shib-protected:
+                <span {% if admin_links_shib_protected == "no" %}class="no"{% endif %}">{{ admin_links_shib_protected }}</span>
+                 &mdash; <span {% if not admin_links_shib_protected_CHECKED.fresh %}class="no"{% endif %}">({{ admin_links_shib_protected_CHECKED.date }})</span>
+            </p>
+        </li>
+        <li>
+            <p>logs rotated:
+                <span {% if logs_rotated == "no" %}class="no"{% endif %}">{{ logs_rotated }}</span>
+                 &mdash; <span {% if not logs_rotated_CHECKED.fresh %}class="no"{% endif %}">({{ logs_rotated_CHECKED.date }})</span>
+            </p>
+        </li>
+        <li>
+            <p>patron-data expiration-policy implemented:
+                <span {% if patron_data_expiration_process == "no" %}class="no"{% endif %}">{{ patron_data_expiration_process }}</span>
+                 &mdash; <span {% if not patron_data_expiration_process_CHECKED.fresh %}class="no"{% endif %}">({{ patron_data_expiration_process_CHECKED.date }})</span>
+            </p>
+        </li>
+        <li>
+            <p>admin-links shib-protected:
+                <span {% if admin_links_shib_protected == "no" %}class="no"{% endif %}">{{ admin_links_shib_protected }}</span>
+                 &mdash; <span {% if not admin_links_shib_protected_CHECKED.fresh %}class="no"{% endif %}">({{ admin_links_shib_protected_CHECKED.date }})</span>
+            </p>
+        </li>
 
+    </ul>
+    {% endif %}
     <hr/>
     <p>BUL developers, <a href="{{ login_url }}">log-in</a> to see additional info, and use the <a href="{{ admin_url }}">admin</a> to create or update project-entries.</p>
 
