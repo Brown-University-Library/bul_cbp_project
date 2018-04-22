@@ -93,12 +93,11 @@ def build_project_info_authenticated_context( context, user, tracker ):
         Called by build_project_context() """
     context['username'] = user.first_name
     for ( field_name, field_value ) in tracker.__dict__.items():
-        log.debug( 'field_name, `%s`' % field_name )
-        log.debug( 'field_value, `%s`' % field_value )
+        log.debug( 'field_name, `%s`; field_value, `%s' % (field_name, field_value) )
         log.debug( 'ending, `%s`' % field_name[-7:] )
         if field_name[-7:] == 'CHECKED':  # these are dates (can't use isinstance() on the field_value because it can be None )
             entrydct = { 'date': 'init', 'fresh': 'init' }
-            entrydct['date'] = str(field_value) if field_value else 'no_date'
+            entrydct['date'] = 'checked ' + str(field_value) if field_value else 'no_date'
             entrydct['fresh'] = False if ( field_value is None or field_value + datetime.timedelta(6*365/12) < datetime.date.today() ) else True
             context[field_name] = entrydct
     log.debug( 'authenticated context, ```%s```' % pprint.pformat(context) )

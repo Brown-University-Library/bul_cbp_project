@@ -46,7 +46,12 @@ cbp project-info
                 {% if authenticated %} &mdash; <span {% if not code_versioned_CHECKED.fresh %}class="no"{% endif %}">({{ code_versioned_CHECKED.date }})</span>{% endif %}
             </p>
         </li>
-        <li><p>has public code-url: <span {% if has_url == "no" %}class="no"{% endif %}>{{ has_url }}</span></p></li>
+        <li>
+            <p>has public code-url:
+                <span {% if has_url == "no" %}class="no"{% endif %}>{{ has_url }}</span>
+                {% if authenticated %} &mdash; <span {% if not has_public_code_url_CHECKED.fresh %}class="no"{% endif %}">({{ has_public_code_url_CHECKED.date }})</span>{% endif %}
+            </p>
+        </li>
         <li><p>is responsive: <span {% if responsive == "no" %}class="no"{% endif %}>{{ responsive }}</span></p></li>
         <li><p>contains lightweight data-reporting: <span {% if reports == "no" %}class="no"{% endif %}>{{ reports }}</span></p></li>
         <li><p>accessability checked: <span {% if accessability == "no" %}class="no"{% endif %}">{{ accessability }}</span></p></li>
