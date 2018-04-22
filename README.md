@@ -14,11 +14,11 @@
 
 This is a django webapp that manages localized code-best-practices checks. Its three primary functions:
 
-- Serves out a dynamically-updated badge on a load of a github readme page.
+- It serves out a dynamically-updated score-badge which can be embedded in a version-control readme page (or elsewhere).
 
-- Provides a public-display of some of the underlying data that produces the badge score.
+- It provides public and authorized-user views of the underlying data that produces the badge score.
 
-- Provides a link for authorized users to use a lightweight admin to edit an existing project's best-practices checklist or create a new-project checklist.
+- It provides a lightweight admin for authorized-users to edit an existing project's best-practices checklist or create a new-project checklist.
 
 
 #### purpose
