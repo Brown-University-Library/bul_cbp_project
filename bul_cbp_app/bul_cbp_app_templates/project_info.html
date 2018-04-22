@@ -52,8 +52,18 @@ cbp project-info
                 {% if authenticated %} &mdash; <span {% if not has_public_code_url_CHECKED.fresh %}class="no"{% endif %}">({{ has_public_code_url_CHECKED.date }})</span>{% endif %}
             </p>
         </li>
-        <li><p>is responsive: <span {% if responsive == "no" %}class="no"{% endif %}>{{ responsive }}</span></p></li>
-        <li><p>contains lightweight data-reporting: <span {% if reports == "no" %}class="no"{% endif %}>{{ reports }}</span></p></li>
+        <li>
+            <p>is responsive:
+                <span {% if responsive == "no" %}class="no"{% endif %}>{{ responsive }}</span>
+                {% if authenticated %} &mdash; <span {% if not responsiveness_CHECKED.fresh %}class="no"{% endif %}">({{ responsiveness_CHECKED.date }})</span>{% endif %}
+            </p>
+        </li>
+        <li>
+            <p>contains lightweight data-reporting:
+                <span {% if reports == "no" %}class="no"{% endif %}>{{ reports }}</span>
+                {% if authenticated %} &mdash; <span {% if not contains_lightweight_data_reporting_CHECKED.fresh %}class="no"{% endif %}">({{ contains_lightweight_data_reporting_CHECKED.date }})</span>{% endif %}
+            </p>
+        </li>
         <li><p>accessability checked: <span {% if accessability == "no" %}class="no"{% endif %}">{{ accessability }}</span></p></li>
         <li><p>data is discoverable: <span {% if discoverable == "no" %}class="no"{% endif %}>{{ discoverable }}</span></p></li>
         <li><p>has site-checker entry: <span {% if has_sitechecker_entry == "no" %}class="no"{% endif %}>{{ has_sitechecker_entry }}</span></p></li>
