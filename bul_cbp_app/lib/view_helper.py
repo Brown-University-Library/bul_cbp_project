@@ -105,6 +105,7 @@ def build_project_info_authenticated_context( context, user, tracker ):
     context['admin_links_shib_protected'] = tracker.admin_links_shib_protected
     context['logs_rotated'] = tracker.logs_rotated
     context['patron_data_expiration_process'] = tracker.patron_data_expiration_process
+    context['django_session_data_expired'] = tracker.django_session_data_expired
     log.debug( 'authenticated context, ```%s```' % pprint.pformat(context) )
     return context
 

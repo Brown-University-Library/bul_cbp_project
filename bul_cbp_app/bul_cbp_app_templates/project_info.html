@@ -127,6 +127,12 @@ cbp project-info
                  &mdash; <span {% if not admin_links_shib_protected_CHECKED.fresh %}class="no"{% endif %}">({{ admin_links_shib_protected_CHECKED.date }})</span>
             </p>
         </li>
+        <li>
+            <p>session-data expiration handled:
+                <span {% if django_session_data_expired == "no" %}class="no"{% endif %}">{{ django_session_data_expired }}</span>
+                 &mdash; <span {% if not django_session_data_expired_CHECKED.fresh %}class="no"{% endif %}">({{ django_session_data_expired_CHECKED.date }})</span>
+            </p>
+        </li>
 
     </ul>
     {% endif %}
