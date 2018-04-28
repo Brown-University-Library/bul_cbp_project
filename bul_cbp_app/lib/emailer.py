@@ -4,6 +4,7 @@
     Called by cron job. """
 
 import argparse, datetime, logging, os
+from bul_cbp_app.models import Tracker
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'config.settings'
 logging.basicConfig(
@@ -48,8 +49,30 @@ class Controller(object):
         """ Calls other functions.
             Called by parse_args()` """
         log.debug( 'timeframe, `%s`' % timeframe )
-        print( 'hello' )
+        projects = Tracker.objects.all()
+        for project in projects:
+            data = self.prep_standard_data()
+            if timeframe == 'monthly':
+                data = self.add_lookahead_data( data )
+            self.send_email( data )
+            log.debug( 'project `%s` update emailed' % project )
         return
+
+    def prep_standard_data( self ):
+        data = []
+        log.debug( 'data, ```%s```' % pprint.pformat(data) )
+        return data
+
+    def prep_lookahead_data( self, data ):
+        data = []
+        log.debug( 'data, ```%s```' % pprint.pformat(data) )
+        return data
+
+    def send_email( self, data ):
+        return
+
+    ## end Controller()
+
 
 
 if __name__ == '__main__':
