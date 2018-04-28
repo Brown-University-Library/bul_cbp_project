@@ -3,10 +3,16 @@
 """ Prepares and sends email.
     Called by cron job. """
 
-import argparse, datetime, logging, os
+import argparse, datetime, logging, os, pprint, sys
+import django
+
+# os.environ['DJANGO_SETTINGS_MODULE'] = 'config.settings'
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+django.setup()  # now other imports will work
+
 from bul_cbp_app.models import Tracker
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'config.settings'
+
 logging.basicConfig(
     filename=os.environ['BUL_CBP__LOG_PATH'],
     level=logging.DEBUG,
