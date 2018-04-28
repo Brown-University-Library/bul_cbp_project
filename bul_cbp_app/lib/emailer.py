@@ -25,19 +25,31 @@ class Controller(object):
     def parse_args( self ):
         """ Parses any args and calls appropriate functions
             Called by ```if __name__ == '__main__':``` """
-        parser = argparse.ArgumentParser(
-            epilog="Note: no arguments curently handled.")
+        parser = self.get_parser()
         args = parser.parse_args()  # halts here if argument is bad, & displays error and usage
         log.debug( 'checking args, ```%s```' % args )  # empty for now
-        self.process_projects()
-        pass
+        if args.weekly:
+            self.process_projects( 'weekly' )
+        elif args.monthly:
+            self.process_projects( 'monthly' )
+        else:
+            self.process_projects( None )
+        return
 
-    def process_projects( self ):
+    def get_parser( self ):
+        """ Sets up parser.
+            Called by parse_args() """
+        parser = argparse.ArgumentParser()
+        parser.add_argument( '--weekly', action='store_true' )
+        parser.add_argument( '--monthly', action='store_true' )
+        return parser
+
+    def process_projects( self, timeframe ):
         """ Calls other functions.
-            Called by ```if __name__ == '__main__':``` """
-        log.debug( 'starting' )
+            Called by parse_args()` """
+        log.debug( 'timeframe, `%s`' % timeframe )
         print( 'hello' )
-        pass
+        return
 
 
 if __name__ == '__main__':
