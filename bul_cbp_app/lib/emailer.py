@@ -6,15 +6,19 @@
 import argparse, datetime, logging, os, pprint, sys
 import django
 
-# os.environ['DJANGO_SETTINGS_MODULE'] = 'config.settings'
+## configure django paths
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
-django.setup()  # now other imports will work
+cwd = os.getcwd()  # so this assumes the cron call has cd-ed into the project directory
+if cwd not in sys.path:
+    sys.path.append( cwd )
+django.setup()
 
+## ok, now django-related imports will work
 from bul_cbp_app.models import Tracker
 
 
 logging.basicConfig(
-    filename=os.environ['BUL_CBP__LOG_PATH'],
+    # filename=os.environ['BUL_CBP__LOG_PATH'],
     level=logging.DEBUG,
     format='[%(asctime)s] %(levelname)s [%(module)s-%(funcName)s()::%(lineno)d] %(message)s',
     datefmt='%d/%b/%Y %H:%M:%S',
@@ -55,13 +59,16 @@ class Controller(object):
         """ Calls other functions.
             Called by parse_args()` """
         log.debug( 'timeframe, `%s`' % timeframe )
+        if timeframe is None:
+            timeframe = 'weekly'
         projects = Tracker.objects.all()
         for project in projects:
-            data = self.prep_standard_data()
-            if timeframe == 'monthly':
-                data = self.add_lookahead_data( data )
+            if timeframe == 'weekly':
+                data = self.prep_standard_data()
+            else:
+                data = self.prep_lookahead_data()
             self.send_email( data )
-            log.debug( 'project `%s` update emailed' % project )
+            log.debug( 'project `%s` update emailed' % project.project_name )
         return
 
     def prep_standard_data( self ):
@@ -69,7 +76,7 @@ class Controller(object):
         log.debug( 'data, ```%s```' % pprint.pformat(data) )
         return data
 
-    def prep_lookahead_data( self, data ):
+    def prep_lookahead_data( self ):
         data = []
         log.debug( 'data, ```%s```' % pprint.pformat(data) )
         return data
