@@ -58,25 +58,29 @@ class Controller(object):
     def process_projects( self, timeframe ):
         """ Calls other functions.
             Called by parse_args()` """
-        log.debug( 'timeframe, `%s`' % timeframe )
         if timeframe is None:
             timeframe = 'weekly'
         projects = Tracker.objects.all()
         for project in projects:
             if timeframe == 'weekly':
-                data = self.prep_standard_data()
+                data = self.prep_standard_data( project )
             else:
-                data = self.prep_lookahead_data()
+                data = self.prep_lookahead_data( project )
             self.send_email( data )
             log.debug( 'project `%s` update emailed' % project.project_name )
         return
 
-    def prep_standard_data( self ):
+    def prep_standard_data( self, project ):
+        """ Preps email-data alerting to any existing project issues.
+            Called by process_projects() """
         data = []
         log.debug( 'data, ```%s```' % pprint.pformat(data) )
         return data
 
-    def prep_lookahead_data( self ):
+    def prep_lookahead_data( self, project ):
+        """ TODO
+            Preps email-data alerting to any look-ahead conditions for the next 3-months.
+            Called by process_projects() """
         data = []
         log.debug( 'data, ```%s```' % pprint.pformat(data) )
         return data
