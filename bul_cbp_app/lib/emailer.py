@@ -60,24 +60,43 @@ class Controller(object):
             Called by parse_args()` """
         if timeframe is None:
             timeframe = 'weekly'
-        projects = Tracker.objects.all()
-        for project in projects:
-            if timeframe == 'weekly':
-                data = self.prep_standard_data( project )
-            else:
-                data = self.prep_lookahead_data( project )
-            self.send_email( data )
-            log.debug( 'project `%s` update emailed' % project.project_name )
+        projects = Tracker.objects.all().order_by( 'project_name' )
+        email_contacts = self.gather_email_contacts( projects )
+        for email_contact in email_contacts:
+            email_data = self.prep_email_data( projects, timeframe )
+            self.send_email( email_data )
+            log.debug( 'email sent to, `%s`' % email_contact )
         return
 
-    def prep_standard_data( self, project ):
+    def gather_email_contacts( self, projects ):
+        """ Creates contacts list from projects.
+            Called by process_projects() """
+        email_contacts = []
+        for project in projects:
+            if project.project_contact_email not in email_contacts:
+                email_contacts.append( project.project_contact_email )
+        sorted_email_contacts = sorted( email_contacts )
+        log.debug( 'sorted_email_contacts, ```%s```' % pprint.pformat(sorted_email_contacts) )
+        return sorted_email_contacts
+
+    def prep_email_data( self, projects, timeframe ):
+        """ Prepares alert data for all projects based on timeframe.
+            Called by process_projects() """
+        if timeframe == 'weekly':
+            email_data = self.prep_standard_data( projects )
+        else:
+            email_data = self.prep_lookahead_data( projects )
+        log.debug( 'returning email_data' )
+        return email_data
+
+    def prep_standard_data( self, projects ):
         """ Preps email-data alerting to any existing project issues.
             Called by process_projects() """
         data = []
         log.debug( 'data, ```%s```' % pprint.pformat(data) )
         return data
 
-    def prep_lookahead_data( self, project ):
+    def prep_lookahead_data( self, projects ):
         """ TODO
             Preps email-data alerting to any look-ahead conditions for the next 3-months.
             Called by process_projects() """
@@ -89,6 +108,17 @@ class Controller(object):
         return
 
     ## end Controller()
+
+
+
+    # for project in projects:
+    #     if timeframe == 'weekly':
+    #         data = self.prep_standard_data( project )
+    #     else:
+    #         data = self.prep_lookahead_data( project )
+    #     self.send_email( data )
+    #     log.debug( 'project `%s` update emailed' % project.project_name )
+
 
 
 
