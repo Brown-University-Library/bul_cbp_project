@@ -2,7 +2,7 @@
 
 import logging, pprint
 from .lib.scorer import Scorer
-from .models import Tracker
+from bul_cbp_app.models import Tracker
 from django.test import TestCase
 
 
