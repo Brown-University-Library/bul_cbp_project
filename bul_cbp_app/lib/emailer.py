@@ -60,7 +60,7 @@ class Controller(object):
             Called by parse_args()` """
         if timeframe is None:
             timeframe = 'weekly'
-        projects = Tracker.objects.all().order_by( 'project_name' )
+        projects = Tracker.objects.filter( score__lt=100 ).order_by( 'project_name' )  # thought, if I want to ensure all developers get a _monthly_ email, only apply the filter on the weekly project-grab
         email_contacts = self.gather_email_contacts( projects )
         for email_contact in email_contacts:
             email_data = self.prep_email_data( projects, timeframe )
