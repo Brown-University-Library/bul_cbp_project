@@ -14,8 +14,10 @@ if cwd not in sys.path:
 django.setup()
 
 ## ok, now django-related imports will work
+from bul_cbp_app import settings_app
 from bul_cbp_app.models import Tracker
-from django.core.mail import send_mail
+# from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 
 
 logging.basicConfig(
@@ -103,15 +105,21 @@ class Controller(object):
     def prep_needs_data( self, projects ):
         """ Preps email-data alerting to any existing project issues.
             Called by process_projects() """
-        data = []
-        log.debug( 'data, ```%s```' % pprint.pformat(data) )
-        return data
+        data_dct = {
+            'subject': 'weekly project-needs update',
+            'body': '',
+            'sender': settings_app.EMAIL_SENDER,
+            'receivers': [],
+            'reply_to': [settings_app.EMAIL_REPLY_TO],
+            }
+        log.debug( 'data_dct, ```%s```' % pprint.pformat(data_dct) )
+        return data_dct
 
     def prep_overview_data( self, projects ):
         """ TODO
             Preps overview email-data including any look-ahead conditions for the next 3-months.
             Called by process_projects() """
-        data = []
+        data = {}
         log.debug( 'data, ```%s```' % pprint.pformat(data) )
         return data
 
@@ -119,12 +127,22 @@ class Controller(object):
         """ Sends email.
             Called by process_projects() """
         try:
-            send_mail(
+            # send_mail(
+            #     data_dct['subject'],
+            #     data_dct['body'],
+            #     data_dct['sender'],
+            #     data_dct['receivers'],
+            #     fail_silently=False
+            #     )
+            email = EmailMessage(
                 data_dct['subject'],
                 data_dct['body'],
                 data_dct['sender'],
-                data_dct['receivers']
-                )
+                data_dct['receivers'],
+                reply_to=[data_dct['reply_to']],
+            )
+
+            log.debug( 'mail sent successfully' )
         except Exception as e:
             log.error( 'exception, ```%s```' % e )
         return
