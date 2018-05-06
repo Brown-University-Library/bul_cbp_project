@@ -15,6 +15,7 @@ django.setup()
 
 ## ok, now django-related imports will work
 from bul_cbp_app.models import Tracker
+from django.core.mail import send_mail
 
 
 logging.basicConfig(
@@ -60,13 +61,23 @@ class Controller(object):
             Called by parse_args()` """
         if timeframe is None:
             timeframe = 'weekly'
-        projects = Tracker.objects.filter( score__lt=100 ).order_by( 'project_name' )  # thought, if I want to ensure all developers get a _monthly_ email, only apply the filter on the weekly project-grab
+        projects = self.get_projects( timeframe )
         email_contacts = self.gather_email_contacts( projects )
         for email_contact in email_contacts:
             email_data = self.prep_email_data( projects, timeframe )
             self.send_email( email_data )
             log.debug( 'email sent to, `%s`' % email_contact )
         return
+
+    def get_projects( self, timeframe ):
+        """ Returns either all projects or those with needs.
+            Called by process_projects() """
+        if timeframe == 'weekly':
+            projects = Tracker.objects.filter( score__lt=100 ).order_by( 'project_name' )
+        else:
+            projects = Tracker.objects.all().order_by( 'project_name' )
+        log.debug( 'num of projects, %s' % len(projects) )
+        return projects
 
     def gather_email_contacts( self, projects ):
         """ Creates contacts list from projects.
@@ -83,43 +94,42 @@ class Controller(object):
         """ Prepares alert data for all projects based on timeframe.
             Called by process_projects() """
         if timeframe == 'weekly':
-            email_data = self.prep_standard_data( projects )
+            email_data = self.prep_needs_data( projects )
         else:
-            email_data = self.prep_lookahead_data( projects )
+            email_data = self.prep_overview_data( projects )
         log.debug( 'returning email_data' )
         return email_data
 
-    def prep_standard_data( self, projects ):
+    def prep_needs_data( self, projects ):
         """ Preps email-data alerting to any existing project issues.
             Called by process_projects() """
         data = []
         log.debug( 'data, ```%s```' % pprint.pformat(data) )
         return data
 
-    def prep_lookahead_data( self, projects ):
+    def prep_overview_data( self, projects ):
         """ TODO
-            Preps email-data alerting to any look-ahead conditions for the next 3-months.
+            Preps overview email-data including any look-ahead conditions for the next 3-months.
             Called by process_projects() """
         data = []
         log.debug( 'data, ```%s```' % pprint.pformat(data) )
         return data
 
-    def send_email( self, data ):
+    def send_email( self, data_dct ):
+        """ Sends email.
+            Called by process_projects() """
+        try:
+            send_mail(
+                data_dct['subject'],
+                data_dct['body'],
+                data_dct['sender'],
+                data_dct['receivers']
+                )
+        except Exception as e:
+            log.error( 'exception, ```%s```' % e )
         return
 
     ## end Controller()
-
-
-
-    # for project in projects:
-    #     if timeframe == 'weekly':
-    #         data = self.prep_standard_data( project )
-    #     else:
-    #         data = self.prep_lookahead_data( project )
-    #     self.send_email( data )
-    #     log.debug( 'project `%s` update emailed' % project.project_name )
-
-
 
 
 if __name__ == '__main__':
