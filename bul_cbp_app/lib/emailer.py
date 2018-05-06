@@ -16,7 +16,6 @@ django.setup()
 ## ok, now django-related imports will work
 from bul_cbp_app import settings_app
 from bul_cbp_app.models import Tracker
-# from django.core.mail import send_mail
 from django.core.mail import EmailMessage
 
 
@@ -110,7 +109,6 @@ class Controller(object):
             'body': 'coming',
             'sender': settings_app.EMAIL_SENDER,
             'receivers': [ email_contact ],
-            'reply_to': [settings_app.EMAIL_REPLY_TO],
             }
         log.debug( 'data_dct, ```%s```' % pprint.pformat(data_dct) )
         return data_dct
@@ -127,21 +125,12 @@ class Controller(object):
         """ Sends email.
             Called by process_projects() """
         try:
-            # send_mail(
-            #     data_dct['subject'],
-            #     data_dct['body'],
-            #     data_dct['sender'],
-            #     data_dct['receivers'],
-            #     fail_silently=False
-            #     )
             email = EmailMessage(
                 data_dct['subject'],
                 data_dct['body'],
                 data_dct['sender'],
                 data_dct['receivers'],
-                reply_to=[data_dct['reply_to']],
             )
-
             log.debug( 'mail sent successfully' )
         except Exception as e:
             log.error( 'exception, ```%s```' % e )
@@ -154,4 +143,3 @@ if __name__ == '__main__':
     c = Controller()
     c.parse_args()
     log.debug( 'complete' )
-

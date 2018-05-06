@@ -15,4 +15,3 @@ TEST_META_DCT = json.loads( os.environ['BUL_CBP__TEST_META_DCT_JSON'] )
 
 
 EMAIL_SENDER = os.environ['BUL_CBP__APPARENT_SENDER']
-EMAIL_REPLY_TO = os.environ['BUL_CBP__REPLY_TO']
