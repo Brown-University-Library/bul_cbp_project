@@ -129,8 +129,8 @@ class Controller(object):
                 data_dct['subject'],
                 data_dct['body'],
                 data_dct['sender'],
-                data_dct['receivers'],
-            )
+                data_dct['receivers'] )
+            email.send()
             log.debug( 'mail sent successfully' )
         except Exception as e:
             log.error( 'exception, ```%s```' % e )
