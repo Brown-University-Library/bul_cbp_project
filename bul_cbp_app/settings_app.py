@@ -3,9 +3,6 @@
 import json, os
 
 
-FOO = 'BAR'
-
-
 README_URL = os.environ['BUL_CBP__README_URL']
 
 SUPER_USERS = json.loads( os.environ['BUL_CBP__SUPER_USERS_JSON'] )
@@ -17,8 +14,5 @@ STAFF_GROUP = os.environ['BUL_CBP__STAFF_GROUP']
 TEST_META_DCT = json.loads( os.environ['BUL_CBP__TEST_META_DCT_JSON'] )
 
 
-# DEV_SHIB_INFO = json.loads( os.environ['BUL_CBP__DEV_SHIB_INFO_JSON'] )
-
-# TEST_USERNAME = os.environ['BUL_CBP__TEST_USERNAME']
-# TEST_NETID = os.environ['BUL_CBP__TEST_NETID']
-# TEST_EMAIL = os.environ['BUL_CBP__TEST_EMAIL']
+EMAIL_SENDER = os.environ['BUL_CBP__APPARENT_SENDER']
+EMAIL_REPLY_TO = os.environ['BUL_CBP__REPLY_TO']
