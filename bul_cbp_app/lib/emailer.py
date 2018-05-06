@@ -66,9 +66,9 @@ class Controller(object):
         projects = self.get_projects( timeframe )
         email_contacts = self.gather_email_contacts( projects )
         for email_contact in email_contacts:
-            email_data = self.prep_email_data( projects, timeframe )
+            log.debug( 'processing, `%s`' % email_contact )
+            email_data = self.prep_email_data( email_contact, projects, timeframe )
             self.send_email( email_data )
-            log.debug( 'email sent to, `%s`' % email_contact )
         return
 
     def get_projects( self, timeframe ):
@@ -92,36 +92,36 @@ class Controller(object):
         log.debug( 'sorted_email_contacts, ```%s```' % pprint.pformat(sorted_email_contacts) )
         return sorted_email_contacts
 
-    def prep_email_data( self, projects, timeframe ):
+    def prep_email_data( self, email_contact, projects, timeframe ):
         """ Prepares alert data for all projects based on timeframe.
             Called by process_projects() """
         if timeframe == 'weekly':
-            email_data = self.prep_needs_data( projects )
+            email_data = self.prep_needs_data( email_contact, projects )
         else:
-            email_data = self.prep_overview_data( projects )
+            email_data = self.prep_overview_data( email_contact, projects )
         log.debug( 'returning email_data' )
         return email_data
 
-    def prep_needs_data( self, projects ):
+    def prep_needs_data( self, email_contact, projects ):
         """ Preps email-data alerting to any existing project issues.
             Called by process_projects() """
         data_dct = {
             'subject': 'weekly project-needs update',
-            'body': '',
+            'body': 'coming',
             'sender': settings_app.EMAIL_SENDER,
-            'receivers': [],
+            'receivers': [ email_contact ],
             'reply_to': [settings_app.EMAIL_REPLY_TO],
             }
         log.debug( 'data_dct, ```%s```' % pprint.pformat(data_dct) )
         return data_dct
 
-    def prep_overview_data( self, projects ):
+    def prep_overview_data( self, email_contact, projects ):
         """ TODO
             Preps overview email-data including any look-ahead conditions for the next 3-months.
             Called by process_projects() """
-        data = {}
-        log.debug( 'data, ```%s```' % pprint.pformat(data) )
-        return data
+        data_dct = {}
+        log.debug( 'data_dct, ```%s```' % pprint.pformat(data_dct) )
+        return data_dct
 
     def send_email( self, data_dct ):
         """ Sends email.
