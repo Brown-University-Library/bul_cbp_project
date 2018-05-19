@@ -113,14 +113,10 @@ class Controller(object):
         log.debug( 'data_dct, ```%s```' % pprint.pformat(data_dct) )
         return data_dct
 
-
-
-
     def prep_needs_body( self, email_contact ):
         """ Preps email-data alerting to any existing project issues.
             Called by prep_needs_data() """
         user_projects_by_score = Tracker.objects.filter( project_contact_email=email_contact ).order_by( '-score' )
-        # template = Template("My name is {{ my_name }}.")
         template = django.template.loader.get_template( 'bul_cbp_app_templates/email_template.html' )
         context = {
             'usr_projects': user_projects_by_score,
@@ -128,9 +124,6 @@ class Controller(object):
         body_text = template.render(context)
         log.debug( 'body_text, ```%s```' % body_text )
         return body_text
-
-
-
 
     def prep_overview_data( self, email_contact, projects ):
         """ TODO
