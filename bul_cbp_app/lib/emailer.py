@@ -119,20 +119,13 @@ class Controller(object):
     def prep_needs_body( self, email_contact ):
         """ Preps email-data alerting to any existing project issues.
             Called by prep_needs_data() """
-        # body_text = 'coming soon'
         user_projects_by_score = Tracker.objects.filter( project_contact_email=email_contact ).order_by( '-score' )
-        # tmplt = template.Template( 'bul_cbp_app_templates/email_template.html' )
-        # data = Context( {
-        #     'email_name': email_contact,
-        #     'projects': user_projects_by_score }
-        #     )
-        # body_text = tmplt.render( data )
-
         # template = Template("My name is {{ my_name }}.")
         template = django.template.loader.get_template( 'bul_cbp_app_templates/email_template.html' )
-        context = {"my_name": "Foo"}
+        context = {
+            'usr_projects': user_projects_by_score,
+            }
         body_text = template.render(context)
-
         log.debug( 'body_text, ```%s```' % body_text )
         return body_text
 
