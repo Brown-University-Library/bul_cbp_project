@@ -179,19 +179,34 @@ class Controller(object):
             elif ( prjct.has_sitechecker_entry_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
                 issues_lst.append( 'sitechecker-check date is too old' )
             #
-            if prjct.framework_supported is 'no':
+            if prjct.framework_supported == 'no':
                 issues_lst.append( 'need to upgrade to modern, supported version of framework' )
             if not prjct.framework_supported_CHECKED:
                 issues_lst.append( 'framework-check date needs to be entered' )
             elif ( prjct.framework_supported_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
                 issues_lst.append( 'framework-check date is too old' )
             #
-            if prjct.https_enforced is 'no':
+            if prjct.https_enforced == 'no':
                 issues_lst.append( 'need to enforce https' )
             if not prjct.https_enforced_CHECKED:
                 issues_lst.append( 'https-check date needs to be entered' )
             elif ( prjct.https_enforced_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
                 issues_lst.append( 'https-check date is too old' )
+            #
+            if prjct.admin_links_shib_protected == 'no':
+                issues_lst.append( 'need to shib-protect admin links' )
+            if not prjct.admin_links_shib_protected_CHECKED:
+                issues_lst.append( 'shibbed-admin-check date needs to be entered' )
+            elif ( prjct.admin_links_shib_protected_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
+                issues_lst.append( 'shibbed-admin-check date is too old' )
+            #
+            if prjct.logs_rotated == 'no':
+                issues_lst.append( 'need to rotate logs' )
+            if not prjct.logs_rotated_CHECKED:
+                issues_lst.append( 'logrotate-check date needs to be entered' )
+            elif ( prjct.logs_rotated_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
+                issues_lst.append( 'logrotate-check date is too old' )
+
 
 
             #
