@@ -116,7 +116,7 @@ class Controller(object):
     def prep_needs_body( self, email_contact ):
         """ Preps email-data alerting to any existing project issues.
             Called by prep_needs_data() """
-        user_projects_by_score = Tracker.objects.filter( project_contact_email=email_contact ).order_by( '-score' )
+        user_projects_by_score = Tracker.objects.filter( score__lt=100, project_contact_email=email_contact ).order_by( 'score' )
         template = django.template.loader.get_template( 'bul_cbp_app_templates/email_template.html' )
         log.debug( 'about to start loop' )
         for prjct in user_projects_by_score:
