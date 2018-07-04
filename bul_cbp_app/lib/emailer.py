@@ -206,15 +206,23 @@ class Controller(object):
                 issues_lst.append( 'logrotate-check date needs to be entered' )
             elif ( prjct.logs_rotated_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
                 issues_lst.append( 'logrotate-check date is too old' )
-
-
-
+            #
+            if prjct.patron_data_expiration_process == 'no':
+                issues_lst.append( 'need to implement patron-data expiration plan' )
+            if not prjct.patron_data_expiration_process_CHECKED:
+                issues_lst.append( 'patron-data-expiration-plan-check date needs to be entered' )
+            elif ( prjct.patron_data_expiration_process_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
+                issues_lst.append( 'patron-data-expiration-plan-check date is too old' )
+            #
+            if prjct.django_session_data_expired == 'no':
+                issues_lst.append( 'need to auto-delete old (django) session entries' )
+            if not prjct.django_session_data_expired_CHECKED:
+                issues_lst.append( 'session-deletion-check date needs to be entered' )
+            elif ( prjct.django_session_data_expired_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
+                issues_lst.append( 'session-deletion-check date is too old' )
             #
             prjct.issues = issues_lst
             log.debug( 'issues_lst, ```%s```' % pprint.pformat(issues_lst) )
-
-
-
         context = {
             'usr_projects': user_projects_by_score,
             }
