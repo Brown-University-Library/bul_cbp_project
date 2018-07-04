@@ -6,7 +6,9 @@ Below is a list of your projects, sorted from lowest to highest score, along wit
 Project: {{ prj.project_name }}
 - score: {{ prj.score }}
 - issues:
-
+    {% for issue in prj.issues %}
+    - {{ issue }}
+    {% endfor %}
 ---
 
 {% endfor %}

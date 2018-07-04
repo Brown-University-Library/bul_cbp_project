@@ -118,6 +118,36 @@ class Controller(object):
             Called by prep_needs_data() """
         user_projects_by_score = Tracker.objects.filter( project_contact_email=email_contact ).order_by( '-score' )
         template = django.template.loader.get_template( 'bul_cbp_app_templates/email_template.html' )
+        log.debug( 'about to start loop' )
+        for prjct in user_projects_by_score:
+            log.debug( 'in prjct loop' )
+            issues_lst = []
+            #
+            # if prjct.code_versioned == 'no':
+            #     issues_lst.append( 'needs to be versioned' )
+            # log.debug( 'prjct.project_name, `%s`' % prjct.project_name )
+            # log.debug( 'prjct.code_versioned_CHECKED, `%s`' % prjct.code_versioned_CHECKED )
+            # log.debug( 'type(prjct.code_versioned_CHECKED), `%s`' % type(prjct.code_versioned_CHECKED) )
+            # log.debug( 'paren-val, `%s`' % ( prjct.code_versioned_CHECKED + datetime.timedelta(6*365/12) ) )
+            # log.debug( 'if-val, `%s`' % ( ( prjct.code_versioned_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today() ) )
+            # 1/0
+            if not prjct.code_versioned_CHECKED:
+                issues_lst.append( 'version-check date needs to be entered' )
+            elif ( prjct.code_versioned_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
+                issues_lst.append( 'version-check date needs to be updated' )
+            #
+            if prjct.contains_lightweight_data_reporting == 'no':
+                issues_lst.append( 'needs lightweight data-reporting' )
+            if not prjct.contains_lightweight_data_reporting_CHECKED:
+                issues_lst.append( 'lightweight-data-reporting-check date needs to be entered' )
+            elif ( prjct.contains_lightweight_data_reporting_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
+                issues_lst.append( 'lightweight-data-reporting-check date needs to be updated' )
+            #
+            prjct.issues = issues_lst
+            log.debug( 'issues_lst, ```%s```' % pprint.pformat(issues_lst) )
+
+
+
         context = {
             'usr_projects': user_projects_by_score,
             }
