@@ -128,43 +128,56 @@ class Controller(object):
             if not prjct.code_versioned_CHECKED:
                 issues_lst.append( 'version-check date needs to be entered' )
             elif ( prjct.code_versioned_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
-                issues_lst.append( 'version-check date needs to be updated' )
+                issues_lst.append( 'version-check date is too old' )
             #
             if prjct.has_public_code_url == 'no':
                 issues_lst.append( 'needs to be publicly accessable (or marked as not-applicable)' )
             if not prjct.has_public_code_url_CHECKED:
                 issues_lst.append( '_has_ public-code-url-check date needs to be entered' )
             elif ( prjct.has_public_code_url_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
-                issues_lst.append( '_has_ public-code-url-check date needs to be updated' )
+                issues_lst.append( '_has_ public-code-url-check date is too old' )
             #
             if prjct.has_public_code_url is 'yes' and len(prjct.public_code_url) is 0:
                 issues_lst.append( 'need to enter the public url' )
             if not prjct.public_code_url_CHECKED:
                 issues_lst.append( 'public-code-url-check date needs to be entered' )
             elif ( prjct.public_code_url_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
-                issues_lst.append( 'public-code-url-check date needs to be updated' )
+                issues_lst.append( 'public-code-url-check date is too old' )
             #
             if prjct.responsive == 'no':
                 issues_lst.append( 'needs to be responsive' )
             if not prjct.responsiveness_CHECKED:
                 issues_lst.append( 'responsive-check date needs to be entered' )
             elif ( prjct.responsiveness_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
-                issues_lst.append( 'responsive-check date needs to be updated' )
+                issues_lst.append( 'responsive-check date is too old' )
             #
             if prjct.contains_lightweight_data_reporting == 'no':
                 issues_lst.append( 'needs lightweight data-reporting' )
             if not prjct.contains_lightweight_data_reporting_CHECKED:
                 issues_lst.append( 'lightweight-data-reporting-check date needs to be entered' )
             elif ( prjct.contains_lightweight_data_reporting_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
-                issues_lst.append( 'lightweight-data-reporting-check date needs to be updated' )
+                issues_lst.append( 'lightweight-data-reporting-check date is too old' )
             #
             if prjct.accessability_check_run == 'no':
                 issues_lst.append( 'need to pass accessability-check' )
             if not prjct.accessability_check_run_CHECKED:
                 issues_lst.append( 'accessability-check date needs to be entered' )
             elif ( prjct.accessability_check_run_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
-                issues_lst.append( 'accessability-check date needs to be updated' )
-
+                issues_lst.append( 'accessability-check date is too old' )
+            #
+            if prjct.data_discoverable == 'no':
+                issues_lst.append( 'need to check w/discovery team to make project discoverable' )
+            if not prjct.data_discoverable_CHECKED:
+                issues_lst.append( 'discoverability-check date needs to be entered' )
+            elif ( prjct.data_discoverable_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
+                issues_lst.append( 'discoverability-check date is too old' )
+            #
+            if prjct.has_sitechecker_entry == 'no':
+                issues_lst.append( 'need to add site-checker check' )
+            if not prjct.has_sitechecker_entry_CHECKED:
+                issues_lst.append( 'sitechecker-check date needs to be entered' )
+            elif ( prjct.has_sitechecker_entry_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
+                issues_lst.append( 'sitechecker-check date is too old' )
 
 
             #
