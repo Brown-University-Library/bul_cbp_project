@@ -18,6 +18,8 @@ This is a django webapp that manages localized code-best-practices checks. Its t
 
 - It provides public and authorized-user views of the underlying data that produces the badge score.
 
+- It enables automated reminder to-do emails to project owners.
+
 - It provides a lightweight admin for authorized-users to edit an existing project's best-practices checklist or create a new-project checklist.
 
 
