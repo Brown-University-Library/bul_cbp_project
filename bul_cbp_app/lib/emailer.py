@@ -143,8 +143,13 @@ class Controller(object):
                 issues_lst.append( 'public-code-url-check date needs to be entered' )
             elif ( prjct.public_code_url_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
                 issues_lst.append( 'public-code-url-check date needs to be updated' )
-
-
+            #
+            if prjct.responsive == 'no':
+                issues_lst.append( 'needs to be responsive' )
+            if not prjct.responsiveness_CHECKED:
+                issues_lst.append( 'responsive-check date needs to be entered' )
+            elif ( prjct.responsiveness_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
+                issues_lst.append( 'responsive-check date needs to be updated' )
             #
             if prjct.contains_lightweight_data_reporting == 'no':
                 issues_lst.append( 'needs lightweight data-reporting' )
@@ -152,6 +157,16 @@ class Controller(object):
                 issues_lst.append( 'lightweight-data-reporting-check date needs to be entered' )
             elif ( prjct.contains_lightweight_data_reporting_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
                 issues_lst.append( 'lightweight-data-reporting-check date needs to be updated' )
+            #
+            if prjct.accessability_check_run == 'no':
+                issues_lst.append( 'need to pass accessability-check' )
+            if not prjct.accessability_check_run_CHECKED:
+                issues_lst.append( 'accessability-check date needs to be entered' )
+            elif ( prjct.accessability_check_run_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
+                issues_lst.append( 'accessability-check date needs to be updated' )
+
+
+
             #
             prjct.issues = issues_lst
             log.debug( 'issues_lst, ```%s```' % pprint.pformat(issues_lst) )
