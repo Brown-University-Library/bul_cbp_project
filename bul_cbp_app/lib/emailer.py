@@ -123,18 +123,28 @@ class Controller(object):
             log.debug( 'in prjct loop' )
             issues_lst = []
             #
-            # if prjct.code_versioned == 'no':
-            #     issues_lst.append( 'needs to be versioned' )
-            # log.debug( 'prjct.project_name, `%s`' % prjct.project_name )
-            # log.debug( 'prjct.code_versioned_CHECKED, `%s`' % prjct.code_versioned_CHECKED )
-            # log.debug( 'type(prjct.code_versioned_CHECKED), `%s`' % type(prjct.code_versioned_CHECKED) )
-            # log.debug( 'paren-val, `%s`' % ( prjct.code_versioned_CHECKED + datetime.timedelta(6*365/12) ) )
-            # log.debug( 'if-val, `%s`' % ( ( prjct.code_versioned_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today() ) )
-            # 1/0
+            if prjct.code_versioned == 'no':
+                issues_lst.append( 'needs to be versioned' )
             if not prjct.code_versioned_CHECKED:
                 issues_lst.append( 'version-check date needs to be entered' )
             elif ( prjct.code_versioned_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
                 issues_lst.append( 'version-check date needs to be updated' )
+            #
+            if prjct.has_public_code_url == 'no':
+                issues_lst.append( 'needs to be publicly accessable (or marked as not-applicable)' )
+            if not prjct.has_public_code_url_CHECKED:
+                issues_lst.append( '_has_ public-code-url-check date needs to be entered' )
+            elif ( prjct.has_public_code_url_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
+                issues_lst.append( '_has_ public-code-url-check date needs to be updated' )
+            #
+            if prjct.has_public_code_url is 'yes' and len(prjct.public_code_url) is 0:
+                issues_lst.append( 'need to enter the public url' )
+            if not prjct.public_code_url_CHECKED:
+                issues_lst.append( 'public-code-url-check date needs to be entered' )
+            elif ( prjct.public_code_url_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
+                issues_lst.append( 'public-code-url-check date needs to be updated' )
+
+
             #
             if prjct.contains_lightweight_data_reporting == 'no':
                 issues_lst.append( 'needs lightweight data-reporting' )
