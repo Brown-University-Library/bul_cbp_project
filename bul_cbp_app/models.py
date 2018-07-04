@@ -160,7 +160,6 @@ class Tracker(models.Model):
     score = models.IntegerField( null=True, blank=True, help_text="auto-calculated, not editable" )
 
     def save(self, *args, **kwargs):
-        # self.score = 42
         self.score = scrr.calc_score( self )
         super(Tracker, self).save()
 

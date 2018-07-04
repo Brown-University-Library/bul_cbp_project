@@ -1,14 +1,13 @@
 Greetings,
 
 Below is a list of your projects, sorted from lowest to highest score, along with a bullet-list of the TODOs for that project.
-
 {% for prj in usr_projects %}
 Project: {{ prj.project_name }}
 - score: {{ prj.score }}
+- url: <https://library.brown.edu/good_code/project_info/{{ prj.slug }}/>
 - issues:
     {% for issue in prj.issues %}- {{ issue }}
     {% endfor %}
-
 ---
 
 {% endfor %}
