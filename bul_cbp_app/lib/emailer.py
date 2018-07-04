@@ -178,6 +178,20 @@ class Controller(object):
                 issues_lst.append( 'sitechecker-check date needs to be entered' )
             elif ( prjct.has_sitechecker_entry_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
                 issues_lst.append( 'sitechecker-check date is too old' )
+            #
+            if prjct.framework_supported is 'no':
+                issues_lst.append( 'need to upgrade to modern, supported version of framework' )
+            if not prjct.framework_supported_CHECKED:
+                issues_lst.append( 'framework-check date needs to be entered' )
+            elif ( prjct.framework_supported_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
+                issues_lst.append( 'framework-check date is too old' )
+            #
+            if prjct.https_enforced is 'no':
+                issues_lst.append( 'need to enforce https' )
+            if not prjct.https_enforced_CHECKED:
+                issues_lst.append( 'https-check date needs to be entered' )
+            elif ( prjct.https_enforced_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
+                issues_lst.append( 'https-check date is too old' )
 
 
             #
