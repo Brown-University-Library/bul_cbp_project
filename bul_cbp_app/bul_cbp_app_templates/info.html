@@ -94,7 +94,7 @@ cbp info
         {% for project in projects %}
         <tr>
             <td class="project">{{ project.name }}</td><td class="contact">{{ project.contact }}</td>
-            <td class="badge_cell"><a href="{{ project.project_info_link }}"><img alt="badge-image-link" src="{{ project.project_image_link }}" /></a></td>
+            <td class="badge_cell"><a href="{{ project.project_info_link }}"><img alt="{{ project.slug }} badge-image-link" src="{{ project.project_image_link }}" /></a></td>
         </tr>
         {% endfor %}
     </table>

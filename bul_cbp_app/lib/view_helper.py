@@ -38,7 +38,8 @@ def make_info_projects_lst( get_dct ):
             'name': project.project_name,
             'contact': project.project_contact_email,
             'project_info_link': reverse( 'project_info_url', kwargs={'slug': project.slug} ),
-            'project_image_link': build_image_link( get_dct, project.slug ) }
+            'project_image_link': build_image_link( get_dct, project.slug ),
+            'slug': project.slug }
         projects_lst.append( dct )
     log.debug( 'projects_lst, ```%s```' % pprint.pformat(projects_lst) )
     return projects_lst
