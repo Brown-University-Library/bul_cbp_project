@@ -17,9 +17,45 @@ from django.utils.cache import patch_response_headers
 log = logging.getLogger(__name__)
 
 
+def version( request ):
+    """ Returns basic branch and commit data. """
+    rq_now = datetime.now()
+    commit = info_helper.get_commit()
+    branch = info_helper.get_branch()
+    info_txt = commit.replace( 'commit', branch )
+    resp_now = datetime.now()
+    taken = resp_now - rq_now
+    d = {
+        'request': {
+            'url': '%s%s' % ( settings.BASE_URL, request.META.get('REQUEST_URI', request.META['PATH_INFO']) ),
+            'timestamp': unicode( rq_now )
+        },
+        'response': {
+            'version': info_txt,
+            'timetaken': unicode( taken )
+        }
+    }
+    output = json.dumps( d, sort_keys=True, indent=2 )
+    return HttpResponse( output, content_type='application/json; charset=utf-8' )
+
+
+def info( request ):
+    """ Returns overview of all projects.
+        Called by site-checker, or by loading root url. """
+    log.debug( 'starting info()' )
+    admin_url = '{schm}://{hst}{path}'.format( schm=request.scheme, hst=request.META['HTTP_HOST'], path=reverse('admin:bul_cbp_app_tracker_changelist') )
+    display_admin_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(admin_url) )
+    context = view_helper.build_info_context( request.user, display_admin_url, request.GET )
+    if request.GET.get('format', '') == 'json':
+        resp = HttpResponse( json.dumps(context, sort_keys=True, indent=2), content_type='application/javascript; charset=utf-8' )
+    else:
+        resp = render( request, 'bul_cbp_app_templates/info.html', context )
+    return resp
+
+
 def project_info( request, slug ):
-    """ Shows public info.
-        Called by click on `BUL code-check` badge of github readme page. """
+    """ Shows project info.
+        Called by click on `BUL code-check` badge . """
     log.debug( 'starting project_info()' )
     tracker = get_object_or_404( Tracker, slug=slug )
     admin_url = reverse( 'admin:bul_cbp_app_tracker_changelist' )
@@ -33,24 +69,10 @@ def project_info( request, slug ):
     return resp
 
 
-def info( request ):
-    """ Returns simple response.
-        Called by site-checker, or by loading root url. """
-    log.debug( 'starting info()' )
-    admin_url = '{schm}://{hst}{path}'.format( schm=request.scheme, hst=request.META['HTTP_HOST'], path=reverse('admin:bul_cbp_app_tracker_changelist') )
-    display_admin_url = '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(admin_url) )
-    context = view_helper.build_info_context( request.user, display_admin_url, request.GET )
-    if request.GET.get('format', '') == 'json':
-        resp = HttpResponse( json.dumps(context, sort_keys=True, indent=2), content_type='application/javascript; charset=utf-8' )
-    else:
-        resp = render( request, 'bul_cbp_app_templates/info.html', context )
-    return resp
-
-
 def project_image( request, slug ):
     """ Loads data, calculates score, displays image.
         views.project_info() will pass in a cache_timeout=0 when logout is clicked.
-        Called by load of github readme page, and views.project_info(). """
+        Called by load of github readme page (any page containing a badge-link), views.info(), and views.project_info(). """
     cache_timeout = int( request.GET.get('cache_timeout', '5') )
     tracker = get_object_or_404( Tracker, slug=slug )
     log.debug( 'real tracker.score, `%s`' % tracker.score )
@@ -65,25 +87,10 @@ def project_image( request, slug ):
     return resp
 
 
-# def project_image( request, slug ):
-#     """ Loads data, calculates score, displays image.
-#         Called by load of github readme page. """
-#     tracker = get_object_or_404( Tracker, slug=slug )
-#     log.debug( 'real tracker.score, `%s`' % tracker.score )
-#     log.debug( 'request.user.is_authenticated, `%s`' % request.user.is_authenticated )
-#     score_display = str( tracker.score )
-#     if tracker.score < 75:
-#         if not request.user.is_authenticated:
-#             score_display = '&lt; 75'
-#     svg = image_helper.prep_svg( tracker.score, score_display )
-#     resp = HttpResponse( svg, content_type="image/svg+xml" )
-#     patch_response_headers( resp, cache_timeout=5 )
-#     return resp
-
-
 @shib_login
 def login( request ):
-    """ Handles authNZ, & redirects to admin. """
+    """ Handles authNZ, & redirects to admin.
+        Called by click on login or admin link. """
     next_url = request.GET.get( 'next', None )
     if not next_url:
         redirect_url = reverse( 'admin:bul_cbp_app_tracker_changelist' )
@@ -93,6 +100,8 @@ def login( request ):
 
 
 def logout( request ):
+    """ Logs _app_ out; shib logout not yet implemented.
+        Called by click on Welcome/Logout link in tool-bar. """
     redirect_url = request.GET.get( 'next', None )
     if not redirect_url:
         redirect_url = reverse( 'info_url' )
