@@ -1,15 +1,6 @@
 # -*- coding: utf-8 -*-
 
 """
-Django minimal settings
-- not used by default; settings.py is used
-- could be good for api or api-wrapper
-- main differences:
-    - no staticfiles
-    - no db
-    - no sessions
-    - no templates
-
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
@@ -183,6 +174,11 @@ LOGGING = {
             'level': os.environ.get(u'BUL_CBP__LOG_LEVEL'),
             'propagate': False
         },
+        # 'django.db.backends': {  # re-enable to check sql-queries! <https://docs.djangoproject.com/en/1.11/topics/logging/#django-db-backends>
+        #     'handlers': ['logfile'],
+        #     'level': os.environ.get(u'BUL_CBP__LOG_LEVEL'),
+        #     'propagate': False
+        # },
     }
 }
 
