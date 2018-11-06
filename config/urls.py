@@ -18,6 +18,7 @@ urlpatterns = [
     url( r'^admin/', admin.site.urls ),  # eg host/project_x/admin/
 
     ## support urls...
+    url( r'^version/$', views.version, name='version_url' ),
     url( r'^bul_search/$', views.bul_search, name='bul_search_url' ),
     url( r'^login/$', views.login, name='login_url' ),
     url( r'^logout/$', views.logout, name='logout_url' ),

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime, json, logging, os, pprint, urllib
-from .lib import image_helper, view_helper
+from .lib import image_helper, version_helper, view_helper
 from .lib.shib_auth import shib_login  # decorator
 from .models import Tracker
 from bul_cbp_app import settings_app
@@ -19,23 +19,12 @@ log = logging.getLogger(__name__)
 
 def version( request ):
     """ Returns basic branch and commit data. """
-    rq_now = datetime.now()
-    commit = info_helper.get_commit()
-    branch = info_helper.get_branch()
+    rq_now = datetime.datetime.now()
+    commit = version_helper.get_commit()
+    branch = version_helper.get_branch()
     info_txt = commit.replace( 'commit', branch )
-    resp_now = datetime.now()
-    taken = resp_now - rq_now
-    d = {
-        'request': {
-            'url': '%s%s' % ( settings.BASE_URL, request.META.get('REQUEST_URI', request.META['PATH_INFO']) ),
-            'timestamp': unicode( rq_now )
-        },
-        'response': {
-            'version': info_txt,
-            'timetaken': unicode( taken )
-        }
-    }
-    output = json.dumps( d, sort_keys=True, indent=2 )
+    context = version_helper.make_context( request, rq_now, info_txt )
+    output = json.dumps( context, sort_keys=True, indent=2 )
     return HttpResponse( output, content_type='application/json; charset=utf-8' )
 
 
