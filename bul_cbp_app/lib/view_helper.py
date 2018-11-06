@@ -28,12 +28,32 @@ def build_info_context( user, display_admin_url, get_dct ):
     return context
 
 
+# def make_info_projects_lst( get_dct ):
+#     """ Grabs projects.
+#         Called by build_info_context() """
+#     projects = Tracker.objects.all().order_by( 'project_name' )
+#     projects_lst = []
+#     for project in projects:
+#         dct = {
+#             'name': project.project_name,
+#             'contact': project.project_contact_email,
+#             'project_info_link': reverse( 'project_info_url', kwargs={'slug': project.slug} ),
+#             'project_image_link': build_image_link( get_dct, project.slug ),
+#             'slug': project.slug }
+#         projects_lst.append( dct )
+#     log.debug( 'projects_lst, ```%s```' % pprint.pformat(projects_lst) )
+#     return projects_lst
+
+
 def make_info_projects_lst( get_dct ):
     """ Grabs projects.
         Called by build_info_context() """
     projects = Tracker.objects.all().order_by( 'project_name' )
+    needs_update = check_recent_save()
     projects_lst = []
     for project in projects:
+        if needs_update:
+            project.save()
         dct = {
             'name': project.project_name,
             'contact': project.project_contact_email,
@@ -43,6 +63,23 @@ def make_info_projects_lst( get_dct ):
         projects_lst.append( dct )
     log.debug( 'projects_lst, ```%s```' % pprint.pformat(projects_lst) )
     return projects_lst
+
+
+
+def check_recent_save():
+    """ Returns boolean based on modification date.
+        Called by make_info_projects_lst() """
+    last_modified = Tracker.objects.latest( 'modified' ).modified
+    log.debug( 'last_modified, `%s`; type(), `%s`' % (last_modified, type(last_modified)) )
+    modified_plus_day = ( last_modified + datetime.timedelta(days=1) ).replace(tzinfo=None)
+    log.debug( 'modified_plus_day, `%s`' % modified_plus_day )
+    if modified_plus_day < datetime.datetime.now():
+        needs_update = True
+    else:
+        needs_update = False
+    log.debug( 'needs_update result, `%s`' % needs_update )
+    return needs_update
+
 
 
 def build_image_link( get_dct, project_slug ):
