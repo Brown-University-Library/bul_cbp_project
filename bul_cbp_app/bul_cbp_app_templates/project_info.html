@@ -84,7 +84,9 @@ cbp project-info
             </p>
         </li>
         <li>
-            <p>contact: {{ contact }}</p>
+            <p>contact: {{ contact }}
+                {% if authenticated %} &mdash; <span {% if not project_contact_email_CHECKED.fresh %}class="no"{% endif %}">({{ project_contact_email_CHECKED.date }})</span>{% endif %}
+            </p>
         </li>
     </ul>
     {% comment %} authenticated-only elements {% endcomment %}
@@ -119,12 +121,6 @@ cbp project-info
             <p>patron-data expiration-policy implemented:
                 <span {% if patron_data_expiration_process == "no" %}class="no"{% endif %}">{{ patron_data_expiration_process }}</span>
                  &mdash; <span {% if not patron_data_expiration_process_CHECKED.fresh %}class="no"{% endif %}">({{ patron_data_expiration_process_CHECKED.date }})</span>
-            </p>
-        </li>
-        <li>
-            <p>admin-links shib-protected:
-                <span {% if admin_links_shib_protected == "no" %}class="no"{% endif %}">{{ admin_links_shib_protected }}</span>
-                 &mdash; <span {% if not admin_links_shib_protected_CHECKED.fresh %}class="no"{% endif %}">({{ admin_links_shib_protected_CHECKED.date }})</span>
             </p>
         </li>
         <li>
