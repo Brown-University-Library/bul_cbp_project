@@ -15,3 +15,5 @@ TEST_META_DCT = json.loads( os.environ['BUL_CBP__TEST_META_DCT_JSON'] )
 
 
 EMAIL_SENDER = os.environ['BUL_CBP__APPARENT_SENDER']
+
+PUBLIC_SCORE_CUTOFF = int( os.environ['BUL_CBP__PUBLIC_SCORE_CUTOFF'] )
