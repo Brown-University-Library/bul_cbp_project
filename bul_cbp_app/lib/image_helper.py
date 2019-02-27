@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime, decimal, logging
+from bul_cbp_app import settings_app
 
 
 log = logging.getLogger(__name__)
@@ -9,7 +10,7 @@ log = logging.getLogger(__name__)
 def prep_svg( score, score_display ):
     """" Returns image svg.
         Called by views.project_image() """
-    if score > 75:
+    if score > settings_app.PUBLIC_SCORE_CUTOFF:
         color = 'green'
     else:
         color = 'orange'
@@ -34,8 +35,7 @@ def prep_svg( score, score_display ):
     return svg
 
 
-
-# def prep_svg( score ):
+# def prep_svg( score, score_display ):
 #     """" Returns image svg.
 #         Called by views.project_image() """
 #     if score > 75:
@@ -59,5 +59,5 @@ def prep_svg( score, score_display ):
 #         <text x="51.5" y="14">BUL code-check</text>
 #         <text x="127.5" y="14">{scr}%</text>
 #     </g>
-# </svg>'''.format( clr=color, scr=score )
+# </svg>'''.format( clr=color, scr=score_display )
 #     return svg
