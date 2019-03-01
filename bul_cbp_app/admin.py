@@ -50,6 +50,7 @@ class TrackerAdmin(admin.ModelAdmin):
         ('Non-Public Dates for above', {
             'classes': ('wide',),
             'fields': (
+                'project_contact_email_CHECKED',
                 'code_versioned_CHECKED',
                 'has_public_code_url_CHECKED',
                 'public_code_url_CHECKED',
@@ -58,7 +59,6 @@ class TrackerAdmin(admin.ModelAdmin):
                 'accessibility_check_run_CHECKED',
                 'data_discoverable_CHECKED',
                 'has_sitechecker_entry_CHECKED',
-                'project_contact_email_CHECKED',
             ),
         }),
         ('Non-Public Security', {
