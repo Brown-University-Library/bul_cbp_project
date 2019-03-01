@@ -158,12 +158,12 @@ class Controller(object):
             elif ( prjct.contains_lightweight_data_reporting_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
                 issues_lst.append( 'lightweight-data-reporting-check date is too old' )
             #
-            if prjct.accessability_check_run == 'no':
-                issues_lst.append( 'need to pass accessability-check' )
-            if not prjct.accessability_check_run_CHECKED:
-                issues_lst.append( 'accessability-check date needs to be entered' )
-            elif ( prjct.accessability_check_run_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
-                issues_lst.append( 'accessability-check date is too old' )
+            if prjct.accessibility_check_run == 'no':
+                issues_lst.append( 'need to pass accessibility-check' )
+            if not prjct.accessibility_check_run_CHECKED:
+                issues_lst.append( 'accessibility-check date needs to be entered' )
+            elif ( prjct.accessibility_check_run_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
+                issues_lst.append( 'accessibility-check date is too old' )
             #
             if prjct.data_discoverable == 'no':
                 issues_lst.append( 'need to check w/discovery team to make project discoverable' )

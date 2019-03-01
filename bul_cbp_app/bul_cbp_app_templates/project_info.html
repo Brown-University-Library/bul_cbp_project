@@ -66,9 +66,9 @@ cbp project-info
             </p>
         </li>
         <li>
-            <p>accessability checked:
-                <span {% if accessability == "no" %}class="no"{% endif %}">{{ accessability }}</span>
-                {% if authenticated %} &mdash; <span {% if not accessability_check_run_CHECKED.fresh %}class="no"{% endif %}">({{ accessability_check_run_CHECKED.date }})</span>{% endif %}
+            <p>is accessible:
+                <span {% if accessibility == "no" %}class="no"{% endif %}">{{ accessibility }}</span>
+                {% if authenticated %} &mdash; <span {% if not accessibility_check_run_CHECKED.fresh %}class="no"{% endif %}">({{ accessibility_check_run_CHECKED.date }})</span>{% endif %}
             </p>
         </li>
         <li>

@@ -60,7 +60,7 @@ class Tracker(models.Model):
         default='no',
     )
 
-    accessability_check_run = models.CharField(
+    accessibility_check_run = models.CharField(
         max_length=20,
         choices=STANDARD_CHOICES,
         default='no',
@@ -100,7 +100,7 @@ class Tracker(models.Model):
     )
     responsiveness_CHECKED = models.DateField( blank=True, null=True )
     contains_lightweight_data_reporting_CHECKED = models.DateField( blank=True, null=True )
-    accessability_check_run_CHECKED = models.DateField( blank=True, null=True )
+    accessibility_check_run_CHECKED = models.DateField( blank=True, null=True )
     data_discoverable_CHECKED = models.DateField( blank=True, null=True )
     has_sitechecker_entry_CHECKED = models.DateField( blank=True, null=True )
 

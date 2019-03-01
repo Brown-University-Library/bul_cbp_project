@@ -52,9 +52,9 @@ class Scorer(object):
                 score += 1
         log.debug( 'possible so far, `%s`; score so far, `%s`' % (possible, score) )
 
-        if tracker.accessability_check_run != 'n/a':
+        if tracker.accessibility_check_run != 'n/a':
             possible += 1
-            if tracker.accessability_check_run == 'yes':
+            if tracker.accessibility_check_run == 'yes':
                 score += 1
         log.debug( 'possible so far, `%s`; score so far, `%s`' % (possible, score) )
 
@@ -83,7 +83,7 @@ class Scorer(object):
             tracker.public_code_url_CHECKED,
             tracker.responsiveness_CHECKED,
             tracker.contains_lightweight_data_reporting_CHECKED,
-            tracker.accessability_check_run_CHECKED,
+            tracker.accessibility_check_run_CHECKED,
             tracker.data_discoverable_CHECKED,
             tracker.has_sitechecker_entry_CHECKED,
             ]
