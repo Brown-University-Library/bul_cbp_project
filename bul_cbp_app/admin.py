@@ -5,8 +5,7 @@ from django.contrib import admin
 
 
 class TrackerAdmin(admin.ModelAdmin):
-    # list_display = [ 'created', 'number', 'format', 'acquisition_method', 'volumes', 'titles', 'location', 'serial_added_volume' ]
-    # search_fields = ('created', 'format', 'location', 'acquisition_method')
+
     list_display = [ 'project_name', 'slug', 'project_contact_email', 'score', 'modified' ]
     list_filter = [
         'project_contact_email',
@@ -89,6 +88,9 @@ class TrackerAdmin(admin.ModelAdmin):
         }),
     )
 
+    save_on_top = True
+
+    ## class TrackerAdmin()
 
 
 admin.site.register( Tracker, TrackerAdmin )
