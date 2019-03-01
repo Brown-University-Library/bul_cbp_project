@@ -131,7 +131,7 @@ class Controller(object):
                 issues_lst.append( 'version-check date is too old' )
             #
             if prjct.has_public_code_url == 'no':
-                issues_lst.append( 'needs to be publicly accessable (or marked as not-applicable)' )
+                issues_lst.append( 'needs to be publicly accessible (or marked as not-applicable)' )
             if not prjct.has_public_code_url_CHECKED:
                 issues_lst.append( '_has_ public-code-url-check date needs to be entered' )
             elif ( prjct.has_public_code_url_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
