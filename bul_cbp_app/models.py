@@ -89,12 +89,12 @@ class Tracker(models.Model):
 
     code_versioned_CHECKED = models.DateField( blank=True, null=True )
     has_public_code_url_CHECKED = models.DateField(
-        help_text="check-date for whether there is a public url to code",
+        help_text="check-date for the drop-down menu for whether there _is_ a public url to code",
         blank=True,
         null=True
     )
     public_code_url_CHECKED = models.DateField(
-        help_text="check-date for the url entered in this web-app",
+        help_text="check-date for the _accuracy_ of the public url entered",
         blank=True,
         null=True
     )
@@ -112,7 +112,7 @@ class Tracker(models.Model):
         max_length=20,
         choices=STANDARD_CHOICES,
         default='no',
-        help_text='eg: uses long-term-release version or later'
+        help_text='uses latest version of a supported long-term-release'
     )
     framework_supported_CHECKED = models.DateField( blank=True, null=True )
 
