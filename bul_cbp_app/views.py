@@ -76,24 +76,6 @@ def project_image( request, slug ):
     return resp
 
 
-# def project_image( request, slug ):
-#     """ Loads data, calculates score, displays image.
-#         views.project_info() will pass in a cache_timeout=0 when logout is clicked.
-#         Called by load of github readme page (any page containing a badge-link), views.info(), and views.project_info(). """
-#     cache_timeout = int( request.GET.get('cache_timeout', '5') )
-#     tracker = get_object_or_404( Tracker, slug=slug )
-#     log.debug( 'real tracker.score, `%s`' % tracker.score )
-#     log.debug( 'request.user.is_authenticated, `%s`' % request.user.is_authenticated )
-#     score_display = str( tracker.score )
-#     if tracker.score < 75:
-#         if not request.user.is_authenticated:
-#             score_display = '&lt; 75'
-#     svg = image_helper.prep_svg( tracker.score, score_display )
-#     resp = HttpResponse( svg, content_type="image/svg+xml" )
-#     patch_response_headers( resp, cache_timeout=cache_timeout )
-#     return resp
-
-
 @shib_login
 def login( request ):
     """ Handles authNZ, & redirects to admin.
