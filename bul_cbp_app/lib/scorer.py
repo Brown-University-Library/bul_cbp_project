@@ -124,21 +124,27 @@ class Scorer(object):
                 score += 1
         log.debug( 'possible so far, `%s`; score so far, `%s`' % (possible, score) )
 
-        log.debug( 'tracker.patron_data_expiration_process, `%s`' % tracker.patron_data_expiration_process )
-        assert tracker.patron_data_expiration_process is not 'n/a', 'error, tracker.patron_data_expiration_process is `%s`' % tracker.patron_data_expiration_process
-        # if tracker.patron_data_expiration_process is not 'n/a':
         if tracker.patron_data_expiration_process != 'n/a':
-            log.debug( 'hereA' )
-            log.debug( 'tracker.patron_data_expiration_process, `%s`' % tracker.patron_data_expiration_process )
             possible += 1
             if tracker.patron_data_expiration_process == 'yes':
-                log.debug( 'hereB' )
                 score += 1
         log.debug( 'possible so far, `%s`; score so far, `%s`' % (possible, score) )
 
         if tracker.django_session_data_expired != 'n/a':
             possible += 1
             if tracker.django_session_data_expired == 'yes':
+                score += 1
+        log.debug( 'possible so far, `%s`; score so far, `%s`' % (possible, score) )
+
+        if tracker.emails_admin_on_error != 'n/a':
+            possible += 1
+            if tracker.emails_admin_on_error == 'yes':
+                score += 1
+        log.debug( 'possible so far, `%s`; score so far, `%s`' % (possible, score) )
+
+        if tracker.vulnerabilities_fixed != 'n/a':
+            possible += 1
+            if tracker.vulnerabilities_fixed == 'yes':
                 score += 1
         log.debug( 'possible so far, `%s`; score so far, `%s`' % (possible, score) )
 
@@ -150,6 +156,8 @@ class Scorer(object):
             tracker.logs_rotated_CHECKED,
             tracker.patron_data_expiration_process_CHECKED,
             tracker.django_session_data_expired_CHECKED,
+            tracker.emails_admin_on_error_CHECKED,
+            tracker.vulnerabilities_fixed_CHECKED,
             ]
         for non_pub_date_value in non_pub_dates_to_check:
             log.debug( 'non_pub_date_value, ```%s```' % pub_date_value )
