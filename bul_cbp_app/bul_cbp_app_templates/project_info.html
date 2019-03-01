@@ -129,7 +129,18 @@ cbp project-info
                  &mdash; <span {% if not django_session_data_expired_CHECKED.fresh %}class="no"{% endif %}">({{ django_session_data_expired_CHECKED.date }})</span>
             </p>
         </li>
-
+        <li>
+            <p>emails admin on webapp-error:
+                <span {% if emails_admin_on_error == "no" %}class="no"{% endif %}">{{ emails_admin_on_error }}</span>
+                 &mdash; <span {% if not emails_admin_on_error_CHECKED.fresh %}class="no"{% endif %}">({{ emails_admin_on_error_CHECKED.date }})</span>
+            </p>
+        </li>
+        <li>
+            <p>vulnerabilities fixed <i>(eg github security vulnerability warnings)</i>:
+                <span {% if vulnerabilities_fixed == "no" %}class="no"{% endif %}">{{ vulnerabilities_fixed }}</span>
+                 &mdash; <span {% if not vulnerabilities_fixed_CHECKED.fresh %}class="no"{% endif %}">({{ vulnerabilities_fixed_CHECKED.date }})</span>
+            </p>
+        </li>
     </ul>
     {% endif %}
     <hr/>

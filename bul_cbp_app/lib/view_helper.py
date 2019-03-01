@@ -28,23 +28,6 @@ def build_info_context( user, display_admin_url, get_dct ):
     return context
 
 
-# def make_info_projects_lst( get_dct ):
-#     """ Grabs projects.
-#         Called by build_info_context() """
-#     projects = Tracker.objects.all().order_by( 'project_name' )
-#     projects_lst = []
-#     for project in projects:
-#         dct = {
-#             'name': project.project_name,
-#             'contact': project.project_contact_email,
-#             'project_info_link': reverse( 'project_info_url', kwargs={'slug': project.slug} ),
-#             'project_image_link': build_image_link( get_dct, project.slug ),
-#             'slug': project.slug }
-#         projects_lst.append( dct )
-#     log.debug( 'projects_lst, ```%s```' % pprint.pformat(projects_lst) )
-#     return projects_lst
-
-
 def make_info_projects_lst( get_dct ):
     """ Grabs projects.
         Called by build_info_context() """
@@ -144,6 +127,10 @@ def build_project_info_authenticated_context( context, user, tracker ):
     context['logs_rotated'] = tracker.logs_rotated
     context['patron_data_expiration_process'] = tracker.patron_data_expiration_process
     context['django_session_data_expired'] = tracker.django_session_data_expired
+
+    context['emails_admin_on_error'] = tracker.emails_admin_on_error
+    context['vulnerabilities_fixed'] = tracker.vulnerabilities_fixed
+
     log.debug( 'authenticated context, ```%s```' % pprint.pformat(context) )
     return context
 
