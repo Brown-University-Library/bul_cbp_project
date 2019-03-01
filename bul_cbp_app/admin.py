@@ -76,7 +76,10 @@ class TrackerAdmin(admin.ModelAdmin):
                 'patron_data_expiration_process_CHECKED',
                 'django_session_data_expired',
                 'django_session_data_expired_CHECKED',
-
+                'emails_admin_on_error',
+                'emails_admin_on_error_CHECKED',
+                'vulnerabilities_fixed',
+                'vulnerabilities_fixed_CHECKED',
             ),
         }),
         ('Non-Public Other', {
