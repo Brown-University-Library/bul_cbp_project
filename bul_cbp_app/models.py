@@ -153,6 +153,26 @@ class Tracker(models.Model):
     )
     django_session_data_expired_CHECKED = models.DateField( blank=True, null=True )
 
+
+
+    emails_admin_on_error = models.CharField(
+        max_length=20,
+        choices=STANDARD_CHOICES,
+        default='no',
+        help_text=""
+    )
+    emails_admin_on_error_CHECKED = models.DateField( blank=True, null=True )
+
+    vulnerabilities_fixed = models.CharField(
+        max_length=20,
+        choices=STANDARD_CHOICES,
+        default='no',
+        help_text="github `potential security vulnerabilities` fixed"
+    )
+    vulnerabilities_fixed_CHECKED = models.DateField( blank=True, null=True )
+
+
+
     ### other ###
 
     notes = models.TextField( null=True, blank=True )
