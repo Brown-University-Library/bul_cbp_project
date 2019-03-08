@@ -64,6 +64,8 @@ class Tracker(models.Model):
         max_length=20,
         choices=STANDARD_CHOICES,
         default='no',
+        verbose_name='is accessible',
+        help_text='start suggestion: no "wave" errors on first and second-level pages'
     )
 
     data_discoverable = models.CharField(
