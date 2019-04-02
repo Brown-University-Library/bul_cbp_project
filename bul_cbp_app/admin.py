@@ -21,7 +21,9 @@ class TrackerAdmin(admin.ModelAdmin):
         'admin_links_shib_protected',
         'logs_rotated',
         'patron_data_expiration_process',
-        'django_session_data_expired'
+        'django_session_data_expired',
+        'emails_admin_on_error',
+        'vulnerabilities_fixed'
     ]
     ordering = [ 'project_name' ]
 
