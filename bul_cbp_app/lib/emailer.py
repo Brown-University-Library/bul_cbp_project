@@ -221,6 +221,20 @@ class Controller(object):
             elif ( prjct.django_session_data_expired_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
                 issues_lst.append( 'session-deletion-check date is too old' )
             #
+            if prjct.emails_admin_on_error == 'no':
+                issues_lst.append( 'add error-check url if web-app, or confirm code successfully sends email on error' )
+            if not prjct.emails_admin_on_error_CHECKED:
+                issues_lst.append( 'email-error-check date needs to be entered' )
+            elif ( prjct.emails_admin_on_error_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
+                issues_lst.append( 'email-error-check date is too old' )
+            #
+            if prjct.vulnerabilities_fixed == 'no':
+                issues_lst.append( 'ensure github (or equivalent) does not show security vulnerabilites for project' )
+            if not prjct.vulnerabilities_fixed_CHECKED:
+                issues_lst.append( 'vulnerability-check date needs to be entered' )
+            elif ( prjct.vulnerabilities_fixed_CHECKED + datetime.timedelta(6*365/12) ) < datetime.date.today():  # means entry has _not_ been updated in last six months
+                issues_lst.append( 'vulnerability-check date is too old' )
+            #
             prjct.issues = issues_lst
             log.debug( 'issues_lst, ```%s```' % pprint.pformat(issues_lst) )
         context = {
