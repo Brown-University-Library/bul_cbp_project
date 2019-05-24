@@ -20,6 +20,7 @@ urlpatterns = [
 
     ## support urls...
     url( r'^version/$', views.version, name='version_url' ),
+    url( r'^error_check/$', views.error_check, name='error_check_url' ),
     url( r'^bul_search/$', views.bul_search, name='bul_search_url' ),
     url( r'^login/$', views.login, name='login_url' ),
     url( r'^logout/$', views.logout, name='logout_url' ),

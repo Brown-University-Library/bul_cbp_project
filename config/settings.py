@@ -127,6 +127,7 @@ STATIC_ROOT = os.environ['BUL_CBP__STATIC_ROOT']  # needed for collectstatic com
 
 
 # Email
+SERVER_EMAIL = 'good_code@library.brown.edu'
 EMAIL_HOST = os.environ['BUL_CBP__EMAIL_HOST']
 EMAIL_PORT = int( os.environ['BUL_CBP__EMAIL_PORT'] )
 
@@ -167,12 +168,22 @@ LOGGING = {
             'class':'logging.StreamHandler',
             'formatter': 'standard'
         },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,
+        }
     },
     'loggers': {
         'bul_cbp_app': {
             'handlers': ['logfile'],
             'level': os.environ.get(u'BUL_CBP__LOG_LEVEL'),
             'propagate': False
+        },
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
         },
         # 'django.db.backends': {  # re-enable to check sql-queries! <https://docs.djangoproject.com/en/1.11/topics/logging/#django-db-backends>
         #     'handlers': ['logfile'],
