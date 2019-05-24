@@ -9,7 +9,7 @@ from django.conf import settings as project_settings
 from django.contrib.auth import logout as django_logout
 # from django.contrib.auth.views import logout
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.utils.cache import patch_response_headers
 
