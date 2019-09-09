@@ -127,4 +127,3 @@ def error_check( request ):
         1/0
     else:
         return HttpResponseNotFound( '<div>404 / Not Found</div>' )
-
