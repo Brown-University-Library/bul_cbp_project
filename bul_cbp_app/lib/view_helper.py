@@ -104,6 +104,7 @@ def build_project_info_unauthenticated_context( user, tracker, score_image_url, 
         'admin_url': display_admin_url,
         'login_url': '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(reverse('project_info_url', kwargs={'slug': slug})) ),
         'logout_url': '%s?next=%s?cache_timeout=0' % ( reverse('logout_url'), urllib.parse.quote(reverse('project_info_url', kwargs={'slug': slug})) ),
+        'notes': tracker.notes,
         }
     log.debug( 'unauthenticated context, ```%s```' % pprint.pformat(context) )
     return context

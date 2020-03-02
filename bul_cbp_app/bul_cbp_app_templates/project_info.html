@@ -1,5 +1,7 @@
 {% extends "bul_cbp_app_templates/base.html" %}
 
+{% load markdown_extras %}
+
 
 {% block page_title %}
 cbp project-info
@@ -37,8 +39,9 @@ cbp project-info
 
     <h2><strong>project: {{ project_name }} </strong></h2>
 
-     <p><img id="score" src="{{ score_image_url }}" alt="image showing score"></img></p>
+    <p><img id="score" src="{{ score_image_url }}" alt="image showing score"></img></p>
 
+    <h3>public elements</h3>
     <ul>
         {% comment %} publicly-viewable elements {% endcomment %}
         <li>
@@ -142,6 +145,10 @@ cbp project-info
             </p>
         </li>
     </ul>
+    <h3>notes</h3>
+    <div>
+        {{ notes | markdown | safe }}
+    </div>
     {% endif %}
     <hr/>
     <p>BUL developers, <a href="{{ login_url }}">log-in</a> to see additional info, and use the <a href="{{ admin_url }}">admin</a> to create or update project-entries.</p>

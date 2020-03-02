@@ -117,7 +117,7 @@ class Tracker(models.Model):
         max_length=20,
         choices=STANDARD_CHOICES,
         default='no',
-        help_text='uses latest version of a supported long-term-release'
+        help_text='uses a supported long-term-release'
     )
     framework_supported_CHECKED = models.DateField( blank=True, null=True )
 
