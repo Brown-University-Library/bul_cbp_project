@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 
 import datetime, json, logging, os, pprint
+
 from .lib.scorer import Scorer
-from django.utils import timezone
 from django.conf import settings as project_settings
+from django.core import serializers
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.http import HttpResponseRedirect
+from django.utils import timezone
+
 
 log = logging.getLogger(__name__)
 scrr = Scorer()
@@ -183,5 +186,11 @@ class Tracker(models.Model):
 
     def __unicode__(self):
         return self.project_name
+
+    def jsonize( self ):
+        jsn = serializers.serialize( 'json', self )  # data = serializers.serialize("json", YourModel.objects.all())
+        jsn_dct = json.loads( jsn )
+        return jsn_dct
+
 
     ## end class Tracker()
