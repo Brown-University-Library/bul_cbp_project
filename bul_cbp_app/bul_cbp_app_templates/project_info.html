@@ -147,7 +147,13 @@ cbp project-info
     </ul>
     <h3>notes</h3>
     <div>
-        {{ notes | markdown | safe }}
+        {% if notes %}
+            {{ notes | markdown | safe }}
+        {% else %}
+            <ul>
+                <li>(None)</li>
+            </ul>
+        {% endif %}
     </div>
     {% endif %}
     <hr/>
