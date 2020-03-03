@@ -104,7 +104,6 @@ def build_project_info_unauthenticated_context( user, tracker, score_image_url, 
         'admin_url': display_admin_url,
         'login_url': '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(reverse('project_info_url', kwargs={'slug': slug})) ),
         'logout_url': '%s?next=%s?cache_timeout=0' % ( reverse('logout_url'), urllib.parse.quote(reverse('project_info_url', kwargs={'slug': slug})) ),
-        'notes': tracker.notes,
         }
     log.debug( 'unauthenticated context, ```%s```' % pprint.pformat(context) )
     return context
@@ -122,15 +121,18 @@ def build_project_info_authenticated_context( context, user, tracker ):
             entrydct['date'] = 'checked ' + str(field_value) if field_value else 'no_date'
             entrydct['fresh'] = False if ( field_value is None or field_value + datetime.timedelta(6*365/12) < datetime.date.today() ) else True
             context[field_name] = entrydct
+    #
+    context['public_code_url'] = tracker.public_code_url
+    #
     context['framework_supported'] = tracker.framework_supported
     context['https_enforced'] = tracker.https_enforced
     context['admin_links_shib_protected'] = tracker.admin_links_shib_protected
     context['logs_rotated'] = tracker.logs_rotated
     context['patron_data_expiration_process'] = tracker.patron_data_expiration_process
     context['django_session_data_expired'] = tracker.django_session_data_expired
-
     context['emails_admin_on_error'] = tracker.emails_admin_on_error
     context['vulnerabilities_fixed'] = tracker.vulnerabilities_fixed
+    context['notes'] = tracker.notes
 
     log.debug( 'authenticated context, ```%s```' % pprint.pformat(context) )
     return context

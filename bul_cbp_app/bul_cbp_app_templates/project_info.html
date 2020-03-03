@@ -54,6 +54,9 @@ cbp project-info
             <p>has public code-url:
                 <span {% if has_url == "no" %}class="no"{% endif %}>{{ has_url }}</span>
                 {% if authenticated %} &mdash; <span {% if not has_public_code_url_CHECKED.fresh %}class="no"{% endif %}">({{ has_public_code_url_CHECKED.date }})</span>{% endif %}
+                {% if authenticated %}
+                <br/>( <a href="{{ public_code_url }}">{{ public_code_url }}</a> )
+                {% endif %}
             </p>
         </li>
         <li>
