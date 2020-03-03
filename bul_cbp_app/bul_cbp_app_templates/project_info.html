@@ -162,8 +162,11 @@ cbp project-info
     </div>
     {% endif %}
     <hr/>
+    {% if authenticated %}
+    <p>BUL developers, use the <a href="{{ admin_url }}">admin</a> to create or update project-entries.</p>
+    {% else %}
     <p>BUL developers, <a href="{{ login_url }}">log-in</a> to see additional info, and use the <a href="{{ admin_url }}">admin</a> to create or update project-entries.</p>
-
+    {% endif %}
 
 </div>  <!-- end <div id="info_text"> -->
 
