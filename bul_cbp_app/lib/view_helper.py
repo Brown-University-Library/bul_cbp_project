@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import datetime, logging, pprint, urllib
+
 from bul_cbp_app import settings_app
+from bul_cbp_app.lib import common
 from bul_cbp_app.models import Tracker
 from django.core.urlresolvers import reverse
 
@@ -12,17 +14,19 @@ log = logging.getLogger(__name__)
 ## views.info() ##
 
 
-def build_info_context( user, display_admin_url, get_dct ):
+def build_info_context( user: 'django_user_object', display_admin_url, get_dct ):
     """ Builds info context.
         Called by views.info() """
-    username = None
     if user.is_authenticated:
-        username = user.first_name
+        log.debug( 'will prep authenticated header' )
+        pattern_header = common.prep_authenticated_header( user.first_name, display_admin_url )
+    else:
+        log.debug( 'will prep un-authenticated header' )
+        pattern_header = common.prep_unauthenticated_header( display_admin_url )
     context = {
-        'username': username,
-        'login_url': '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(reverse('info_url')) ),
-        'admin_url': display_admin_url,
-        'logout_url': '%s?next=%s?cache_timeout=0' % ( reverse('logout_url'), urllib.parse.quote(reverse('info_url')) ),
+        'pattern_header': pattern_header,
+        'login_url': '%s?next=%s' % ( reverse('login_url'), urllib.parse.quote(reverse('info_url')) ),  # not just for header; also for body.
+        'admin_url': display_admin_url,  # not just for header; also for body.
         'projects': make_info_projects_lst( get_dct ) }
     log.debug( 'context, ```%s```' % context )
     return context

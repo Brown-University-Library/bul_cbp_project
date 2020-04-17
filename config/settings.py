@@ -126,6 +126,14 @@ STATIC_URL = os.environ['BUL_CBP__STATIC_URL']
 STATIC_ROOT = os.environ['BUL_CBP__STATIC_ROOT']  # needed for collectstatic command
 
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.environ['BUL_CBP__CACHE_DIR_PATH'],
+    }
+}
+
+
 # Email
 SERVER_EMAIL = 'good_code@library.brown.edu'
 EMAIL_HOST = os.environ['BUL_CBP__EMAIL_HOST']
